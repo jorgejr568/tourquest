@@ -1,0 +1,27 @@
+name: Backend Actions
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  setup-bun:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v3
+      - id: setup-bun
+        name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - id: install-dependencies
+        name: Install Dependencies
+        run: bun install
+      - id: run-tests
+        name: Run Tests
+        run: bun test --coverage
