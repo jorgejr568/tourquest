@@ -23,6 +23,10 @@ jobs:
         working-directory: ./backend
         name: Install Dependencies
         run: bun install
+      - id: prisma-generate
+        working-directory: ./backend
+        name: Prisma Generate
+        run: bun prisma:generate
       - id: run-tests
         working-directory: ./backend
         name: Run Tests
