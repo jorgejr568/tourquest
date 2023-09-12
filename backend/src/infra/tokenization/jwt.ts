@@ -1,6 +1,6 @@
 import { Environment } from "@/constants";
 import { InvalidTokenException } from "@/exceptions";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { Tokenization, TokenizationUserData } from "./_interface";
 
 export class JwtTokenization implements Tokenization {

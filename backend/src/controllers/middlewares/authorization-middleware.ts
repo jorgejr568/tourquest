@@ -1,7 +1,7 @@
 import { UnauthorizedException } from "@/exceptions";
 import { NextFunction, Request, Response } from "express";
 
-export const authorizationMiddleware = async (
+export const authorizationMiddleware = (
   req: Request,
   _: Response,
   next: NextFunction

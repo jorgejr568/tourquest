@@ -11,7 +11,7 @@ class MockRepository implements UserRepository {
 
 const mockRepository = new MockRepository();
 
-describe.only("services.UserService.signIn", () => {
+describe("services.UserService.signIn", () => {
   const spyFindUserByEmail = spyOn(mockRepository, "findUserByEmail");
 
   beforeEach(() => {
