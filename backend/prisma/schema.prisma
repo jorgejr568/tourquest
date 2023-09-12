@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Checkpoint {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // relationships
+  Journeys          JourneyCheckpoint[]
+  UsersWhoCompleted UserCompletedCheckpoints[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // relationships
+  Checkpoints UserCompletedCheckpoints[]
+}
+
+model Journey {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // relationships
+  Checkpoints JourneyCheckpoint[]
+}
+
+model JourneyCheckpoint {
+  journeyId    String
+  checkpointId String
+
+  // relationships
+  Checkpoint Checkpoint @relation(fields: [checkpointId], references: [id])
+  Journey    Journey    @relation(fields: [journeyId], references: [id])
+
+  @@id([journeyId, checkpointId])
+}
+
+model UserCompletedCheckpoints {
+  userId       String
+  checkpointId String
+  completedAt  DateTime @default(now())
+
+  // relationships
+  Checkpoint Checkpoint @relation(fields: [checkpointId], references: [id])
+  User       User       @relation(fields: [userId], references: [id])
+
+  @@id([userId, checkpointId])
+}
