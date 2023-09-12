@@ -5,7 +5,7 @@ import { User } from "@/dtos";
 
 const mockEmail = "example@example.org";
 
-describe.todo("repositories.PrismaUserRepository", () => {
+describe("repositories.PrismaUserRepository", () => {
   it("finds a user by email", async () => {
     const prismaUser = {
       id: "1",
