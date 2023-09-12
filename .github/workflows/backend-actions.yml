@@ -20,8 +20,10 @@ jobs:
         with:
           bun-version: latest
       - id: install-dependencies
+        working-directory: ./backend
         name: Install Dependencies
         run: bun install
       - id: run-tests
+        working-directory: ./backend
         name: Run Tests
         run: bun test --coverage
