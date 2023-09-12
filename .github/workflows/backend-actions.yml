@@ -27,3 +27,5 @@ jobs:
         working-directory: ./backend
         name: Run Tests
         run: bun test --coverage
+        env:
+          APP_ENV: test
