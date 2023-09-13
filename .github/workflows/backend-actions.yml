@@ -27,6 +27,10 @@ jobs:
         working-directory: ./backend
         name: Prisma Generate
         run: bun run prisma:generate
+      - id: type-check
+        working-directory: ./backend
+        name: Type Check
+        run: bun run typecheck
       - id: run-tests
         working-directory: ./backend
         name: Run Tests
