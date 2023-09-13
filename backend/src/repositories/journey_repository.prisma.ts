@@ -3,7 +3,7 @@ import { JourneyRepository } from "./journey_repository";
 import { PrismaClient, Journey as JourneyDocument } from "@prisma/client";
 
 export class PrismaJourneyRepository implements JourneyRepository {
-  constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}
+  constructor(private readonly prisma: PrismaClient) {}
 
   create = async (request: JourneyCreateRequest): Promise<Journey> => {
     const journey = await this.prisma.journey.create({

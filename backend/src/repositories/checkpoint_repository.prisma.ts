@@ -3,7 +3,7 @@ import { CheckpointRepository } from "./checkpoint_repository";
 import { PrismaClient, Checkpoint as CheckpointDocument } from "@prisma/client";
 
 export class PrismaCheckpointRepository implements CheckpointRepository {
-  constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}
+  constructor(private readonly prisma: PrismaClient) {}
 
   async create(request: CheckpointCreateRequest): Promise<Checkpoint> {
     const checkpoint = await this.prisma.checkpoint.create({

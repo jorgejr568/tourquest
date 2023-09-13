@@ -1,24 +1,23 @@
 import { TokenizationUserData } from "@/infra/tokenization";
 import { UserLocationWsMessage, UserLocationWsSchema } from "../messages";
 import { Ws } from "../types";
-import { PrismaClient } from "@prisma/client";
+import { LocationService } from "@/services";
+import { locationServiceFactory } from "@/factories";
 
 type HandleUserLocationWsMessageContainer = {
-  prisma: PrismaClient;
+  service: LocationService;
 };
 export const handleUserLocationWsMessage = async (
   ws: Ws,
   message: UserLocationWsMessage,
   user: TokenizationUserData,
-  { prisma }: HandleUserLocationWsMessageContainer = {
-    prisma: new PrismaClient(),
+  { service }: HandleUserLocationWsMessageContainer = {
+    service: locationServiceFactory(),
   }
 ) => {
-  const result = await prisma.location.create({
-    data: {
-      userId: user.id,
-      ...UserLocationWsSchema.parse(message.data),
-    },
+  const result = await service.create({
+    userId: user.id,
+    ...UserLocationWsSchema.parse(message.data),
   });
 
   ws.send(`Location saved ${result.id}`);
