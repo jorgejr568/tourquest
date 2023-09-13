@@ -1,11 +1,11 @@
-import { User } from "@/dtos";
+import { User, UserCreateRequest } from "@/dtos";
 import { UserRepository } from "./user_repository";
 import { PrismaClient, User as UserDocument } from "@prisma/client";
 
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly client = new PrismaClient()) {}
 
-  findUserByEmail = async (email: string): Promise<User | null> => {
+  async findUserByEmail(email: string): Promise<User | null> {
     const user = await this.client.user.findUnique({
       where: {
         email: email,
@@ -16,12 +16,25 @@ export class PrismaUserRepository implements UserRepository {
       return null;
     }
 
-    return this._prismaUserToDto(user);
-  };
+    return this.toDTO(user);
+  }
 
-  private _prismaUserToDto(user: UserDocument): User {
+  async create(request: UserCreateRequest): Promise<User> {
+    const user = await this.client.user.create({
+      data: {
+        name: request.name,
+        email: request.email,
+        password: request.password,
+      },
+    });
+
+    return this.toDTO(user);
+  }
+
+  private toDTO(user: UserDocument): User {
     return new User({
       id: user.id,
+      name: user.name,
       email: user.email,
       password: user.password,
       createdAt: user.createdAt,

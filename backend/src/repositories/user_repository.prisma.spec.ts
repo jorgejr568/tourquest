@@ -66,4 +66,69 @@ describe("repositories.PrismaUserRepository", () => {
       },
     ]);
   });
+
+  describe("create", () => {
+    it("should create a user", async () => {
+      const mockClient = {
+        user: {
+          create: mock(async () => ({
+            id: "mock-id",
+            name: "mock-name",
+            email: "mock-email",
+            password: "mock-password",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })),
+        },
+      };
+
+      const repository = new SUT(mockClient as any);
+
+      const user = await repository.create({
+        name: "mock-name",
+        email: "mock-email",
+        password: "mock-password",
+      });
+
+      expect(user.id).toEqual("mock-id");
+      expect(user.name).toEqual("mock-name");
+      expect(user.email).toEqual("mock-email");
+      expect(user.password).toEqual("mock-password");
+
+      expect(mockClient.user.create).toHaveBeenCalledTimes(1);
+      expect(mockClient.user.create.mock.calls[0]).toEqual([
+        {
+          data: {
+            name: "mock-name",
+            email: "mock-email",
+            password: "mock-password",
+          },
+        },
+      ]);
+    });
+
+    it("should throw an error if the user could not be created", (done) => {
+      const mockClient = {
+        user: {
+          create: mock(async () => {
+            throw new Error("mock-error");
+          }),
+        },
+      };
+
+      const repository = new SUT(mockClient as any);
+
+      repository
+        .create({
+          name: "mock-name",
+          email: "mock-email",
+          password: "mock-password",
+        })
+        .then(() => done("Expected an error to be thrown"))
+        .catch((error) => {
+          expect(error.message).toEqual("mock-error");
+          done();
+        });
+    });
+  });
 });

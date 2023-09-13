@@ -3,6 +3,7 @@ import { Checkpoint } from "./checkpoint_dto";
 
 type UserData = {
   id: string;
+  name: string;
   email: string;
   password: string;
   createdAt: Date;
@@ -14,6 +15,10 @@ type UserData = {
 export class User extends BaseDTO<UserData, Omit<UserData, "password">> {
   get id(): string {
     return this.data.id;
+  }
+
+  get name(): string {
+    return this.data.name;
   }
 
   get email(): string {
@@ -39,6 +44,7 @@ export class User extends BaseDTO<UserData, Omit<UserData, "password">> {
   toJSON(): Omit<UserData, "password"> {
     return {
       id: this.id,
+      name: this.name,
       email: this.email,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -54,4 +60,10 @@ export type UserLoginRequest = {
 export type UserLoginResponse = {
   user: User;
   token: string;
+};
+
+export type UserCreateRequest = {
+  name: string;
+  email: string;
+  password: string;
 };
