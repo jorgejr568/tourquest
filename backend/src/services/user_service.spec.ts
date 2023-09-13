@@ -1,6 +1,5 @@
-import { User, UserCreateRequest } from "@/dtos";
-import { UserRepository } from "@/repositories";
-import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { User } from "@/dtos";
+import { describe, expect, it, mock } from "bun:test";
 import { DefaultUserService } from "./user_service";
 import {
   CredentialsNotMatchException,
@@ -11,7 +10,7 @@ import {
 describe("services.UserService.signIn", () => {
   it("should throw an error if the user is not found", (done) => {
     const mockRepository = {
-      findUserByEmail: mock(async () => null),
+      findByEmail: mock(async () => null),
     } as any;
     const sut = new DefaultUserService(mockRepository, {} as any, {} as any);
     const request = {
@@ -26,8 +25,8 @@ describe("services.UserService.signIn", () => {
       })
       .catch((err) => {
         expect(err).toBeInstanceOf(CredentialsNotMatchException);
-        expect(mockRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-        expect(mockRepository.findUserByEmail.mock.calls[0]).toEqual([
+        expect(mockRepository.findByEmail).toHaveBeenCalledTimes(1);
+        expect(mockRepository.findByEmail.mock.calls[0]).toEqual([
           request.email,
         ]);
         done();
@@ -41,7 +40,7 @@ describe("services.UserService.signIn", () => {
     };
 
     const mockRepository = {
-      findUserByEmail: mock(() =>
+      findByEmail: mock(() =>
         Promise.resolve(
           new User({
             id: "mock_id",
@@ -64,8 +63,8 @@ describe("services.UserService.signIn", () => {
       })
       .catch((err) => {
         expect(err).toBeInstanceOf(CredentialsNotMatchException);
-        expect(mockRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-        expect(mockRepository.findUserByEmail.mock.calls[0]).toEqual([
+        expect(mockRepository.findByEmail).toHaveBeenCalledTimes(1);
+        expect(mockRepository.findByEmail.mock.calls[0]).toEqual([
           request.email,
         ]);
         done();
@@ -80,7 +79,7 @@ describe("services.UserService.signIn", () => {
     } as any;
 
     const mockRepository = {
-      findUserByEmail: mock(
+      findByEmail: mock(
         async () =>
           new User({
             id: "mock_id",
@@ -110,8 +109,8 @@ describe("services.UserService.signIn", () => {
       })
       .catch((err) => {
         expect(err).toBeInstanceOf(Error);
-        expect(mockRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-        expect(mockRepository.findUserByEmail.mock.calls[0]).toEqual([
+        expect(mockRepository.findByEmail).toHaveBeenCalledTimes(1);
+        expect(mockRepository.findByEmail.mock.calls[0]).toEqual([
           request.email,
         ]);
         expect(tokenizationMock.sign).toHaveBeenCalledTimes(1);
@@ -143,7 +142,7 @@ describe("services.UserService.signIn", () => {
     };
 
     const mockRepository = {
-      findUserByEmail: mock(async () => new User(mockUser)),
+      findByEmail: mock(async () => new User(mockUser)),
     } as any;
 
     const sut = new DefaultUserService(
@@ -167,10 +166,8 @@ describe("services.UserService.signIn", () => {
       updatedAt: mockUser.updatedAt,
     });
 
-    expect(mockRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-    expect(mockRepository.findUserByEmail.mock.calls[0]).toEqual([
-      request.email,
-    ]);
+    expect(mockRepository.findByEmail).toHaveBeenCalledTimes(1);
+    expect(mockRepository.findByEmail.mock.calls[0]).toEqual([request.email]);
     expect(tokenizationMock.sign).toHaveBeenCalledTimes(1);
     expect(tokenizationMock.sign.mock.calls[0]).toEqual([
       {
@@ -247,7 +244,7 @@ describe("services.UserService.signIn", () => {
               updatedAt: new Date(),
             })
         ),
-        findUserByEmail: mock(async () => null),
+        findByEmail: mock(async () => null),
       };
 
       const mockTokenization = {
@@ -275,8 +272,8 @@ describe("services.UserService.signIn", () => {
         updatedAt: response.user.updatedAt,
       });
 
-      expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-      expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+      expect(mockUserRepository.findByEmail).toHaveBeenCalledTimes(1);
+      expect(mockUserRepository.findByEmail.mock.calls[0]).toEqual([
         "mock-email",
       ]);
       expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
@@ -300,7 +297,7 @@ describe("services.UserService.signIn", () => {
 
     it("should throw if user already exists with that e-mail", (done) => {
       const mockUserRepository = {
-        findUserByEmail: mock(async () => new User({} as any)),
+        findByEmail: mock(async () => new User({} as any)),
       };
 
       const sut = new DefaultUserService(
@@ -321,8 +318,8 @@ describe("services.UserService.signIn", () => {
         .catch((err) => {
           expect(err).toBeInstanceOf(UserAlreadyExistsException);
           expect(err).toBeInstanceOf(HttpException);
-          expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-          expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+          expect(mockUserRepository.findByEmail).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.findByEmail.mock.calls[0]).toEqual([
             "mock-email",
           ]);
           done();
@@ -334,7 +331,7 @@ describe("services.UserService.signIn", () => {
         create: mock(async () => {
           throw new Error("mock-error");
         }),
-        findUserByEmail: mock(async () => null),
+        findByEmail: mock(async () => null),
       };
 
       const sut = new DefaultUserService(
@@ -355,8 +352,8 @@ describe("services.UserService.signIn", () => {
         .catch((err) => {
           expect(err).toBeInstanceOf(Error);
 
-          expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-          expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+          expect(mockUserRepository.findByEmail).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.findByEmail.mock.calls[0]).toEqual([
             "mock-email",
           ]);
           expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
@@ -384,7 +381,7 @@ describe("services.UserService.signIn", () => {
               updatedAt: new Date(),
             })
         ),
-        findUserByEmail: mock(async () => null),
+        findByEmail: mock(async () => null),
       };
 
       const mockTokenization = {
@@ -411,8 +408,8 @@ describe("services.UserService.signIn", () => {
         .catch((err) => {
           expect(err).toBeInstanceOf(Error);
 
-          expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
-          expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+          expect(mockUserRepository.findByEmail).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.findByEmail.mock.calls[0]).toEqual([
             "mock-email",
           ]);
           expect(mockUserRepository.create).toHaveBeenCalledTimes(1);

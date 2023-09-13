@@ -5,7 +5,7 @@ import { PrismaClient, User as UserDocument } from "@prisma/client";
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly client = new PrismaClient()) {}
 
-  async findUserByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = await this.client.user.findUnique({
       where: {
         email: email,

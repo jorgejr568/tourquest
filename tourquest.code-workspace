@@ -17,7 +17,8 @@
     "exportall.config.folderListener": [
       "/src/repositories",
       "/src/exceptions",
-      "/src/controllers/schemas"
+      "/src/controllers/schemas",
+      "/src/server/ws/handlers"
     ],
     "exportall.config.relExclusion": ["/src/dtos/_base.ts"]
   }

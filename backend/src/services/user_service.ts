@@ -34,7 +34,7 @@ export class DefaultUserService implements UserService {
   ) {}
 
   async signIn(request: UserLoginRequest): Promise<UserLoginResponse> {
-    const user = await this.userRepository.findUserByEmail(request.email);
+    const user = await this.userRepository.findByEmail(request.email);
     if (
       !user ||
       !(await Bun.password.verify(request.password, user.password))
@@ -59,7 +59,7 @@ export class DefaultUserService implements UserService {
   }
 
   async signUp(request: UserCreateRequest): Promise<UserCreateResponse> {
-    if (await this.userRepository.findUserByEmail(request.email)) {
+    if (await this.userRepository.findByEmail(request.email)) {
       throw new UserAlreadyExistsException();
     }
 

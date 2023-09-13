@@ -2,7 +2,7 @@ import { describe, it, expect } from "bun:test";
 import { Journey } from "./journey_dto";
 
 describe("dtos.journey_dto", () => {
-  describe("journey", () => {
+  describe("Journey", () => {
     it("should create a journey dto", () => {
       const dto = new Journey({
         id: "mock-id",

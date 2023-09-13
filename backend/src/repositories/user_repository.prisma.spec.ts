@@ -24,7 +24,7 @@ describe("repositories.PrismaUserRepository", () => {
     };
 
     const sut = new SUT(mockPrismaClient as any);
-    const user = await sut.findUserByEmail(mockEmail);
+    const user = await sut.findByEmail(mockEmail);
 
     expect(user).not.toBeNull();
     expect(user?.id).toEqual(prismaUser.id);
@@ -54,7 +54,7 @@ describe("repositories.PrismaUserRepository", () => {
     };
 
     const sut = new SUT(mockPrismaClient as any);
-    const user = await sut.findUserByEmail(mockEmail);
+    const user = await sut.findByEmail(mockEmail);
 
     expect(user).toBeNull();
     expect(mockFindUnique).toHaveBeenCalledTimes(1);
