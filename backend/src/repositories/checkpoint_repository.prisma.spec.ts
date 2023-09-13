@@ -127,7 +127,7 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
   });
 
   describe("exists", () => {
-    it("should return false if no checkpoint exists", () => {
+    it("should return false if no checkpoint exists", (done) => {
       const mockClient = {
         checkpoint: {
           findFirst: mock(async () => undefined),
@@ -138,10 +138,11 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
 
       repository.exists("mock-id").then((result) => {
         expect(result).toEqual(false);
+        done();
       });
     });
 
-    it("should return the checkpoint id if a checkpoint exists", () => {
+    it("should return the checkpoint id if a checkpoint exists", (done) => {
       const mockClient = {
         checkpoint: {
           findFirst: mock(async () => ({ id: "mock-id" })),
@@ -152,6 +153,7 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
 
       repository.exists("mock-id").then((result) => {
         expect(result).toEqual("mock-id");
+        done();
       });
     });
 
