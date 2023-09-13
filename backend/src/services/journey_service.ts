@@ -30,9 +30,6 @@ export class DefaultJourneyService implements JourneyService {
       throw new JourneyNotFoundException();
     }
 
-    return await this.checkpointRepository.listByJourneyId(
-      journeyId
-    );
-
+    return await this.checkpointRepository.listByJourneyId(journeyId);
   };
 }

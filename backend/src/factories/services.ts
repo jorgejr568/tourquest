@@ -13,7 +13,11 @@ import {
 import { infraTokenizationFactory } from "./infra";
 
 export const userServiceFactory: Factory<UserService> = () =>
-  new DefaultUserService(userRepositoryFactory(), infraTokenizationFactory());
+  new DefaultUserService(
+    userRepositoryFactory(),
+    infraTokenizationFactory(),
+    checkpointRepositoryFactory()
+  );
 
 export const journeyServiceFactory: Factory<JourneyService> = () =>
   new DefaultJourneyService(
