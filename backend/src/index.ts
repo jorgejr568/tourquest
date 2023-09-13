@@ -19,16 +19,6 @@ app.get("/status", (_, res) => {
   res.json({ status: "OK" });
 });
 
-const repo = new PrismaUserRepository();
-app.get("/users/:email", async (req, res) => {
-  const user = await repo.findUserByEmail(req.params.email);
-  if (!user) {
-    throw new CredentialsNotMatchException();
-  }
-
-  res.json(user);
-});
-
 app.use(ExpressHttpExceptionErrorHandler);
 
 app.listen(Environment.PORT, () => {
