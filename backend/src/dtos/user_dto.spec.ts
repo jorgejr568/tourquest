@@ -9,6 +9,7 @@ describe("dtos.User", () => {
       password: "password",
       createdAt: new Date(),
       updatedAt: new Date(),
+      checkpoints: [],
     });
 
     expect(user).not.toBeNull();
@@ -17,6 +18,7 @@ describe("dtos.User", () => {
     expect(user.password).toEqual("password");
     expect(user.createdAt).not.toBeNull();
     expect(user.updatedAt).not.toBeNull();
+    expect(user.checkpoints).toEqual([]);
   });
 
   it("toJSON should return the user without password", () => {

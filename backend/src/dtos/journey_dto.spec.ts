@@ -10,6 +10,7 @@ describe("dtos.journey_dto", () => {
         description: "mock-description",
         image: "mock-image",
         rewards: [],
+        checkpoints: [],
       });
 
       expect(dto.id).toEqual("mock-id");
@@ -17,6 +18,7 @@ describe("dtos.journey_dto", () => {
       expect(dto.description).toEqual("mock-description");
       expect(dto.image).toEqual("mock-image");
       expect(dto.rewards).toEqual([]);
+      expect(dto.checkpoints).toEqual([]);
     });
   });
 });
