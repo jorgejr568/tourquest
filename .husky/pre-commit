@@ -3,4 +3,5 @@
 
 # Run backend tests
 cd ./backend
+bun run typecheck
 bun run test

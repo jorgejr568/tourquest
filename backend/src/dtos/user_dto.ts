@@ -44,6 +44,6 @@ export type UserLoginRequest = {
 };
 
 export type UserLoginResponse = {
-  user: Omit<User, "password">;
+  user: Omit<UserData, "password">;
   token: string;
 };
