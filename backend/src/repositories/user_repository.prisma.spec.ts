@@ -1,6 +1,6 @@
 import { describe, it, mock, expect, spyOn } from "bun:test";
 
-import { PrismaUserRepository as SUT } from "./prisma_user_repository";
+import { PrismaUserRepository as SUT } from "./user_repository.prisma";
 import { User } from "@/dtos";
 
 const mockEmail = "example@example.org";

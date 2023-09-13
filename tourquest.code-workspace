@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "./backend",
+      "name": "TourQuest - Backend"
+    },
+    {
+      "path": "./.github/workflows",
+      "name": "GitHub Actions"
+    },
+    {
+      "path": ".",
+      "name": "Root"
+    }
+  ],
+  "settings": {
+    "exportall.config.folderListener": ["/src/repositories"]
+  }
+}

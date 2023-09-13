@@ -1,9 +1,0 @@
-{
-  "exportall.config.folderListener": [
-    "/src/repositories",
-    "/src/dtos",
-    "/src/services",
-    "/src/exceptions",
-    "/src/schemas"
-  ]
-}

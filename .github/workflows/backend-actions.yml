@@ -26,10 +26,10 @@ jobs:
       - id: prisma-generate
         working-directory: ./backend
         name: Prisma Generate
-        run: bun prisma:generate
+        run: bun run prisma:generate
       - id: run-tests
         working-directory: ./backend
         name: Run Tests
-        run: bun test --coverage
+        run: bun run test --coverage
         env:
           APP_ENV: test
