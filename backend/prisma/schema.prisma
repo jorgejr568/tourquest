@@ -23,6 +23,7 @@ model Checkpoint {
   // relationships
   Journeys          JourneyCheckpoint[]
   UsersWhoCompleted UserCompletedCheckpoints[]
+  Location          Location[]
 }
 
 model User {
@@ -35,6 +36,7 @@ model User {
 
   // relationships
   Checkpoints UserCompletedCheckpoints[]
+  Location    Location[]
 }
 
 model Journey {
@@ -47,6 +49,7 @@ model Journey {
 
   // relationships
   Checkpoints JourneyCheckpoint[]
+  Location    Location[]
 }
 
 model JourneyCheckpoint {
@@ -70,4 +73,19 @@ model UserCompletedCheckpoints {
   User       User       @relation(fields: [userId], references: [id])
 
   @@id([userId, checkpointId])
+}
+
+model Location {
+  id           String   @id @default(uuid())
+  userId       String
+  journeyId    String?
+  checkpointId String?
+  latitude     Float
+  longitude    Float
+  createdAt    DateTime @default(now())
+
+  // relationships
+  User       User        @relation(fields: [userId], references: [id])
+  Journey    Journey?    @relation(fields: [journeyId], references: [id])
+  Checkpoint Checkpoint? @relation(fields: [checkpointId], references: [id])
 }

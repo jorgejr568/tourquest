@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot src/index.ts",
+    "ws:dev": "bun --hot src/ws.ts",
     "start": "bun run src/index.ts",
-    "prestart": "bun prisma:generate",
     "test": "APP_ENV=test bun test",
     "test:watch": "bun test --watch",
     "typecheck": "bunx --bun tsc --noEmit",
