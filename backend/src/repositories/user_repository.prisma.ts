@@ -16,7 +16,7 @@ export class PrismaUserRepository implements UserRepository {
       return null;
     }
 
-    return this.toDTO(user);
+    return PrismaUserRepository.toDTO(user);
   }
 
   async create(request: UserCreateRequest): Promise<User> {
@@ -28,10 +28,10 @@ export class PrismaUserRepository implements UserRepository {
       },
     });
 
-    return this.toDTO(user);
+    return PrismaUserRepository.toDTO(user);
   }
 
-  private toDTO(user: UserDocument): User {
+  static toDTO(user: UserDocument): User {
     return new User({
       id: user.id,
       name: user.name,

@@ -14,7 +14,7 @@ export class PrismaJourneyRepository implements JourneyRepository {
       },
     });
 
-    return this.toDto(journey);
+    return PrismaJourneyRepository.toDTO(journey);
   };
 
   exists(title: string): Promise<boolean>;
@@ -35,7 +35,7 @@ export class PrismaJourneyRepository implements JourneyRepository {
 
   list = async (): Promise<Journey[]> => {
     const journeys = await this.prisma.journey.findMany();
-    return journeys.map((journey) => this.toDto(journey));
+    return journeys.map((journey) => PrismaJourneyRepository.toDTO(journey));
   };
 
   private findBy = async (
@@ -48,15 +48,15 @@ export class PrismaJourneyRepository implements JourneyRepository {
 
     if (!journey) return null;
 
-    return this.toDto(journey);
+    return PrismaJourneyRepository.toDTO(journey);
   };
 
-  private toDto = (journey: JourneyDocument): Journey => {
+  static toDTO(journey: JourneyDocument): Journey {
     return new Journey({
       id: journey.id,
       title: journey.title,
       description: journey.description,
       image: journey.image,
     });
-  };
+  }
 }

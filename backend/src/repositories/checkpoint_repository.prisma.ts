@@ -16,7 +16,7 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       },
     });
 
-    return this.toDto(checkpoint);
+    return PrismaCheckpointRepository.toDTO(checkpoint);
   }
 
   async assignToJourney(
@@ -57,7 +57,9 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       include: { Checkpoint: true },
     });
 
-    return checkpoints.map(({ Checkpoint }) => this.toDto(Checkpoint));
+    return checkpoints.map(({ Checkpoint }) =>
+      PrismaCheckpointRepository.toDTO(Checkpoint)
+    );
   }
 
   async listByUserId(userId: string): Promise<Checkpoint[]> {
@@ -66,7 +68,7 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       include: { Checkpoint: true },
     });
     return checkpoints.map(({ completedAt, Checkpoint }) =>
-      this.toDto(
+      PrismaCheckpointRepository.toDTO(
         { ...Checkpoint },
         {
           completedAt,
@@ -75,10 +77,10 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
     );
   }
 
-  private toDto = (
+  static toDTO(
     checkpoint: CheckpointDocument,
     aggregate?: Partial<ConstructorParameters<typeof Checkpoint>[0]>
-  ): Checkpoint => {
+  ): Checkpoint {
     return new Checkpoint({
       id: checkpoint.id,
       title: checkpoint.title,
@@ -88,5 +90,5 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       longitude: checkpoint.longitude,
       ...aggregate,
     });
-  };
+  }
 }

@@ -1,5 +1,4 @@
-import { LocationCreateRequest } from "@/dtos";
-import { Location } from "@prisma/client";
+import { Location, LocationCreateRequest } from "@/dtos";
 
 export interface LocationRepository {
   create(request: LocationCreateRequest): Promise<Location>;

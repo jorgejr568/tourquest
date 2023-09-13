@@ -8,9 +8,9 @@ type LocationData = {
   latitude: number;
   longitude: number;
 
-  user: User;
-  journey?: Journey;
-  checkpoint?: Checkpoint;
+  userId: string;
+  journeyId?: string;
+  checkpointId?: string;
 
   createdAt: Date;
 };
@@ -28,16 +28,16 @@ export class Location extends BaseDTO<LocationData> {
     return this.data.longitude;
   }
 
-  get user() {
-    return this.data.user;
+  get userId() {
+    return this.data.userId;
   }
 
-  get journey() {
-    return this.data.journey;
+  get journeyId() {
+    return this.data.journeyId;
   }
 
-  get checkpoint() {
-    return this.data.checkpoint;
+  get checkpointId() {
+    return this.data.checkpointId;
   }
 
   get createdAt() {
