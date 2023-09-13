@@ -1,6 +1,8 @@
 import { Factory } from "./_base";
 import {
+  CheckpointRepository,
   JourneyRepository,
+  PrismaCheckpointRepository,
   PrismaJourneyRepository,
   PrismaUserRepository,
   UserRepository,
@@ -11,3 +13,6 @@ export const userRepositoryFactory: Factory<UserRepository> = () =>
 
 export const journeyRepositoryFactory: Factory<JourneyRepository> = () =>
   new PrismaJourneyRepository();
+
+export const checkpointRepositoryFactory: Factory<CheckpointRepository> = () =>
+  new PrismaCheckpointRepository();

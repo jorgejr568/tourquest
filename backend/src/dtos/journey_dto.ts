@@ -1,5 +1,6 @@
 import { Reward } from "./reward_dto";
 import { Checkpoint } from "./checkpoint_dto";
+import { BaseDTO } from "./_base";
 
 type JourneyData = {
   id: string;
@@ -11,9 +12,7 @@ type JourneyData = {
   rewards?: Reward[];
 };
 
-export class Journey {
-  constructor(private readonly data: JourneyData) {}
-
+export class Journey extends BaseDTO<JourneyData> {
   get id() {
     return this.data.id;
   }
@@ -44,3 +43,5 @@ export type JourneyCreateRequest = {
   description: string;
   image: string;
 };
+
+export type JourneyListResponse = Journey[];

@@ -1,3 +1,4 @@
+import { BaseDTO } from "./_base";
 import { Checkpoint } from "./checkpoint_dto";
 
 type UserData = {
@@ -10,9 +11,7 @@ type UserData = {
   checkpoints?: Checkpoint[];
 };
 
-export class User {
-  constructor(private readonly data: UserData) {}
-
+export class User extends BaseDTO<UserData> {
   get id(): string {
     return this.data.id;
   }

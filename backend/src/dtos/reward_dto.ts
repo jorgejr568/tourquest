@@ -1,12 +1,12 @@
+import { BaseDTO } from "./_base";
+
 type RewardData = {
   id: string;
   title: string;
   description: string;
 };
 
-export class Reward {
-  constructor(private readonly data: RewardData) {}
-
+export class Reward extends BaseDTO<RewardData> {
   get id() {
     return this.data.id;
   }

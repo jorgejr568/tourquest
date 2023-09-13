@@ -1,3 +1,4 @@
+import { BaseDTO } from "./_base";
 import { Reward } from "./reward_dto";
 
 type CheckpointData = {
@@ -12,9 +13,7 @@ type CheckpointData = {
   rewards?: Reward[];
 };
 
-export class Checkpoint {
-  constructor(private readonly data: CheckpointData) {}
-
+export class Checkpoint extends BaseDTO<CheckpointData> {
   get id() {
     return this.data.id;
   }
@@ -51,3 +50,5 @@ export type CheckpointCreateRequest = {
   latitude: number;
   longitude: number;
 };
+
+export type CheckpointListResponse = Checkpoint[];

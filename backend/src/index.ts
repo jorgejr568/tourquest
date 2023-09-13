@@ -6,7 +6,7 @@ import {
   CredentialsNotMatchException,
   ExpressHttpExceptionErrorHandler,
 } from "./exceptions";
-import { userRouter } from "./controllers";
+import { journeyRouter, userRouter } from "./controllers";
 import { tokenizationMiddleware } from "./controllers/middlewares";
 
 const app = express();
@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(tokenizationMiddleware());
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/journeys", journeyRouter);
 
 app.get("/status", (_, res) => {
   res.json({ status: "OK" });
