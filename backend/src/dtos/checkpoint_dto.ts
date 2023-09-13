@@ -1,24 +1,25 @@
 import { Reward } from "./reward_dto";
-import { Checkpoint } from "./checkpoint_dto";
 
-type JourneyData = {
+type CheckpointData = {
   id: string;
   title: string;
   description: string;
   image: string;
 
-  checkpoints?: Checkpoint[];
+  latitude: number;
+  longitude: number;
+
   rewards?: Reward[];
 };
 
-export class Journey {
-  constructor(private readonly data: JourneyData) {}
+export class Checkpoint {
+  constructor(private readonly data: CheckpointData) {}
 
   get id() {
     return this.data.id;
   }
 
-  get name() {
+  get title() {
     return this.data.title;
   }
 
@@ -30,17 +31,15 @@ export class Journey {
     return this.data.image;
   }
 
-  get checkpoints(): Checkpoint[] {
-    return this.data.checkpoints || [];
+  get latitude() {
+    return this.data.latitude;
+  }
+
+  get longitude() {
+    return this.data.longitude;
   }
 
   get rewards() {
     return this.data.rewards;
   }
 }
-
-export type JourneyCreateRequest = {
-  title: string;
-  description: string;
-  image: string;
-};
