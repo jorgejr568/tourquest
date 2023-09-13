@@ -65,11 +65,20 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       where: { userId },
       include: { Checkpoint: true },
     });
-
-    return checkpoints.map(({ Checkpoint }) => this.toDto(Checkpoint));
+    return checkpoints.map(({ completedAt, Checkpoint }) =>
+      this.toDto(
+        { ...Checkpoint },
+        {
+          completedAt,
+        }
+      )
+    );
   }
 
-  private toDto = (checkpoint: CheckpointDocument): Checkpoint => {
+  private toDto = (
+    checkpoint: CheckpointDocument,
+    aggregate?: Partial<ConstructorParameters<typeof Checkpoint>[0]>
+  ): Checkpoint => {
     return new Checkpoint({
       id: checkpoint.id,
       title: checkpoint.title,
@@ -77,6 +86,7 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       image: checkpoint.image,
       latitude: checkpoint.latitude,
       longitude: checkpoint.longitude,
+      ...aggregate,
     });
   };
 }

@@ -245,6 +245,7 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
         userCompletedCheckpoints: {
           findMany: mock(async () => [
             {
+              completedAt: new Date("2023-01-01T00:00:00.000Z"),
               Checkpoint: {
                 id: "mock-id",
                 title: "mock-title",
@@ -269,6 +270,9 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
       expect(checkpoints[0].image).toEqual("mock-image");
       expect(checkpoints[0].latitude).toEqual(22);
       expect(checkpoints[0].longitude).toEqual(23);
+      expect(checkpoints[0].completedAt).toEqual(
+        new Date("2023-01-01T00:00:00.000Z")
+      );
 
       expect(
         mockClient.userCompletedCheckpoints.findMany

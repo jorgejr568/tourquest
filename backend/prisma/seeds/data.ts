@@ -1,3 +1,11 @@
+export const USERS_SEED_DATA = [
+  {
+    name: "John Doe",
+    email: "dev@example.org",
+    password: "password",
+  },
+];
+
 export const JOURNEY_SEED_DATA = [
   {
     title: "Natureza e Aventura",

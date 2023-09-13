@@ -1,7 +1,11 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect, beforeAll, setSystemTime } from "bun:test";
 import { Checkpoint } from "./checkpoint_dto";
 
 describe("dtos.checkpoint_dto.Checkpoint", () => {
+  beforeAll(() => {
+    setSystemTime(new Date());
+  });
+
   it("should create a dto", () => {
     const dto = new Checkpoint({
       id: "mock-id",
@@ -11,6 +15,7 @@ describe("dtos.checkpoint_dto.Checkpoint", () => {
       latitude: 22,
       longitude: 23,
       rewards: [],
+      completedAt: new Date(),
     });
 
     expect(dto.id).toEqual("mock-id");
@@ -20,5 +25,6 @@ describe("dtos.checkpoint_dto.Checkpoint", () => {
     expect(dto.latitude).toEqual(22);
     expect(dto.longitude).toEqual(23);
     expect(dto.rewards).toEqual([]);
+    expect(dto.completedAt).toEqual(new Date());
   });
 });

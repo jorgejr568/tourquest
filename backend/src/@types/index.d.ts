@@ -5,9 +5,5 @@ declare global {
     interface Request {
       user?: TokenizationUserData;
     }
-
-    interface AuthorizedRequest extends Request {
-      user: TokenizationUserData;
-    }
   }
 }

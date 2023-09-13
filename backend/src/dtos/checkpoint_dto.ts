@@ -9,6 +9,7 @@ type CheckpointData = {
   latitude: number;
   longitude: number;
   rewards?: Reward[];
+  completedAt?: Date;
 };
 
 export class Checkpoint extends BaseDTO<CheckpointData> {
@@ -38,6 +39,10 @@ export class Checkpoint extends BaseDTO<CheckpointData> {
 
   get rewards() {
     return this.data.rewards;
+  }
+
+  get completedAt() {
+    return this.data.completedAt;
   }
 }
 

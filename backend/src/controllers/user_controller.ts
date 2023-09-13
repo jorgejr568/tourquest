@@ -21,4 +21,12 @@ userRouter.get(
   }
 );
 
+userRouter.get(
+  "/checkpoints",
+  authorizationMiddleware,
+  async (req: Request, res: Response) => {
+    res.json(await userService.listCheckpoints(req.user!.id));
+  }
+);
+
 export { userRouter };
