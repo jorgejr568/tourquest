@@ -17,3 +17,9 @@ export class UnauthorizedException extends HttpException {
     super(401, "Unauthorized");
   }
 }
+
+export class UserAlreadyExistsException extends HttpException {
+  constructor() {
+    super(409, "User already exists");
+  }
+}

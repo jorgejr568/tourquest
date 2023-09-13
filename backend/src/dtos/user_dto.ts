@@ -67,3 +67,8 @@ export type UserCreateRequest = {
   email: string;
   password: string;
 };
+
+export type UserCreateResponse = {
+  user: User;
+  token: string;
+};

@@ -1,6 +1,6 @@
 import { userServiceFactory } from "@/factories";
 import { Request, Response, Router } from "express";
-import { UserLoginSchema } from "./schemas";
+import { UserCreateSchema, UserLoginSchema } from "./schemas";
 import { authorizationMiddleware } from "@/controllers/middlewares";
 
 const userService = userServiceFactory();
@@ -28,5 +28,9 @@ userRouter.get(
     res.json(await userService.listCheckpoints(req.user!.id));
   }
 );
+
+userRouter.post("/", async (req: Request, res: Response) => {
+  res.json(await userService.signUp(UserCreateSchema.parse(req.body)));
+});
 
 export { userRouter };

@@ -27,12 +27,20 @@ describe("infra.tokenization.jwt", () => {
 
     signSpy.mockReturnValueOnce("mock_token" as any);
 
-    const result = sut.sign({ id: "mock_id", email: "mock_email" });
+    const result = sut.sign({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(signSpy).toHaveBeenCalledTimes(1);
     expect(result).toBe("mock_token");
 
     const callParams = signSpy.mock.calls[0] as any[];
-    expect(callParams[0]).toEqual({ id: "mock_id", email: "mock_email" });
+    expect(callParams[0]).toEqual({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(callParams[1]).toBe("mock_secret");
     expect(callParams[2]).toEqual({
       expiresIn: "mock_expiresIn",
@@ -50,13 +58,21 @@ describe("infra.tokenization.jwt", () => {
 
     signSpy.mockReturnValueOnce("mock_token" as any);
 
-    const result = sut.sign({ id: "mock_id", email: "mock_email" });
+    const result = sut.sign({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(signSpy).toHaveBeenCalledTimes(1);
     expect(result).toBe("mock_token");
 
     const callParams = signSpy.mock.calls[0] as any[];
 
-    expect(callParams[0]).toEqual({ id: "mock_id", email: "mock_email" });
+    expect(callParams[0]).toEqual({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(callParams[1]).toBe(Environment.JWT_SECRET);
     expect(callParams[2]).toEqual({
       expiresIn: Environment.JWT_EXPIRES_IN,
@@ -71,7 +87,11 @@ describe("infra.tokenization.jwt", () => {
     expect(sut).toBeInstanceOf(JwtTokenization);
 
     signSpy.mockImplementationOnce(originalSign as any);
-    const token = sut.sign({ id: "mock_id", email: "mock_email" });
+    const token = sut.sign({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(signSpy).toHaveBeenCalledTimes(1);
     expect(token).toBeString();
 
@@ -80,6 +100,7 @@ describe("infra.tokenization.jwt", () => {
     expect(verifySpy).toHaveBeenCalledTimes(1);
     expect(result).toEqual({
       id: "mock_id",
+      name: "mock_name",
       email: "mock_email",
     });
 
@@ -100,7 +121,11 @@ describe("infra.tokenization.jwt", () => {
     signSpy.mockImplementationOnce(originalSign as any);
     verifySpy.mockImplementationOnce(originalVerify as any);
 
-    const token = sut1.sign({ id: "mock_id", email: "mock_email" });
+    const token = sut1.sign({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(signSpy).toHaveBeenCalledTimes(1);
     expect(token).toBeString();
 
@@ -114,12 +139,17 @@ describe("infra.tokenization.jwt", () => {
     signSpy.mockImplementationOnce(originalSign as any);
     verifySpy.mockImplementationOnce(originalVerify as any);
 
-    const token = sut1.sign({ id: "mock_id", email: "mock_email" });
+    const token = sut1.sign({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(signSpy).toHaveBeenCalledTimes(1);
     expect(token).toBeString();
 
     expect(sut2.verify(token)).toEqual({
       id: "mock_id",
+      name: "mock_name",
       email: "mock_email",
     });
   });
@@ -130,7 +160,11 @@ describe("infra.tokenization.jwt", () => {
     signSpy.mockImplementationOnce(originalSign as any);
     verifySpy.mockImplementationOnce(originalVerify as any);
 
-    const token = sut.sign({ id: "mock_id", email: "mock_email" });
+    const token = sut.sign({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(signSpy).toHaveBeenCalledTimes(1);
     expect(token).toBeString();
     expect(() => sut.verify(token)).not.toThrow(new InvalidTokenException());

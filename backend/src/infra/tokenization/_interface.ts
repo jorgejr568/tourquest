@@ -1,5 +1,6 @@
 export type TokenizationUserData = {
   id: string;
+  name: string;
   email: string;
 };
 

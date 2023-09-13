@@ -27,6 +27,7 @@ export class JwtTokenization implements Tokenization {
 
       return {
         id: data.id,
+        name: data.name,
         email: data.email,
       };
     } catch (error) {

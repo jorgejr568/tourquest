@@ -16,7 +16,11 @@ describe("controllers.middlewares.TokenizationMiddleware", () => {
   it("should be able to inject a tokenization service", () => {
     class MockTokenization implements Tokenization {
       sign = mock(() => "mock_token");
-      verify = mock(() => ({ id: "mock_id", email: "mock_email" }));
+      verify = mock(() => ({
+        id: "mock_id",
+        name: "mock_name",
+        email: "mock_email",
+      }));
     }
 
     const mockTokenization = new MockTokenization();
@@ -42,7 +46,11 @@ describe("controllers.middlewares.TokenizationMiddleware", () => {
 
     sut(request as any, {} as any, next);
 
-    expect(request.user).toEqual({ id: "mock_id", email: "mock_email" });
+    expect(request.user).toEqual({
+      id: "mock_id",
+      name: "mock_name",
+      email: "mock_email",
+    });
     expect(next).toHaveBeenCalledTimes(1);
     expect(mockTokenization.verify).toHaveBeenCalledTimes(1);
 

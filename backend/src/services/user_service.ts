@@ -1,9 +1,14 @@
 import {
   CheckpointListResponse,
+  UserCreateRequest,
+  UserCreateResponse,
   UserLoginRequest,
   UserLoginResponse,
 } from "@/dtos";
-import { CredentialsNotMatchException } from "@/exceptions";
+import {
+  CredentialsNotMatchException,
+  UserAlreadyExistsException,
+} from "@/exceptions";
 import { Tokenization } from "@/infra/tokenization";
 import { CheckpointRepository, UserRepository } from "@/repositories";
 
@@ -14,6 +19,11 @@ export interface UserService {
   signIn(request: UserLoginRequest): Promise<UserLoginResponse>;
 
   listCheckpoints(userId: string): Promise<CheckpointListResponse>;
+
+  /**
+   * @throws {UserAlreadyExistsException} if the user already exists
+   */
+  signUp(request: UserCreateRequest): Promise<UserCreateResponse>;
 }
 
 export class DefaultUserService implements UserService {
@@ -23,7 +33,7 @@ export class DefaultUserService implements UserService {
     private readonly checkpointRepository: CheckpointRepository
   ) {}
 
-  signIn = async (request: UserLoginRequest): Promise<UserLoginResponse> => {
+  async signIn(request: UserLoginRequest): Promise<UserLoginResponse> {
     const user = await this.userRepository.findUserByEmail(request.email);
     if (
       !user ||
@@ -34,6 +44,7 @@ export class DefaultUserService implements UserService {
 
     const token = this.tokenization.sign({
       id: user.id,
+      name: user.name,
       email: user.email,
     });
 
@@ -41,9 +52,27 @@ export class DefaultUserService implements UserService {
       user,
       token,
     };
-  };
+  }
 
-  listCheckpoints = async (userId: string): Promise<CheckpointListResponse> => {
+  async listCheckpoints(userId: string): Promise<CheckpointListResponse> {
     return await this.checkpointRepository.listByUserId(userId);
-  };
+  }
+
+  async signUp(request: UserCreateRequest): Promise<UserCreateResponse> {
+    if (await this.userRepository.findUserByEmail(request.email)) {
+      throw new UserAlreadyExistsException();
+    }
+
+    const user = await this.userRepository.create(request);
+    const token = this.tokenization.sign({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    });
+
+    return {
+      user,
+      token,
+    };
+  }
 }

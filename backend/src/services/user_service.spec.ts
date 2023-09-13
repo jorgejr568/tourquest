@@ -2,7 +2,11 @@ import { User, UserCreateRequest } from "@/dtos";
 import { UserRepository } from "@/repositories";
 import { beforeEach, describe, expect, it, mock } from "bun:test";
 import { DefaultUserService } from "./user_service";
-import { CredentialsNotMatchException } from "@/exceptions";
+import {
+  CredentialsNotMatchException,
+  HttpException,
+  UserAlreadyExistsException,
+} from "@/exceptions";
 
 describe("services.UserService.signIn", () => {
   it("should throw an error if the user is not found", (done) => {
@@ -114,6 +118,7 @@ describe("services.UserService.signIn", () => {
         expect(tokenizationMock.sign.mock.calls[0]).toEqual([
           {
             id: "mock_id",
+            name: "mock_name",
             email: "mock_email",
           },
         ]);
@@ -170,6 +175,7 @@ describe("services.UserService.signIn", () => {
     expect(tokenizationMock.sign.mock.calls[0]).toEqual([
       {
         id: mockUser.id,
+        name: mockUser.name,
         email: mockUser.email,
       },
     ]);
@@ -221,6 +227,209 @@ describe("services.UserService.signIn", () => {
           );
           expect(mockCheckpointRepository.listByUserId.mock.calls[0]).toEqual([
             "mock-user-id",
+          ]);
+          done();
+        });
+    });
+  });
+
+  describe("create", () => {
+    it("should create a user", async () => {
+      const mockUserRepository = {
+        create: mock(
+          async () =>
+            new User({
+              id: "mock-id",
+              name: "mock-name",
+              email: "mock-email",
+              password: "mock-password",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            })
+        ),
+        findUserByEmail: mock(async () => null),
+      };
+
+      const mockTokenization = {
+        sign: mock(() => "mock-token"),
+      };
+
+      const sut = new DefaultUserService(
+        mockUserRepository as any,
+        mockTokenization as any,
+        {} as any
+      );
+
+      const response = await sut.signUp({
+        name: "mock-name",
+        email: "mock-email",
+        password: "mock-password",
+      });
+
+      expect(response.token).toEqual("mock-token");
+      expect(response.user.toJSON()).toEqual({
+        id: "mock-id",
+        name: "mock-name",
+        email: "mock-email",
+        createdAt: response.user.createdAt,
+        updatedAt: response.user.updatedAt,
+      });
+
+      expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
+      expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+        "mock-email",
+      ]);
+      expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
+      expect(mockUserRepository.create.mock.calls[0]).toEqual([
+        {
+          name: "mock-name",
+          email: "mock-email",
+          password: "mock-password",
+        },
+      ]);
+
+      expect(mockTokenization.sign).toHaveBeenCalledTimes(1);
+      expect(mockTokenization.sign.mock.calls[0]).toEqual([
+        {
+          id: "mock-id",
+          name: "mock-name",
+          email: "mock-email",
+        },
+      ]);
+    });
+
+    it("should throw if user already exists with that e-mail", (done) => {
+      const mockUserRepository = {
+        findUserByEmail: mock(async () => new User({} as any)),
+      };
+
+      const sut = new DefaultUserService(
+        mockUserRepository as any,
+        {} as any,
+        {} as any
+      );
+
+      sut
+        .signUp({
+          name: "mock-name",
+          email: "mock-email",
+          password: "mock-password",
+        })
+        .then(() => {
+          done("this should throw an exception");
+        })
+        .catch((err) => {
+          expect(err).toBeInstanceOf(UserAlreadyExistsException);
+          expect(err).toBeInstanceOf(HttpException);
+          expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+            "mock-email",
+          ]);
+          done();
+        });
+    });
+
+    it("should throw an error if the repository throws", (done) => {
+      const mockUserRepository = {
+        create: mock(async () => {
+          throw new Error("mock-error");
+        }),
+        findUserByEmail: mock(async () => null),
+      };
+
+      const sut = new DefaultUserService(
+        mockUserRepository as any,
+        {} as any,
+        {} as any
+      );
+
+      sut
+        .signUp({
+          name: "mock-name",
+          email: "mock-email",
+          password: "mock-password",
+        })
+        .then(() => {
+          done("this should throw an exception");
+        })
+        .catch((err) => {
+          expect(err).toBeInstanceOf(Error);
+
+          expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+            "mock-email",
+          ]);
+          expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.create.mock.calls[0]).toEqual([
+            {
+              name: "mock-name",
+              email: "mock-email",
+              password: "mock-password",
+            },
+          ]);
+          done();
+        });
+    });
+
+    it("should throw an error if the token throws", (done) => {
+      const mockUserRepository = {
+        create: mock(
+          async () =>
+            new User({
+              id: "mock-id",
+              name: "mock-name",
+              email: "mock-email",
+              password: "mock-password",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            })
+        ),
+        findUserByEmail: mock(async () => null),
+      };
+
+      const mockTokenization = {
+        sign: mock(() => {
+          throw new Error("mock-error");
+        }),
+      };
+
+      const sut = new DefaultUserService(
+        mockUserRepository as any,
+        mockTokenization as any,
+        {} as any
+      );
+
+      sut
+        .signUp({
+          name: "mock-name",
+          email: "mock-email",
+          password: "mock-password",
+        })
+        .then(() => {
+          done("this should throw an exception");
+        })
+        .catch((err) => {
+          expect(err).toBeInstanceOf(Error);
+
+          expect(mockUserRepository.findUserByEmail).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.findUserByEmail.mock.calls[0]).toEqual([
+            "mock-email",
+          ]);
+          expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
+          expect(mockUserRepository.create.mock.calls[0]).toEqual([
+            {
+              name: "mock-name",
+              email: "mock-email",
+              password: "mock-password",
+            },
+          ]);
+          expect(mockTokenization.sign).toHaveBeenCalledTimes(1);
+          expect(mockTokenization.sign.mock.calls[0]).toEqual([
+            {
+              id: "mock-id",
+              name: "mock-name",
+              email: "mock-email",
+            },
           ]);
           done();
         });
