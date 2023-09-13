@@ -1,9 +1,13 @@
+import { Checkpoint } from "./checkpoint_dto";
+
 type UserData = {
   id: string;
   email: string;
   password: string;
   createdAt: Date;
   updatedAt: Date;
+
+  checkpoints?: Checkpoint[];
 };
 
 export class User {
@@ -27,6 +31,10 @@ export class User {
 
   get updatedAt(): Date {
     return this.data.updatedAt;
+  }
+
+  get checkpoints() {
+    return this.data.checkpoints;
   }
 }
 
