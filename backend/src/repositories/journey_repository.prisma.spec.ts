@@ -1,6 +1,6 @@
 import { describe, expect, it, mock } from "bun:test";
 import { PrismaJourneyRepository } from "./journey_repository.prisma";
-import { JourneyCreateRequest } from "@/dtos";
+import { Journey, JourneyCreateRequest } from "@/dtos";
 
 describe("repositories.journey_repository.PrismJourneyRepository", () => {
   describe("create", () => {
@@ -84,6 +84,299 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
         })
         .catch((err) => {
           done(err);
+        })
+        .finally(done);
+    });
+  });
+
+  describe("exists", () => {
+    it("should throw if prisma.journey.findFirst throws", (done) => {
+      const mockClient = {
+        journey: {
+          findFirst: mock(async () => {
+            throw new Error("mock_error");
+          }),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+
+      sut
+        .exists("mock_title")
+        .then(() => {
+          done("should have thrown");
+        })
+        .catch((err) => {
+          expect(err).toBeInstanceOf(Error);
+          expect(err.message).toBe("mock_error");
+
+          expect(mockClient.journey.findFirst).toHaveBeenCalledTimes(1);
+          expect(mockClient.journey.findFirst.mock.calls[0]).toEqual([
+            {
+              where: {
+                OR: [{ id: "mock_title" }, { title: "mock_title" }],
+              },
+            },
+          ]);
+        })
+        .finally(done);
+    });
+
+    it("should return false if prisma.journey.findFirst returns null", (done) => {
+      const mockClient = {
+        journey: {
+          findFirst: mock(async () => null),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+
+      sut
+        .exists("mock_title")
+        .then((exists) => {
+          expect(exists).toBe(false);
+
+          expect(mockClient.journey.findFirst).toHaveBeenCalledTimes(1);
+          expect(mockClient.journey.findFirst.mock.calls[0]).toEqual([
+            {
+              where: {
+                OR: [{ id: "mock_title" }, { title: "mock_title" }],
+              },
+            },
+          ]);
+        })
+        .catch((err) => {
+          done(err);
+        })
+        .finally(done);
+    });
+  });
+
+  it("should return true if prisma.journey.findFirst returns a Journey", (done) => {
+    const mockClient = {
+      journey: {
+        findFirst: mock(async () => ({
+          id: "mock_id",
+          title: "mock_title",
+          description: "mock_description",
+          image: "mock_image",
+        })),
+      },
+    };
+
+    const sut = new PrismaJourneyRepository(mockClient as any);
+
+    sut
+      .exists("mock_title")
+      .then((exists) => {
+        expect(exists).toBe(true);
+
+        expect(mockClient.journey.findFirst).toHaveBeenCalledTimes(1);
+        expect(mockClient.journey.findFirst.mock.calls[0]).toEqual([
+          {
+            where: {
+              OR: [{ id: "mock_title" }, { title: "mock_title" }],
+            },
+          },
+        ]);
+      })
+      .catch((err) => {
+        done(err);
+      })
+      .finally(done);
+  });
+
+  describe("findByTitle", () => {
+    it("should call findFirst with title", (done) => {
+      const mockClient = {
+        journey: {
+          findFirst: mock(async () => ({
+            id: "mock_id",
+            title: "mock_title",
+            description: "mock_description",
+            image: "mock_image",
+          })),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+      sut
+        .findByTitle("mock_title")
+        .then((journey) => {
+          expect(journey).toBeDefined();
+          expect(journey).toBeTruthy();
+          expect(journey).toBeInstanceOf(Journey);
+
+          if (!journey) return;
+          expect(journey.id).toBe("mock_id");
+          expect(journey.name).toBe("mock_title");
+          expect(journey.description).toBe("mock_description");
+          expect(journey.image).toBe("mock_image");
+
+          expect(mockClient.journey.findFirst).toHaveBeenCalledTimes(1);
+          expect(mockClient.journey.findFirst.mock.calls[0]).toEqual([
+            {
+              where: {
+                title: "mock_title",
+              },
+            },
+          ]);
+        })
+        .catch((err) => {
+          done(err);
+        })
+        .finally(done);
+    });
+
+    it("should return null if prisma.journey.findFirst returns null", (done) => {
+      const mockClient = {
+        journey: {
+          findFirst: mock(async () => null),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+
+      sut
+        .findByTitle("mock_title")
+        .then((journey) => {
+          expect(journey).toBeNull();
+
+          expect(mockClient.journey.findFirst).toHaveBeenCalledTimes(1);
+          expect(mockClient.journey.findFirst.mock.calls[0]).toEqual([
+            {
+              where: {
+                title: "mock_title",
+              },
+            },
+          ]);
+        })
+        .catch((err) => {
+          done(err);
+        })
+        .finally(done);
+    });
+
+    it("should throw if prisma.journey.findFirst throws", (done) => {
+      const mockClient = {
+        journey: {
+          findFirst: mock(async () => {
+            throw new Error("mock_error");
+          }),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+
+      sut
+        .findByTitle("mock_title")
+        .then(() => {
+          done("should have thrown");
+        })
+        .catch((err) => {
+          expect(err).toBeInstanceOf(Error);
+          expect(err.message).toBe("mock_error");
+
+          expect(mockClient.journey.findFirst).toHaveBeenCalledTimes(1);
+          expect(mockClient.journey.findFirst.mock.calls[0]).toEqual([
+            {
+              where: {
+                title: "mock_title",
+              },
+            },
+          ]);
+        })
+        .finally(done);
+    });
+  });
+
+  describe("list", () => {
+    it("should call findMany", (done) => {
+      const mockClient = {
+        journey: {
+          findMany: mock(async () => [
+            {
+              id: "mock_id",
+              title: "mock_title",
+              description: "mock_description",
+              image: "mock_image",
+            },
+          ]),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+
+      sut
+        .list()
+        .then((journeys) => {
+          expect(journeys).toBeDefined();
+          expect(journeys).toBeTruthy();
+          expect(journeys).toBeInstanceOf(Array);
+          expect(journeys.length).toBe(1);
+
+          const journey = journeys[0];
+          expect(journey).toBeInstanceOf(Journey);
+
+          expect(journey.id).toBe("mock_id");
+          expect(journey.name).toBe("mock_title");
+          expect(journey.description).toBe("mock_description");
+          expect(journey.image).toBe("mock_image");
+
+          expect(mockClient.journey.findMany).toHaveBeenCalledTimes(1);
+        })
+        .catch((err) => {
+          done(err);
+        })
+        .finally(done);
+    });
+
+    it("should return an empty array if prisma.journey.findMany returns []", (done) => {
+      const mockClient = {
+        journey: {
+          findMany: mock(async () => []),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+
+      sut
+        .list()
+        .then((journeys) => {
+          expect(journeys).toBeDefined();
+          expect(journeys).toBeTruthy();
+          expect(journeys).toBeInstanceOf(Array);
+          expect(journeys.length).toBe(0);
+
+          expect(mockClient.journey.findMany).toHaveBeenCalledTimes(1);
+        })
+        .catch((err) => {
+          done(err);
+        })
+        .finally(done);
+    });
+
+    it("should throw if prisma.journey.findMany throws", (done) => {
+      const mockClient = {
+        journey: {
+          findMany: mock(async () => {
+            throw new Error("mock_error");
+          }),
+        },
+      };
+
+      const sut = new PrismaJourneyRepository(mockClient as any);
+
+      sut
+        .list()
+        .then(() => {
+          done("should have thrown");
+        })
+        .catch((err) => {
+          expect(err).toBeInstanceOf(Error);
+          expect(err.message).toBe("mock_error");
+
+          expect(mockClient.journey.findMany).toHaveBeenCalledTimes(1);
         })
         .finally(done);
     });

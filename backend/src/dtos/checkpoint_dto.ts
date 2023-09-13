@@ -43,3 +43,11 @@ export class Checkpoint {
     return this.data.rewards;
   }
 }
+
+export type CheckpointCreateRequest = {
+  title: string;
+  description: string;
+  image: string;
+  latitude: number;
+  longitude: number;
+};
