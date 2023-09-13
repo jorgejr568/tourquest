@@ -47,13 +47,15 @@ describe("services.UserService.signIn", () => {
 
     spyFindUserByEmail.mockImplementationOnce(
       () =>
-        Promise.resolve({
-          id: "mock_id",
-          email: "mock_email",
-          password: Bun.password.hashSync("wrong_password"),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }) as any
+        Promise.resolve(
+          new User({
+            id: "mock_id",
+            email: "mock_email",
+            password: Bun.password.hashSync("wrong_password"),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })
+        ) as any
     );
 
     sut
@@ -83,13 +85,15 @@ describe("services.UserService.signIn", () => {
 
     spyFindUserByEmail.mockImplementationOnce(
       () =>
-        Promise.resolve({
-          id: "mock_id",
-          email: "mock_email",
-          password: Bun.password.hashSync("mock_password"),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }) as any
+        Promise.resolve(
+          new User({
+            id: "mock_id",
+            email: "mock_email",
+            password: Bun.password.hashSync("mock_password"),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })
+        ) as any
     );
 
     sut
@@ -135,18 +139,16 @@ describe("services.UserService.signIn", () => {
     };
 
     spyFindUserByEmail.mockImplementationOnce(
-      () => Promise.resolve(mockUser) as any
+      () => Promise.resolve(new User(mockUser)) as any
     );
 
     const response = await sut.signIn(request);
-    expect(response).toEqual({
-      user: {
-        id: mockUser.id,
-        email: mockUser.email,
-        createdAt: mockUser.createdAt,
-        updatedAt: mockUser.updatedAt,
-      },
-      token: "mock_token",
+    expect(response.token).toEqual("mock_token");
+    expect(response.user.toJSON()).toEqual({
+      id: mockUser.id,
+      email: mockUser.email,
+      createdAt: mockUser.createdAt,
+      updatedAt: mockUser.updatedAt,
     });
 
     expect(spyFindUserByEmail).toHaveBeenCalledTimes(1);

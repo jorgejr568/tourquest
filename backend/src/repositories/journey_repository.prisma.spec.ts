@@ -67,7 +67,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
         .then((journey) => {
           expect(journey).toBeDefined();
           expect(journey.id).toBe("mock_id");
-          expect(journey.name).toBe("mock_title");
+          expect(journey.title).toBe("mock_title");
           expect(journey.description).toBe("mock_description");
           expect(journey.image).toBe("mock_image");
 
@@ -209,7 +209,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
 
           if (!journey) return;
           expect(journey.id).toBe("mock_id");
-          expect(journey.name).toBe("mock_title");
+          expect(journey.title).toBe("mock_title");
           expect(journey.description).toBe("mock_description");
           expect(journey.image).toBe("mock_image");
 
@@ -319,7 +319,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
           expect(journey).toBeInstanceOf(Journey);
 
           expect(journey.id).toBe("mock_id");
-          expect(journey.name).toBe("mock_title");
+          expect(journey.title).toBe("mock_title");
           expect(journey.description).toBe("mock_description");
           expect(journey.image).toBe("mock_image");
 

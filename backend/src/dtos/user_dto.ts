@@ -1,4 +1,4 @@
-import { BaseDTO } from "./_base";
+import { BaseDTO } from "./_base_dto";
 import { Checkpoint } from "./checkpoint_dto";
 
 type UserData = {
@@ -11,7 +11,7 @@ type UserData = {
   checkpoints?: Checkpoint[];
 };
 
-export class User extends BaseDTO<UserData> {
+export class User extends BaseDTO<UserData, Omit<UserData, "password">> {
   get id(): string {
     return this.data.id;
   }
@@ -35,6 +35,15 @@ export class User extends BaseDTO<UserData> {
   get checkpoints() {
     return this.data.checkpoints;
   }
+
+  toJSON(): Omit<UserData, "password"> {
+    return {
+      id: this.id,
+      email: this.email,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
 }
 
 export type UserLoginRequest = {
@@ -43,6 +52,6 @@ export type UserLoginRequest = {
 };
 
 export type UserLoginResponse = {
-  user: Omit<UserData, "password">;
+  user: User;
   token: string;
 };

@@ -1,4 +1,4 @@
-import { BaseDTO } from "./_base";
+import { BaseDTO } from "./_base_dto";
 
 type RewardData = {
   id: string;

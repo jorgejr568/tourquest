@@ -18,4 +18,21 @@ describe("dtos.User", () => {
     expect(user.createdAt).not.toBeNull();
     expect(user.updatedAt).not.toBeNull();
   });
+
+  it("toJSON should return the user without password", () => {
+    const user = new User({
+      id: "1",
+      email: "mock_email",
+      password: "mock_password",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    expect(user.toJSON()).toEqual({
+      id: "1",
+      email: "mock_email",
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
+  });
 });

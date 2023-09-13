@@ -238,4 +238,69 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
         });
     });
   });
+
+  describe("listByUserId", () => {
+    it("should return a list of checkpoints", async () => {
+      const mockClient = {
+        userCompletedCheckpoints: {
+          findMany: mock(async () => [
+            {
+              Checkpoint: {
+                id: "mock-id",
+                title: "mock-title",
+                description: "mock-description",
+                image: "mock-image",
+                latitude: 22,
+                longitude: 23,
+              },
+            },
+          ]),
+        },
+      };
+
+      const repository = new PrismaCheckpointRepository(mockClient as any);
+
+      const checkpoints = await repository.listByUserId("mock-user-id");
+
+      expect(checkpoints.length).toEqual(1);
+      expect(checkpoints[0].id).toEqual("mock-id");
+      expect(checkpoints[0].title).toEqual("mock-title");
+      expect(checkpoints[0].description).toEqual("mock-description");
+      expect(checkpoints[0].image).toEqual("mock-image");
+      expect(checkpoints[0].latitude).toEqual(22);
+      expect(checkpoints[0].longitude).toEqual(23);
+
+      expect(
+        mockClient.userCompletedCheckpoints.findMany
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        mockClient.userCompletedCheckpoints.findMany.mock.calls[0]
+      ).toEqual([
+        {
+          where: { userId: "mock-user-id" },
+          include: { Checkpoint: true },
+        },
+      ]);
+    });
+
+    it("should throw an error if the checkpoints could not be listed", (done) => {
+      const mockClient = {
+        userCompletedCheckpoints: {
+          findMany: mock(async () => {
+            throw new Error("mock-error");
+          }),
+        },
+      };
+
+      const repository = new PrismaCheckpointRepository(mockClient as any);
+
+      repository
+        .listByUserId("mock-user-id")
+        .then(() => done("should have thrown an error"))
+        .catch((error) => {
+          expect(error.message).toEqual("mock-error");
+          done();
+        });
+    });
+  });
 });

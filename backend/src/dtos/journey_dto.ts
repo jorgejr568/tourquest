@@ -1,6 +1,6 @@
 import { Reward } from "./reward_dto";
 import { Checkpoint } from "./checkpoint_dto";
-import { BaseDTO } from "./_base";
+import { BaseDTO } from "./_base_dto";
 
 type JourneyData = {
   id: string;
@@ -17,7 +17,7 @@ export class Journey extends BaseDTO<JourneyData> {
     return this.data.id;
   }
 
-  get name() {
+  get title() {
     return this.data.title;
   }
 

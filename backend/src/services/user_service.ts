@@ -31,12 +31,7 @@ export class DefaultUserService implements UserService {
     });
 
     return {
-      user: {
-        id: user.id,
-        email: user.email,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      },
+      user,
       token,
     };
   };

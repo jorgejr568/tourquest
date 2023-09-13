@@ -8,4 +8,6 @@ export interface CheckpointRepository {
   exists(id: string): Promise<string | false>;
 
   listByJourneyId(journeyId: string): Promise<Checkpoint[]>;
+
+  listByUserId(userId: string): Promise<Checkpoint[]>;
 }

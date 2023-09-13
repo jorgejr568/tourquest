@@ -5,7 +5,7 @@ import { PrismaClient, Checkpoint as CheckpointDocument } from "@prisma/client";
 export class PrismaCheckpointRepository implements CheckpointRepository {
   constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}
 
-  create = async (request: CheckpointCreateRequest): Promise<Checkpoint> => {
+  async create(request: CheckpointCreateRequest): Promise<Checkpoint> {
     const checkpoint = await this.prisma.checkpoint.create({
       data: {
         title: request.title,
@@ -17,12 +17,12 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
     });
 
     return this.toDto(checkpoint);
-  };
+  }
 
-  assignToJourney = async (
+  async assignToJourney(
     checkpointId: string,
     journeyId: string
-  ): Promise<void> => {
+  ): Promise<void> {
     await this.prisma.journeyCheckpoint.upsert({
       where: {
         journeyId_checkpointId: {
@@ -36,7 +36,7 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       },
       update: {},
     });
-  };
+  }
 
   exists(title: string): Promise<string | false>;
   exists(id: string): Promise<string | false>;
@@ -51,14 +51,23 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
     return checkpoint.id;
   }
 
-  listByJourneyId = async (journeyId: string): Promise<Checkpoint[]> => {
+  async listByJourneyId(journeyId: string): Promise<Checkpoint[]> {
     const checkpoints = await this.prisma.journeyCheckpoint.findMany({
       where: { journeyId },
       include: { Checkpoint: true },
     });
 
     return checkpoints.map(({ Checkpoint }) => this.toDto(Checkpoint));
-  };
+  }
+
+  async listByUserId(userId: string): Promise<Checkpoint[]> {
+    const checkpoints = await this.prisma.userCompletedCheckpoints.findMany({
+      where: { userId },
+      include: { Checkpoint: true },
+    });
+
+    return checkpoints.map(({ Checkpoint }) => this.toDto(Checkpoint));
+  }
 
   private toDto = (checkpoint: CheckpointDocument): Checkpoint => {
     return new Checkpoint({

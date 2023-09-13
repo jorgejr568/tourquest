@@ -1,11 +1,7 @@
 import express from "express";
 import "express-async-errors";
 import { Environment } from "@/constants";
-import { PrismaUserRepository } from "@/repositories";
-import {
-  CredentialsNotMatchException,
-  ExpressHttpExceptionErrorHandler,
-} from "./exceptions";
+import { ExpressHttpExceptionErrorHandler } from "./exceptions";
 import { journeyRouter, userRouter } from "./controllers";
 import { tokenizationMiddleware } from "./controllers/middlewares";
 

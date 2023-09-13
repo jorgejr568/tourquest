@@ -1,4 +1,4 @@
-import { BaseDTO } from "./_base";
+import { BaseDTO } from "./_base_dto";
 import { Reward } from "./reward_dto";
 
 type CheckpointData = {
@@ -6,10 +6,8 @@ type CheckpointData = {
   title: string;
   description: string;
   image: string;
-
   latitude: number;
   longitude: number;
-
   rewards?: Reward[];
 };
 
