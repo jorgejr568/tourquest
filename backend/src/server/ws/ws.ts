@@ -8,6 +8,7 @@ import {
 } from "./messages";
 import { Ws, WsUpgrade } from "./types";
 import { withAuthorization } from "./middlewares";
+import { handleUserLocationWsMessage } from "./handlers";
 
 const prisma = new PrismaClient();
 
@@ -51,18 +52,3 @@ const server = Bun.serve<WsUpgrade>({
 });
 
 console.log(`Websocket Server is running: ws://localhost:${server.port}`);
-
-const handleUserLocationWsMessage = async (
-  ws: Ws,
-  message: UserLocationWsMessage,
-  user: TokenizationUserData
-) => {
-  const result = await prisma.location.create({
-    data: {
-      userId: user.id,
-      ...UserLocationWsSchema.parse(message.data),
-    },
-  });
-
-  ws.send(`Location saved ${result.id}`);
-};
