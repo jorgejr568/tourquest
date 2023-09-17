@@ -1,9 +1,14 @@
-import { userServiceFactory } from "@/factories";
+import { checkpointServiceFactory, userServiceFactory } from "@/factories";
 import { Request, Response, Router } from "express";
-import { UserCreateSchema, UserLoginSchema } from "./schemas";
+import {
+  CheckpointMarkAsDoneSchema,
+  UserCreateSchema,
+  UserLoginSchema,
+} from "./schemas";
 import { authorizationMiddleware } from "@/controllers/middlewares";
 
 const userService = userServiceFactory();
+const checkpointService = checkpointServiceFactory();
 const userRouter = Router();
 
 userRouter.post("/auth", async (req: Request, res: Response) => {
@@ -25,7 +30,24 @@ userRouter.get(
   "/checkpoints",
   authorizationMiddleware,
   async (req: Request, res: Response) => {
-    res.json(await userService.listCheckpoints(req.user!.id));
+    res.json(await checkpointService.userListCheckpoints(req.user!.id));
+  }
+);
+
+userRouter.patch(
+  "/checkpoints/:checkpointId",
+  authorizationMiddleware,
+  async (req: Request, res: Response) => {
+    res.json(
+      await checkpointService.userMarkCheckpointAsCompleted(
+        CheckpointMarkAsDoneSchema.parse({
+          userId: req.user!.id,
+          checkpointId: req.params.checkpointId,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+        })
+      )
+    );
   }
 );
 

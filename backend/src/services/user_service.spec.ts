@@ -12,7 +12,7 @@ describe("services.UserService.signIn", () => {
     const mockRepository = {
       findByEmail: mock(async () => null),
     } as any;
-    const sut = new DefaultUserService(mockRepository, {} as any, {} as any);
+    const sut = new DefaultUserService(mockRepository, {} as any);
     const request = {
       email: "mock_email",
       password: "mock_password",
@@ -54,7 +54,7 @@ describe("services.UserService.signIn", () => {
       ),
     } as any;
 
-    const sut = new DefaultUserService(mockRepository, {} as any, {} as any);
+    const sut = new DefaultUserService(mockRepository, {} as any);
 
     sut
       .signIn(request)
@@ -92,11 +92,7 @@ describe("services.UserService.signIn", () => {
       ),
     } as any;
 
-    const sut = new DefaultUserService(
-      mockRepository,
-      tokenizationMock,
-      {} as any
-    );
+    const sut = new DefaultUserService(mockRepository, tokenizationMock);
     const request = {
       email: "mock_email",
       password: "mock_password",
@@ -145,11 +141,7 @@ describe("services.UserService.signIn", () => {
       findByEmail: mock(async () => new User(mockUser)),
     } as any;
 
-    const sut = new DefaultUserService(
-      mockRepository,
-      tokenizationMock,
-      {} as any
-    );
+    const sut = new DefaultUserService(mockRepository, tokenizationMock);
 
     const request = {
       email: "mock_email",
@@ -178,58 +170,6 @@ describe("services.UserService.signIn", () => {
     ]);
   });
 
-  describe("listCheckpoints", () => {
-    it("should list checkpoints for a user", async () => {
-      const mockCheckpointRepository = {
-        listByUserId: mock(async () => [{ id: "mock-id" }]),
-      };
-
-      const sut = new DefaultUserService(
-        null as any,
-        {} as any,
-        mockCheckpointRepository as any
-      );
-
-      const checkpoints = await sut.listCheckpoints("mock-user-id");
-
-      expect(checkpoints).toEqual([{ id: "mock-id" }]);
-      expect(mockCheckpointRepository.listByUserId).toHaveBeenCalledTimes(1);
-      expect(mockCheckpointRepository.listByUserId.mock.calls[0]).toEqual([
-        "mock-user-id",
-      ]);
-    });
-
-    it("should throw an error if repository throws", (done) => {
-      const mockCheckpointRepository = {
-        listByUserId: mock(async () => {
-          throw new Error("mock-error");
-        }),
-      };
-
-      const sut = new DefaultUserService(
-        null as any,
-        {} as any,
-        mockCheckpointRepository as any
-      );
-
-      sut
-        .listCheckpoints("mock-user-id")
-        .then(() => {
-          done("this should throw an exception");
-        })
-        .catch((err) => {
-          expect(err).toBeInstanceOf(Error);
-          expect(mockCheckpointRepository.listByUserId).toHaveBeenCalledTimes(
-            1
-          );
-          expect(mockCheckpointRepository.listByUserId.mock.calls[0]).toEqual([
-            "mock-user-id",
-          ]);
-          done();
-        });
-    });
-  });
-
   describe("create", () => {
     it("should create a user", async () => {
       const mockUserRepository = {
@@ -253,8 +193,7 @@ describe("services.UserService.signIn", () => {
 
       const sut = new DefaultUserService(
         mockUserRepository as any,
-        mockTokenization as any,
-        {} as any
+        mockTokenization as any
       );
 
       const response = await sut.signUp({
@@ -300,11 +239,7 @@ describe("services.UserService.signIn", () => {
         findByEmail: mock(async () => new User({} as any)),
       };
 
-      const sut = new DefaultUserService(
-        mockUserRepository as any,
-        {} as any,
-        {} as any
-      );
+      const sut = new DefaultUserService(mockUserRepository as any, {} as any);
 
       sut
         .signUp({
@@ -334,11 +269,7 @@ describe("services.UserService.signIn", () => {
         findByEmail: mock(async () => null),
       };
 
-      const sut = new DefaultUserService(
-        mockUserRepository as any,
-        {} as any,
-        {} as any
-      );
+      const sut = new DefaultUserService(mockUserRepository as any, {} as any);
 
       sut
         .signUp({
@@ -392,8 +323,7 @@ describe("services.UserService.signIn", () => {
 
       const sut = new DefaultUserService(
         mockUserRepository as any,
-        mockTokenization as any,
-        {} as any
+        mockTokenization as any
       );
 
       sut

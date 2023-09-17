@@ -55,3 +55,12 @@ export type CheckpointCreateRequest = {
 };
 
 export type CheckpointListResponse = Checkpoint[];
+
+export type CheckpointMarkAsCompletedRequest = {
+  checkpointId: string;
+  userId: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type CheckpointMarkAsCompletedResponse = void;

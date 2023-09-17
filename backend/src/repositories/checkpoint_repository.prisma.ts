@@ -1,4 +1,9 @@
-import { CheckpointCreateRequest, Checkpoint } from "@/dtos";
+import {
+  CheckpointCreateRequest,
+  Checkpoint,
+  CheckpointMarkAsCompletedRequest,
+  CheckpointMarkAsCompletedResponse,
+} from "@/dtos";
 import { CheckpointRepository } from "./checkpoint_repository";
 import { PrismaClient, Checkpoint as CheckpointDocument } from "@prisma/client";
 
@@ -75,6 +80,26 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
         }
       )
     );
+  }
+
+  async markAsDone(
+    request: CheckpointMarkAsCompletedRequest
+  ): Promise<CheckpointMarkAsCompletedResponse> {
+    await this.prisma.userCompletedCheckpoints.upsert({
+      where: {
+        userId_checkpointId: {
+          userId: request.userId,
+          checkpointId: request.checkpointId,
+        },
+      },
+      create: {
+        userId: request.userId,
+        checkpointId: request.checkpointId,
+        latitude: request.latitude,
+        longitude: request.longitude,
+      },
+      update: {},
+    });
   }
 
   static toDTO(

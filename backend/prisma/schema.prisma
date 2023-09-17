@@ -66,6 +66,8 @@ model JourneyCheckpoint {
 model UserCompletedCheckpoints {
   userId       String
   checkpointId String
+  latitude     Float
+  longitude    Float
   completedAt  DateTime @default(now())
 
   // relationships

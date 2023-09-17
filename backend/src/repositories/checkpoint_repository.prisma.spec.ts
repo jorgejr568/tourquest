@@ -307,4 +307,69 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
         });
     });
   });
+
+  describe("markAsDone", () => {
+    it("should mark a checkpoint as done", async () => {
+      const mockClient = {
+        userCompletedCheckpoints: {
+          upsert: mock(async () => {}),
+        },
+      };
+
+      const repository = new PrismaCheckpointRepository(mockClient as any);
+
+      await repository.markAsDone({
+        checkpointId: "mock-checkpoint-id",
+        userId: "mock-user-id",
+        latitude: 22,
+        longitude: 23,
+      });
+
+      expect(mockClient.userCompletedCheckpoints.upsert).toHaveBeenCalledTimes(
+        1
+      );
+      expect(mockClient.userCompletedCheckpoints.upsert.mock.calls[0]).toEqual([
+        {
+          where: {
+            userId_checkpointId: {
+              userId: "mock-user-id",
+              checkpointId: "mock-checkpoint-id",
+            },
+          },
+          create: {
+            userId: "mock-user-id",
+            checkpointId: "mock-checkpoint-id",
+            latitude: 22,
+            longitude: 23,
+          },
+          update: {},
+        },
+      ]);
+    });
+
+    it("should throw an error if the checkpoint could not be marked as done", (done) => {
+      const mockClient = {
+        userCompletedCheckpoints: {
+          upsert: mock(async () => {
+            throw new Error("mock-error");
+          }),
+        },
+      };
+
+      const repository = new PrismaCheckpointRepository(mockClient as any);
+
+      repository
+        .markAsDone({
+          checkpointId: "mock-checkpoint-id",
+          userId: "mock-user-id",
+          latitude: 22,
+          longitude: 23,
+        })
+        .then(() => done("should have thrown an error"))
+        .catch((error) => {
+          expect(error.message).toEqual("mock-error");
+          done();
+        });
+    });
+  });
 });

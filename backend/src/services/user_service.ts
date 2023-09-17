@@ -18,8 +18,6 @@ export interface UserService {
    */
   signIn(request: UserLoginRequest): Promise<UserLoginResponse>;
 
-  listCheckpoints(userId: string): Promise<CheckpointListResponse>;
-
   /**
    * @throws {UserAlreadyExistsException} if the user already exists
    */
@@ -29,8 +27,7 @@ export interface UserService {
 export class DefaultUserService implements UserService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly tokenization: Tokenization,
-    private readonly checkpointRepository: CheckpointRepository
+    private readonly tokenization: Tokenization
   ) {}
 
   async signIn(request: UserLoginRequest): Promise<UserLoginResponse> {
@@ -52,10 +49,6 @@ export class DefaultUserService implements UserService {
       user,
       token,
     };
-  }
-
-  async listCheckpoints(userId: string): Promise<CheckpointListResponse> {
-    return await this.checkpointRepository.listByUserId(userId);
   }
 
   async signUp(request: UserCreateRequest): Promise<UserCreateResponse> {

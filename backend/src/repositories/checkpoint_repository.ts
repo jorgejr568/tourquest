@@ -1,4 +1,9 @@
-import { Checkpoint, CheckpointCreateRequest } from "@/dtos";
+import {
+  Checkpoint,
+  CheckpointCreateRequest,
+  CheckpointMarkAsCompletedRequest,
+  CheckpointMarkAsCompletedResponse,
+} from "@/dtos";
 
 export interface CheckpointRepository {
   create(request: CheckpointCreateRequest): Promise<Checkpoint>;
@@ -10,4 +15,8 @@ export interface CheckpointRepository {
   listByJourneyId(journeyId: string): Promise<Checkpoint[]>;
 
   listByUserId(userId: string): Promise<Checkpoint[]>;
+
+  markAsDone(
+    request: CheckpointMarkAsCompletedRequest
+  ): Promise<CheckpointMarkAsCompletedResponse>;
 }
