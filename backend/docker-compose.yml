@@ -19,37 +19,33 @@ services:
       - 8080:8080
     depends_on:
       - db
-  # TODO: Get back to this when this is solved:
-  # https://github.com/oven-sh/bun/issues/4848
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./src:/app/src
-  #     - ./prisma:/app/prisma
-  #   ports:
-  #     - 8000:8000
-  #     - 8001:8001
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - DATABASE_URL=postgres://postgres:password@db:5432/postgres?schema=public
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+    ports:
+      - 8000:8000
+      - 8001:8001
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/postgres?schema=public
   server:
     build:
       context: ./.nginx
       dockerfile: Dockerfile
       args:
-        - HTTP_ADDRESS=http://host.docker.internal:8000
-        - WS_ADDRESS=http://host.docker.internal:8001
+        - HTTP_ADDRESS=http://backend:8000
+        - WS_ADDRESS=http://backend:8001
     restart: unless-stopped
     ports:
       - 80:80
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
 
 volumes:
   postgres-data:
