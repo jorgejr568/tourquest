@@ -3,6 +3,8 @@ import { UserProvider } from "./src/context/user.context";
 import { PaperProvider } from "react-native-paper";
 import { LogBox } from "react-native";
 import THEME from "./src/theme";
+import { NavbarProvider } from "./src/context/navbar.context";
+import { ErrorsProvider } from "./src/context/errors.context";
 
 LogBox.ignoreLogs([
   "Warning: Cannot update a component (`ForwardRef(BaseNavigationContainer)`)...",
@@ -10,9 +12,13 @@ LogBox.ignoreLogs([
 export default function App() {
   return (
     <PaperProvider theme={THEME}>
-      <UserProvider>
-        <Router />
-      </UserProvider>
+      <ErrorsProvider>
+        <NavbarProvider>
+          <UserProvider>
+            <Router />
+          </UserProvider>
+        </NavbarProvider>
+      </ErrorsProvider>
     </PaperProvider>
   );
 }

@@ -26,6 +26,17 @@ const API = Object.freeze({
       const { data } = await client.get("/api/v1/users/auth");
       return data;
     },
+    register: async (email, password, name) => {
+      const {
+        data: { token, user },
+      } = await client.post("/api/v1/users", {
+        email,
+        password,
+        name,
+      });
+
+      return { token, user };
+    },
   },
 });
 

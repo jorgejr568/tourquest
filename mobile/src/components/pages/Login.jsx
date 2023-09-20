@@ -1,29 +1,24 @@
-import {
-  Keyboard,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
 import Navbar from "../organisms/Navbar";
-import {
-  Text,
-  useTheme,
-  TextInput,
-  Button,
-  Snackbar,
-} from "react-native-paper";
+import { Text, useTheme, TextInput, Button } from "react-native-paper";
 import { useCallback, useMemo, useState } from "react";
 import DismissKeyboardView from "../organisms/DismissKeyboardView";
 import API from "../../API";
 import useUser from "../../hooks/useUser";
 import { useNavigation } from "@react-navigation/native";
 import withGuest from "../../middlewares/guest.middleware";
+import useErrors from "../../hooks/useErrors";
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
 
 function Login() {
   const { setToken } = useUser();
   const navigation = useNavigation();
-  const [error, setError] = useState(null);
+  const errorsContext = useErrors();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -31,7 +26,7 @@ function Login() {
   });
 
   const canSubmit = useMemo(() => {
-    return form.email && form.password;
+    return schema.safeParse(form).success;
   }, [form]);
 
   const theme = useTheme();
@@ -59,9 +54,10 @@ function Login() {
           gap: 24,
           marginTop: 42,
         },
-        snackbar: {
-          backgroundColor: theme.colors.error,
+
+        createAccountHelperContainer: {
           display: "flex",
+          flexDirection: "row",
           justifyContent: "center",
         },
       }),
@@ -81,18 +77,23 @@ function Login() {
         });
       })
       .catch(() => {
-        setError("Email ou senha incorretos");
+        errorsContext.setErrors(["Email ou senha incorretos"]);
       })
       .finally(() => {
         setLoading(false);
       });
   }, [form]);
+
+  const handleCreateAccount = useCallback(() => {
+    navigation.navigate("Register");
+  }, []);
+
   return (
     <DismissKeyboardView>
       <View style={styles.container}>
         <Navbar />
         <SafeAreaView style={styles.safeContainer}>
-          <Text variant="titleLarge">Entrar na TourQuest</Text>
+          <Text variant="headlineSmall">Entrar na TourQuest</Text>
 
           <View style={styles.form}>
             <TextInput
@@ -116,25 +117,28 @@ function Login() {
               onChangeText={(password) =>
                 setForm((form) => ({ ...form, password }))
               }
+              autoCapitalize="none"
             />
 
-            <TouchableOpacity onPress={handleSubmit} activeOpacity={0.8}>
-              <Button mode="contained" loading={loading} disabled={!canSubmit}>
-                Entrar
+            <View style={styles.createAccountHelperContainer}>
+              <Button
+                style={styles.createAccountHelperButton}
+                onPress={handleCreateAccount}
+              >
+                Ainda não tem uma conta
               </Button>
-            </TouchableOpacity>
+            </View>
+
+            <Button
+              mode="contained"
+              loading={loading}
+              disabled={!canSubmit}
+              onPress={handleSubmit}
+            >
+              Entrar
+            </Button>
           </View>
         </SafeAreaView>
-
-        {error && (
-          <Snackbar
-            visible={error}
-            onDismiss={() => setError(null)}
-            style={styles.snackbar}
-          >
-            {error}
-          </Snackbar>
-        )}
       </View>
     </DismissKeyboardView>
   );

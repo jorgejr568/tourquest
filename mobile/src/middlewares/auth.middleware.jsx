@@ -8,7 +8,10 @@ const AuthMiddlewareComponent = ({ Component, props }) => {
 
   if (loading || !user) {
     if (!user) {
-      navigation.navigate("Home");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
     }
     return <LoadingPage />;
   }

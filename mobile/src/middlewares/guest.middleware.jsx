@@ -8,7 +8,10 @@ const GuestMiddlewareComponent = ({ Component, props }) => {
 
   if (loading || user) {
     if (user) {
-      navigation.navigate("Auth");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Auth" }],
+      });
     }
 
     return <LoadingPage />;
