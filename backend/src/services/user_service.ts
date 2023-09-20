@@ -56,7 +56,10 @@ export class DefaultUserService implements UserService {
       throw new UserAlreadyExistsException();
     }
 
-    const user = await this.userRepository.create(request);
+    const user = await this.userRepository.create({
+      ...request,
+      password: await Bun.password.hash(request.password),
+    });
     const token = this.tokenization.sign({
       id: user.id,
       name: user.name,

@@ -216,13 +216,13 @@ describe("services.UserService.signIn", () => {
         "mock-email",
       ]);
       expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
-      expect(mockUserRepository.create.mock.calls[0]).toEqual([
-        {
-          name: "mock-name",
-          email: "mock-email",
-          password: "mock-password",
-        },
-      ]);
+
+      const createMockCall = mockUserRepository.create.mock.calls[0] as any;
+      expect(createMockCall[0].name).toEqual("mock-name");
+      expect(createMockCall[0].email).toEqual("mock-email");
+      expect(
+        Bun.password.verifySync("mock-password", createMockCall[0].password)
+      ).toEqual(true);
 
       expect(mockTokenization.sign).toHaveBeenCalledTimes(1);
       expect(mockTokenization.sign.mock.calls[0]).toEqual([
@@ -288,13 +288,14 @@ describe("services.UserService.signIn", () => {
             "mock-email",
           ]);
           expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
-          expect(mockUserRepository.create.mock.calls[0]).toEqual([
-            {
-              name: "mock-name",
-              email: "mock-email",
-              password: "mock-password",
-            },
-          ]);
+
+          const createMockCall = mockUserRepository.create.mock.calls[0] as any;
+          expect(createMockCall[0].name).toEqual("mock-name");
+          expect(createMockCall[0].email).toEqual("mock-email");
+          expect(
+            Bun.password.verifySync("mock-password", createMockCall[0].password)
+          ).toEqual(true);
+
           done();
         });
     });
@@ -343,13 +344,14 @@ describe("services.UserService.signIn", () => {
             "mock-email",
           ]);
           expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
-          expect(mockUserRepository.create.mock.calls[0]).toEqual([
-            {
-              name: "mock-name",
-              email: "mock-email",
-              password: "mock-password",
-            },
-          ]);
+
+          const createMockCall = mockUserRepository.create.mock.calls[0] as any;
+          expect(createMockCall[0].name).toEqual("mock-name");
+          expect(createMockCall[0].email).toEqual("mock-email");
+          expect(
+            Bun.password.verifySync("mock-password", createMockCall[0].password)
+          ).toEqual(true);
+
           expect(mockTokenization.sign).toHaveBeenCalledTimes(1);
           expect(mockTokenization.sign.mock.calls[0]).toEqual([
             {
