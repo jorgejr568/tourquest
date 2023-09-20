@@ -1,8 +1,9 @@
 import useUser from "../hooks/useUser";
 import { useNavigation } from "@react-navigation/native";
 import LoadingPage from "../components/pages/Loading";
+import { forwardRef } from "react";
 
-const AuthMiddlewareComponent = ({ Component, props }) => {
+const AuthMiddlewareComponent = forwardRef(({ Component, props }, ref) => {
   const { user, loading } = useUser();
   const navigation = useNavigation();
 
@@ -16,8 +17,8 @@ const AuthMiddlewareComponent = ({ Component, props }) => {
     return <LoadingPage />;
   }
 
-  return <Component {...{ ...props, user }} />;
-};
+  return <Component {...{ ...props, user, ref }} />;
+});
 
 export default function withAuth(Component) {
   return function (props) {

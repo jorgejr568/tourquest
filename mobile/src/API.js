@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const BASE_URL = "https://tourquest.j-jr.app";
+const BASE_WS = "wss://tourquest.j-jr.app/ws";
+
 const client = axios.create({
-  baseURL: "https://tourquest.j-jr.app",
+  baseURL: BASE_URL,
 });
 
 const API = Object.freeze({
@@ -36,6 +39,28 @@ const API = Object.freeze({
       });
 
       return { token, user };
+    },
+  },
+  wss: {
+    new: () => {
+      return new WebSocket(BASE_WS, null, {
+        headers: {
+          Authorization: client.defaults.headers.common["Authorization"],
+        },
+      });
+    },
+    sendLocation: (ws, latitude, longitude, journeyId = undefined, checkpointId = undefined) => {
+      ws.send(
+        JSON.stringify({
+          type: "UserLocationWsMessage",
+          data: {
+            latitude,
+            longitude,
+            journeyId,
+            checkpointId,
+          },
+        })
+      );
     },
   },
 });
