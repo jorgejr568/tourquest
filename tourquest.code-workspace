@@ -5,6 +5,10 @@
       "name": "TourQuest - Backend"
     },
     {
+      "path": "./mobile",
+      "name": "TourQuest - Mobile"
+    },
+    {
       "path": "./.github/workflows",
       "name": "GitHub Actions"
     },
