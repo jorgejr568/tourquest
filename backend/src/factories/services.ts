@@ -15,7 +15,7 @@ import {
   locationRepositoryFactory,
   userRepositoryFactory,
 } from "./repositories";
-import { infraTokenizationFactory } from "./infra";
+import { infraGeoDistanceFactory, infraTokenizationFactory } from "./infra";
 import {} from "@/services/checkpoint_service";
 
 export const userServiceFactory: Factory<UserService> = () =>
@@ -28,7 +28,10 @@ export const journeyServiceFactory: Factory<JourneyService> = () =>
   );
 
 export const checkpointServiceFactory: Factory<CheckpointService> = () =>
-  new DefaultCheckpointService(checkpointRepositoryFactory());
+  new DefaultCheckpointService(
+    checkpointRepositoryFactory(),
+    infraGeoDistanceFactory()
+  );
 
 export const locationServiceFactory: Factory<LocationService> = () =>
   new DefaultLocationService(locationRepositoryFactory());

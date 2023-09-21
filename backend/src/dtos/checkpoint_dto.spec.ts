@@ -14,6 +14,7 @@ describe("dtos.checkpoint_dto.Checkpoint", () => {
       image: "mock-image",
       latitude: 22,
       longitude: 23,
+      range: 50,
       rewards: [],
       completedAt: new Date(),
     });
@@ -24,6 +25,7 @@ describe("dtos.checkpoint_dto.Checkpoint", () => {
     expect(dto.image).toEqual("mock-image");
     expect(dto.latitude).toEqual(22);
     expect(dto.longitude).toEqual(23);
+    expect(dto.range).toEqual(50);
     expect(dto.rewards).toEqual([]);
     expect(dto.completedAt).toEqual(new Date());
   });

@@ -19,33 +19,6 @@ services:
       - 8080:8080
     depends_on:
       - db
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    volumes:
-      - ./src:/app/src
-      - ./prisma:/app/prisma
-    ports:
-      - 8000:8000
-      - 8001:8001
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgres://postgres:password@db:5432/postgres?schema=public
-  server:
-    build:
-      context: ./.nginx
-      dockerfile: Dockerfile
-      args:
-        - HTTP_ADDRESS=http://backend:8000
-        - WS_ADDRESS=http://backend:8001
-    restart: unless-stopped
-    ports:
-      - 80:80
-    depends_on:
-      - backend
 
 volumes:
   postgres-data:

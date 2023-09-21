@@ -102,6 +102,18 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
     });
   }
 
+  async findById(id: string): Promise<Checkpoint | null> {
+    const checkpoint = await this.prisma.checkpoint.findUnique({
+      where: { id },
+    });
+
+    if (!checkpoint) {
+      return null;
+    }
+
+    return PrismaCheckpointRepository.toDTO(checkpoint);
+  }
+
   static toDTO(
     checkpoint: CheckpointDocument,
     aggregate?: Partial<ConstructorParameters<typeof Checkpoint>[0]>
@@ -113,6 +125,7 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
       image: checkpoint.image,
       latitude: checkpoint.latitude,
       longitude: checkpoint.longitude,
+      range: checkpoint.range,
       ...aggregate,
     });
   }

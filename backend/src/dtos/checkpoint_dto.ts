@@ -8,6 +8,7 @@ type CheckpointData = {
   image: string;
   latitude: number;
   longitude: number;
+  range: number;
   rewards?: Reward[];
   completedAt?: Date;
 };
@@ -35,6 +36,10 @@ export class Checkpoint extends BaseDTO<CheckpointData> {
 
   get longitude() {
     return this.data.longitude;
+  }
+
+  get range() {
+    return this.data.range;
   }
 
   get rewards() {

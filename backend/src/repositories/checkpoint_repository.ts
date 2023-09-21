@@ -19,4 +19,6 @@ export interface CheckpointRepository {
   markAsDone(
     request: CheckpointMarkAsCompletedRequest
   ): Promise<CheckpointMarkAsCompletedResponse>;
+
+  findById(id: string): Promise<Checkpoint | null>;
 }

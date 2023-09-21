@@ -17,6 +17,7 @@ model Checkpoint {
   image       String
   latitude    Float
   longitude   Float
+  range       Int      @default(100)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
