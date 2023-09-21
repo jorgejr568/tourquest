@@ -1,10 +1,11 @@
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView, FlatList } from "react-native";
 import withAuth from "../../middlewares/auth.middleware";
 import Navbar from "../organisms/Navbar";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, List, Text, useTheme } from "react-native-paper";
 import useUser from "../../hooks/useUser";
 import { useEffect, useRef, useState } from "react";
 import API from "../../API";
+import LottieView from "lottie-react-native";
 
 const AuthPage = ({ user }) => {
   const { token, logout } = useUser();
@@ -60,18 +61,41 @@ const AuthPage = ({ user }) => {
         style={{
           backgroundColor: theme.colors.elevation.level1,
           flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 48,
-          paddingHorizontal: 80,
         }}
       >
-        <Text variant="displayLarge">Auth</Text>
-        <Text>
-          {JSON.stringify({ ...user, token, connected, lastLocation }, null, 2)}
-        </Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 24,
+            paddingHorizontal: 20,
+            paddingTop: 40,
+          }}
+        >
+          <LottieView
+            source={require("../../animations/ManWalkingBackground.json")}
+            style={{ width: 200, height: 200 }}
+            autoPlay={connected}
+            loop
+            speed={0.5}
+          />
 
-        <Button onPress={logout}>Logout</Button>
+          <FlatList
+            data={Object.entries({ ...user, token, lastLocation })}
+            keyExtractor={([key]) => key}
+            renderItem={({ item: [key, value] }) => (
+              <List.Item
+                title={key}
+                description={value}
+                titleStyle={{ fontWeight: "bold" }}
+                descriptionStyle={{ color: theme.colors.text }}
+              />
+            )}
+          />
+
+          <Button onPress={logout}>Logout</Button>
+        </View>
       </SafeAreaView>
     </View>
   );

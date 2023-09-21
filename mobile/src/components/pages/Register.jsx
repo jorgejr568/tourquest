@@ -10,19 +10,22 @@ import API from "../../API";
 import useUser from "../../hooks/useUser";
 import useErrors from "../../hooks/useErrors";
 import { z } from "zod";
+import SuccessBadge from "../molecules/SuccessBadge";
 
 const schema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
   password: z.string().min(8),
 });
+
 function RegisterPage({ route }) {
   const errorsContext = useErrors();
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
+    name: "Dev",
+    email: `dev+${Date.now()}@tourquest.j-jr.app`,
+    password: "password",
   });
   const canSubmit = useMemo(() => {
     const { success } = schema.safeParse(form);
@@ -30,6 +33,7 @@ function RegisterPage({ route }) {
   }, [form]);
 
   const { setToken } = useUser();
+  const [waitToken, setWaitToken] = useState();
   const navbarContext = useNavbar();
   const navigation = useNavigation();
   const theme = useTheme();
@@ -76,8 +80,8 @@ function RegisterPage({ route }) {
     API.user
       .register(form.email, form.password, form.name)
       .then(({ token }) => {
-        setToken(token);
-        navigation.navigate("Auth");
+        setSuccess(true);
+        setWaitToken(token);
       })
       .catch((e) => {
         if (e.response.status === 422) {
@@ -109,65 +113,84 @@ function RegisterPage({ route }) {
       .finally(() => setLoading(false));
   }, [form]);
 
+  const handleAnimationFinished = useCallback(() => {
+    setToken(waitToken);
+    navigation.navigate("Auth");
+  }, [waitToken]);
+
   useEffect(() => {
     return navbarContext.setTitle("Crie sua conta", route.name);
   }, []);
+
   return (
     <View style={styles.container}>
       <Navbar />
 
       <DismissKeyboardView>
         <SafeAreaView style={styles.safeContainer}>
-          <Text variant="headlineSmall" style={styles.heading}>
-            Cadastro TourQuest
-          </Text>
-
-          <View style={styles.form}>
-            <TextInput
-              label="Nome"
-              value={form.name}
-              onChangeText={(name) => setForm((form) => ({ ...form, name }))}
-              placeholder="Digite seu nome"
+          {success ? (
+            <SuccessBadge
+              title="Que bom que você está aqui!"
+              onFinished={handleAnimationFinished}
             />
+          ) : (
+            <>
+              <Text variant="headlineSmall" style={styles.heading}>
+                Cadastro TourQuest
+              </Text>
 
-            <TextInput
-              label="Email"
-              value={form.email}
-              onChangeText={(email) => setForm((form) => ({ ...form, email }))}
-              placeholder="Digite seu email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+              <View style={styles.form}>
+                <TextInput
+                  label="Nome"
+                  value={form.name}
+                  onChangeText={(name) =>
+                    setForm((form) => ({ ...form, name }))
+                  }
+                  placeholder="Digite seu nome"
+                />
 
-            <TextInput
-              label="Senha"
-              value={form.password}
-              onChangeText={(password) =>
-                setForm((form) => ({ ...form, password }))
-              }
-              secureTextEntry
-              placeholder="********"
-              autoCapitalize="none"
-            />
+                <TextInput
+                  label="Email"
+                  value={form.email}
+                  onChangeText={(email) =>
+                    setForm((form) => ({ ...form, email }))
+                  }
+                  placeholder="Digite seu email"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
 
-            <View style={styles.alreadyHaveAccountContainer}>
-              <Button
-                style={styles.alreadyHaveAccountButton}
-                onPress={handleAlreadyHaveAccount}
-              >
-                Já tem uma conta?
-              </Button>
-            </View>
+                <TextInput
+                  label="Senha"
+                  value={form.password}
+                  onChangeText={(password) =>
+                    setForm((form) => ({ ...form, password }))
+                  }
+                  secureTextEntry
+                  placeholder="********"
+                  autoCapitalize="none"
+                />
 
-            <Button
-              mode="contained"
-              onPress={handleRegister}
-              loading={loading}
-              disabled={!canSubmit}
-            >
-              Cadastrar
-            </Button>
-          </View>
+                <View style={styles.alreadyHaveAccountContainer}>
+                  <Button
+                    style={styles.alreadyHaveAccountButton}
+                    onPress={handleAlreadyHaveAccount}
+                  >
+                    Já tem uma conta?
+                  </Button>
+                </View>
+
+                <Button
+                  mode="contained"
+                  onPress={handleRegister}
+                  loading={loading}
+                  disabled={!canSubmit}
+                >
+                  Cadastrar
+                </Button>
+              </View>
+            </>
+          )}
         </SafeAreaView>
       </DismissKeyboardView>
     </View>
