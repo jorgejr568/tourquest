@@ -14,7 +14,7 @@ export default function LoadingPage() {
           backgroundColor: theme.colors.elevation.level1,
         },
       }),
-    [theme]
+    [theme],
   );
   return (
     <View style={styles.container}>

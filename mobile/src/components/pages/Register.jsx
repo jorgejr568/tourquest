@@ -23,9 +23,9 @@ function RegisterPage({ route }) {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    name: "Dev",
-    email: `dev+${Date.now()}@tourquest.j-jr.app`,
-    password: "password",
+    name: "",
+    email: "",
+    password: "",
   });
   const canSubmit = useMemo(() => {
     const { success } = schema.safeParse(form);
@@ -67,7 +67,7 @@ function RegisterPage({ route }) {
           justifyContent: "center",
         },
       }),
-    [theme]
+    [theme],
   );
 
   const handleAlreadyHaveAccount = useCallback(() => {
@@ -92,7 +92,7 @@ function RegisterPage({ route }) {
 
           if (errors?.password) {
             errorsContext.pushError(
-              "A senha deve conter no mínimo 8 caracteres"
+              "A senha deve conter no mínimo 8 caracteres",
             );
           }
 

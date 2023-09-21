@@ -1,7 +1,7 @@
-import { View, SafeAreaView, FlatList } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 import withAuth from "../../middlewares/auth.middleware";
 import Navbar from "../organisms/Navbar";
-import { Button, List, Text, useTheme } from "react-native-paper";
+import { Button, List, useTheme } from "react-native-paper";
 import useUser from "../../hooks/useUser";
 import { useEffect, useRef, useState } from "react";
 import API from "../../API";
@@ -29,6 +29,11 @@ const AuthPage = ({ user }) => {
       if (matches && matches.length > 0) {
         setLastLocation(matches[0]);
       }
+    };
+
+    wss.current.onclose = () => {
+      console.log("disconnected");
+      setConnected(false);
     };
 
     return () => {
@@ -82,7 +87,15 @@ const AuthPage = ({ user }) => {
           />
 
           <FlatList
-            data={Object.entries({ ...user, token, lastLocation })}
+            data={Object.entries({
+              ...user,
+              token,
+              ...(lastLocation
+                ? {
+                    lastLocation,
+                  }
+                : {}),
+            })}
             keyExtractor={([key]) => key}
             renderItem={({ item: [key, value] }) => (
               <List.Item

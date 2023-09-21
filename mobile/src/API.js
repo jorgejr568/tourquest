@@ -49,7 +49,13 @@ const API = Object.freeze({
         },
       });
     },
-    sendLocation: (ws, latitude, longitude, journeyId = undefined, checkpointId = undefined) => {
+    sendLocation: (
+      ws,
+      latitude,
+      longitude,
+      journeyId = undefined,
+      checkpointId = undefined,
+    ) => {
       ws.send(
         JSON.stringify({
           type: "UserLocationWsMessage",
@@ -59,7 +65,7 @@ const API = Object.freeze({
             journeyId,
             checkpointId,
           },
-        })
+        }),
       );
     },
   },

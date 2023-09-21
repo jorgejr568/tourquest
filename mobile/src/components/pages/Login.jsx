@@ -1,6 +1,6 @@
 import { Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
 import Navbar from "../organisms/Navbar";
-import { Text, useTheme, TextInput, Button } from "react-native-paper";
+import { Button, Text, TextInput, useTheme } from "react-native-paper";
 import { useCallback, useMemo, useState } from "react";
 import DismissKeyboardView from "../organisms/DismissKeyboardView";
 import API from "../../API";
@@ -61,7 +61,7 @@ function Login() {
           justifyContent: "center",
         },
       }),
-    []
+    [],
   );
 
   const handleSubmit = useCallback(() => {

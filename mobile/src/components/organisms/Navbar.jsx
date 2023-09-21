@@ -21,8 +21,8 @@ export default function Navbar() {
           backgroundColor: theme.colors.primary,
         },
       },
-      [theme]
-    )
+      [theme],
+    ),
   );
 
   const goBack = useCallback(() => {

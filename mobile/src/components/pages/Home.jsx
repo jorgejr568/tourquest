@@ -1,7 +1,5 @@
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
-import useUser from "../../hooks/useUser";
+import { SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import API from "../../API";
 import Navbar from "../organisms/Navbar";
 import { Button } from "react-native-paper";
 import withGuest from "../../middlewares/guest.middleware";
