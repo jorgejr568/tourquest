@@ -5,24 +5,26 @@ import { Button, List, useTheme } from "react-native-paper";
 import useUser from "../../hooks/useUser";
 import { useEffect, useRef, useState } from "react";
 import API from "../../API";
-import LottieView from "lottie-react-native";
+import useNavbar from "../../hooks/useNavbar";
+import firstName from "../../utils/firstName";
+import ManWalkingAnimation from "../atoms/ManWalkingAnimation";
+import withLocation from "../../middlewares/location.middleware";
 
-const AuthPage = ({ user }) => {
+const AuthPage = ({ user, route, location }) => {
   const { token, logout } = useUser();
   const theme = useTheme();
-  const wss = useRef(API.wss.new());
+  const navbarContext = useNavbar();
+  const wss = useRef();
   const [lastLocation, setLastLocation] = useState();
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    if (!wss.current) return;
+    wss.current = API.wss.new();
     wss.current.onopen = () => {
-      console.log("connected");
       setConnected(true);
     };
 
     wss.current.onmessage = (e) => {
-      console.log(e.data);
       const uuidRegex = /([a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8})/gi;
       const matches = e.data.match(uuidRegex);
 
@@ -32,31 +34,23 @@ const AuthPage = ({ user }) => {
     };
 
     wss.current.onclose = () => {
-      console.log("disconnected");
       setConnected(false);
     };
 
     return () => {
       wss.current.close();
-      console.log("disconnected");
     };
   }, []);
 
   useEffect(() => {
-    if (!wss.current) return;
+    if (!wss.current || wss.current.readyState !== WebSocket.OPEN) return;
 
-    let interval = setInterval(() => {
-      if (wss.current.readyState !== WebSocket.OPEN) return;
+    API.wss.sendLocation(wss.current, location.latitude, location.longitude);
+  }, [wss.current, location]);
 
-      try {
-        API.wss.sendLocation(wss.current, Date.now(), Date.now());
-      } catch (e) {
-        console.log(e);
-      }
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [wss.current]);
+  useEffect(() => {
+    navbarContext.setTitle(`Perfil de ${firstName(user.name)}`, route.name);
+  }, [user]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -78,18 +72,13 @@ const AuthPage = ({ user }) => {
             paddingTop: 40,
           }}
         >
-          <LottieView
-            source={require("../../animations/ManWalkingBackground.json")}
-            style={{ width: 200, height: 200 }}
-            autoPlay={connected}
-            loop
-            speed={0.5}
-          />
+          <ManWalkingAnimation autoPlay={connected} />
 
           <FlatList
             data={Object.entries({
               ...user,
               token,
+              ...location,
               ...(lastLocation
                 ? {
                     lastLocation,
@@ -114,4 +103,4 @@ const AuthPage = ({ user }) => {
   );
 };
 
-export default withAuth(AuthPage);
+export default withAuth(withLocation(AuthPage));

@@ -4,7 +4,7 @@ export const NavbarContext = createContext({
   visible: true,
   setVisible: (visible) => {},
   title: (route) => "",
-  setTitle: (route, title) => {},
+  setTitle: (title, route) => {},
 });
 
 export const NavbarProvider = ({ children }) => {

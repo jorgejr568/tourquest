@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import LottieView from "lottie-react-native";
 import { Text } from "react-native-paper";
 import { useCallback, useEffect, useRef } from "react";
+import SuccessAnimation from "../atoms/SuccessAnimation";
 
 export default function SuccessBadge({ title, onFinished }) {
   const ref = useRef();
@@ -31,14 +32,7 @@ export default function SuccessBadge({ title, onFinished }) {
   }, [ref.current]);
   return (
     <View style={styles.container}>
-      <LottieView
-        source={require("../../animations/RegisterCompleted.json")}
-        style={styles.animation}
-        loop={false}
-        onAnimationFinish={handleAnimationFinish}
-        ref={ref}
-      />
-
+      <SuccessAnimation />
       {title &&
         (typeof title === "string" ? (
           <Text variant="headlineSmall">{title}</Text>
@@ -50,12 +44,7 @@ export default function SuccessBadge({ title, onFinished }) {
 }
 
 const styles = StyleSheet.create({
-  animation: {
-    width: 200,
-    height: 200,
-  },
   container: {
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     gap: 32,

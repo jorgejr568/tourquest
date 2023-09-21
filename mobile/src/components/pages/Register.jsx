@@ -55,14 +55,13 @@ function RegisterPage({ route }) {
           paddingBottom: 92,
           width: "100%",
           maxWidth: 380,
-          display: "flex",
+
           flexDirection: "column",
           gap: 16,
           marginTop: 42,
         },
 
         alreadyHaveAccountContainer: {
-          display: "flex",
           flexDirection: "row",
           justifyContent: "center",
         },

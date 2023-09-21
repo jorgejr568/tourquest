@@ -49,14 +49,13 @@ function Login() {
           paddingBottom: 92,
           width: "100%",
           maxWidth: 380,
-          display: "flex",
+
           flexDirection: "column",
           gap: 24,
           marginTop: 42,
         },
 
         createAccountHelperContainer: {
-          display: "flex",
           flexDirection: "row",
           justifyContent: "center",
         },

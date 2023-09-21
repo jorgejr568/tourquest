@@ -16,12 +16,11 @@ export const ErrorsProvider = ({ children }) => {
   const styles = StyleSheet.create({
     snackbar: {
       backgroundColor: theme.colors.error,
-      display: "flex",
+
       justifyContent: "center",
       paddingHorizontal: 48,
     },
     container: {
-      display: "flex",
       flexDirection: "column",
       gap: 8,
     },

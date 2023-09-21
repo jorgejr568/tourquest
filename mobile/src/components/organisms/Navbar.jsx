@@ -5,13 +5,14 @@ import { Appbar, useTheme } from "react-native-paper";
 import useNavbar from "../../hooks/useNavbar";
 import { StatusBar } from "expo-status-bar";
 
-export default function Navbar() {
+export default function Navbar(props) {
   const navigation = useNavigation();
   const context = useNavbar();
   const route = useRoute();
 
   const hasBack = navigation.canGoBack() && route.name !== "Home";
-  const title = context.title(route.name) || route.name || "title";
+  const title =
+    props.title || context.title(route.name) || route.name || "title";
   const theme = useTheme();
 
   const styles = useMemo(() =>
