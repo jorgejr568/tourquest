@@ -2,7 +2,6 @@ import { StyleSheet, View } from "react-native";
 import LottieView from "lottie-react-native";
 import { Text } from "react-native-paper";
 import { useCallback, useEffect, useRef } from "react";
-import RegisterCompleteAnimation from "../../animations/RegisterCompleted.json";
 
 export default function SuccessBadge({ title, onFinished }) {
   const ref = useRef();
@@ -33,7 +32,7 @@ export default function SuccessBadge({ title, onFinished }) {
   return (
     <View style={styles.container}>
       <LottieView
-        source={RegisterCompleteAnimation}
+        source={require("../../animations/RegisterCompleted.json")}
         style={styles.animation}
         loop={false}
         onAnimationFinish={handleAnimationFinish}
