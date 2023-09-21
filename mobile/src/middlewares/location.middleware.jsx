@@ -1,5 +1,5 @@
 import * as Location from "expo-location";
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import LoadingPage from "../components/pages/Loading";
 import LocationRequestPage from "../components/pages/LocationRequest";
 import useErrors from "../hooks/useErrors";

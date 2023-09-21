@@ -1,5 +1,4 @@
 import { StyleSheet, View } from "react-native";
-import LottieView from "lottie-react-native";
 import { Text } from "react-native-paper";
 import { useCallback, useEffect, useRef } from "react";
 import SuccessAnimation from "../atoms/SuccessAnimation";

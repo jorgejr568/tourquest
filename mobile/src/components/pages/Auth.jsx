@@ -5,7 +5,6 @@ import { Button, List, useTheme } from "react-native-paper";
 import useUser from "../../hooks/useUser";
 import { useEffect, useRef, useState } from "react";
 import API from "../../API";
-import useNavbar from "../../hooks/useNavbar";
 import firstName from "../../utils/firstName";
 import ManWalkingAnimation from "../atoms/ManWalkingAnimation";
 import withLocation from "../../middlewares/location.middleware";
@@ -13,7 +12,6 @@ import withLocation from "../../middlewares/location.middleware";
 const AuthPage = ({ user, route, location }) => {
   const { token, logout } = useUser();
   const theme = useTheme();
-  const navbarContext = useNavbar();
   const wss = useRef();
   const [lastLocation, setLastLocation] = useState();
   const [connected, setConnected] = useState(false);
@@ -48,13 +46,9 @@ const AuthPage = ({ user, route, location }) => {
     API.wss.sendLocation(wss.current, location.latitude, location.longitude);
   }, [wss.current, location]);
 
-  useEffect(() => {
-    navbarContext.setTitle(`Perfil de ${firstName(user.name)}`, route.name);
-  }, [user]);
-
   return (
     <View style={{ flex: 1 }}>
-      <Navbar />
+      <Navbar title={`Perfil de ${firstName(user.name)}`} />
 
       <SafeAreaView
         style={{

@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Navbar from "../organisms/Navbar";
 import { Button, Text, TextInput, useTheme } from "react-native-paper";
 import withGuest from "../../middlewares/guest.middleware";
-import useNavbar from "../../hooks/useNavbar";
 import DismissKeyboardView from "../organisms/DismissKeyboardView";
 import { useNavigation } from "@react-navigation/native";
 import API from "../../API";
@@ -34,7 +33,6 @@ function RegisterPage({ route }) {
 
   const { setToken } = useUser();
   const [waitToken, setWaitToken] = useState();
-  const navbarContext = useNavbar();
   const navigation = useNavigation();
   const theme = useTheme();
   const styles = useMemo(
@@ -117,13 +115,9 @@ function RegisterPage({ route }) {
     navigation.navigate("Auth");
   }, [waitToken]);
 
-  useEffect(() => {
-    return navbarContext.setTitle("Crie sua conta", route.name);
-  }, []);
-
   return (
     <View style={styles.container}>
-      <Navbar />
+      <Navbar title="Crie sua conta" />
 
       <DismissKeyboardView>
         <SafeAreaView style={styles.safeContainer}>

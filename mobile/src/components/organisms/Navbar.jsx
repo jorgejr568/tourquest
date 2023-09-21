@@ -1,18 +1,15 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { Appbar, useTheme } from "react-native-paper";
-import useNavbar from "../../hooks/useNavbar";
 import { StatusBar } from "expo-status-bar";
 
 export default function Navbar(props) {
   const navigation = useNavigation();
-  const context = useNavbar();
   const route = useRoute();
 
   const hasBack = navigation.canGoBack() && route.name !== "Home";
-  const title =
-    props.title || context.title(route.name) || route.name || "title";
+  const title = props.title || route.name || "(title)";
   const theme = useTheme();
 
   const styles = useMemo(() =>
@@ -32,11 +29,7 @@ export default function Navbar(props) {
     }
 
     navigation.navigate("Home");
-  });
-
-  useEffect(() => {
-    context.setTitle("");
-  }, [route.name]);
+  }, [navigation]);
 
   return (
     <>
