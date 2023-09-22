@@ -5,6 +5,7 @@ import Auth from "./components/pages/Auth";
 import { StatusBar } from "expo-status-bar";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
+import Reward from "./components/pages/Reward";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ export default function Router() {
         <Stack.Screen name="Auth" component={Auth} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Reward" component={Reward} />
       </Stack.Navigator>
     </NavigationContainer>
   );

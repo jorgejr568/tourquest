@@ -41,6 +41,18 @@ const API = Object.freeze({
       return { token, user };
     },
   },
+  journeys: {
+    all: async () => {
+      const { data } = await client.get("/api/v1/journeys");
+      return data;
+    },
+    checkpoints: async (journeyId) => {
+      const { data } = await client.get(
+        `/api/v1/journeys/${journeyId}/checkpoints`
+      );
+      return data;
+    },
+  },
   wss: {
     new: () => {
       return new WebSocket(BASE_WS, null, {
@@ -54,7 +66,7 @@ const API = Object.freeze({
       latitude,
       longitude,
       journeyId = undefined,
-      checkpointId = undefined,
+      checkpointId = undefined
     ) => {
       ws.send(
         JSON.stringify({
@@ -65,7 +77,7 @@ const API = Object.freeze({
             journeyId,
             checkpointId,
           },
-        }),
+        })
       );
     },
   },

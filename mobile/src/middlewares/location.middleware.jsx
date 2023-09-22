@@ -22,9 +22,6 @@ function LocationMiddleware({ Component, ...props }) {
     }
 
     setLocationPermission(true);
-
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation(location.coords);
   }, []);
 
   useEffect(() => {
@@ -48,8 +45,11 @@ function LocationMiddleware({ Component, ...props }) {
           },
           ({ coords: { latitude, longitude } }) => {
             setLocation({ latitude, longitude });
-          },
+          }
         );
+
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location.coords);
       }
     })();
 

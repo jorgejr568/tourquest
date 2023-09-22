@@ -8,13 +8,17 @@ import API from "../../API";
 import firstName from "../../utils/firstName";
 import ManWalkingAnimation from "../atoms/ManWalkingAnimation";
 import withLocation from "../../middlewares/location.middleware";
+import { useNavigation } from "@react-navigation/native";
 
 const AuthPage = ({ user, location }) => {
   const { token, logout } = useUser();
+  const navigation = useNavigation();
   const theme = useTheme();
   const wss = useRef();
   const [lastLocation, setLastLocation] = useState();
   const [connected, setConnected] = useState(false);
+  const [journeys, setJourneys] = useState([]);
+  const [checkpoints, setCheckpoints] = useState([]);
 
   useEffect(() => {
     wss.current = API.wss.new();
@@ -46,6 +50,19 @@ const AuthPage = ({ user, location }) => {
     API.wss.sendLocation(wss.current, location.latitude, location.longitude);
   }, [wss.current, location]);
 
+  useEffect(() => {
+    API.journeys
+      .all()
+      .then((journeys) => {
+        setJourneys(journeys);
+
+        return API.journeys.checkpoints(journeys[0].id);
+      })
+      .then((checkpoints) => {
+        setCheckpoints(checkpoints);
+      });
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <Navbar title={`Perfil de ${firstName(user.name)}`} />
@@ -67,6 +84,31 @@ const AuthPage = ({ user, location }) => {
           }}
         >
           <ManWalkingAnimation autoPlay={connected} />
+          {journeys.length > 0 && (
+            <Button
+              mode="outlined"
+              onPress={() =>
+                navigation.navigate("Reward", {
+                  journey: journeys[0],
+                })
+              }
+            >
+              {journeys[0].title}
+            </Button>
+          )}
+
+          {checkpoints.length > 0 && (
+            <Button
+              mode="outlined"
+              onPress={() =>
+                navigation.navigate("Reward", {
+                  checkpoint: checkpoints[0],
+                })
+              }
+            >
+              {checkpoints[0].title}
+            </Button>
+          )}
 
           <FlatList
             data={Object.entries({
