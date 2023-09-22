@@ -6,9 +6,12 @@ import withAuth from "../../middlewares/auth.middleware";
 import Navbar from "../organisms/Navbar";
 import firstName from "../../utils/firstName";
 import withLocation from "../../middlewares/location.middleware";
+import useErrors from "../../hooks/useErrors";
+import API from "../../API";
 
 function Reward({ route, user, navigation, location }) {
   const medalRef = useRef();
+  const errors = useErrors();
   const theme = useTheme();
   const styles = useMemo(() =>
     StyleSheet.create({
@@ -40,7 +43,7 @@ function Reward({ route, user, navigation, location }) {
       button: {
         marginBottom: 12,
       },
-    })
+    }),
   );
 
   const title = useMemo(() => {
@@ -74,6 +77,38 @@ function Reward({ route, user, navigation, location }) {
     navigation.goBack();
   }, []);
 
+  const resetAnimation = useCallback((isCancelled) => {
+    if (isCancelled) return;
+
+    setTimeout(() => {
+      if (medalRef.current) {
+        medalRef.current.play(30, 100);
+      }
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    if (!medalRef.current) return;
+
+    setTimeout(() => {
+      medalRef.current.play();
+    }, 100);
+  }, [medalRef.current]);
+
+  useEffect(() => {
+    errors.clear();
+    if (route.params?.checkpoint) {
+      API.user
+        .markCheckpoint(route.params.checkpoint.id, location)
+        .catch((error) => {
+          console.error(error);
+          errors.pushError(
+            "Não foi possível marcar o checkpoint como concluído.",
+          );
+        });
+    }
+  }, [route.params]);
+
   return (
     <View style={styles.container}>
       <Navbar title={`Parabéns ${firstName(user.name)}`} />
@@ -82,7 +117,7 @@ function Reward({ route, user, navigation, location }) {
         <View style={styles.contentContainer}>
           <View style={styles.medalContainer}>
             {title}
-            <MedalAnimation ref={medalRef} loop={false} />
+            <MedalAnimation ref={medalRef} onAnimationFinish={resetAnimation} />
           </View>
 
           <Button mode="contained" style={styles.button} onPress={handleBack}>

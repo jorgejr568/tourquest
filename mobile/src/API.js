@@ -40,6 +40,12 @@ const API = Object.freeze({
 
       return { token, user };
     },
+    markCheckpoint: async (checkpointId, { latitude, longitude }) => {
+      await client.patch(`/api/v1/users/checkpoints/${checkpointId}`, {
+        latitude,
+        longitude,
+      });
+    },
   },
   journeys: {
     all: async () => {
@@ -48,7 +54,7 @@ const API = Object.freeze({
     },
     checkpoints: async (journeyId) => {
       const { data } = await client.get(
-        `/api/v1/journeys/${journeyId}/checkpoints`
+        `/api/v1/journeys/${journeyId}/checkpoints`,
       );
       return data;
     },
@@ -66,7 +72,7 @@ const API = Object.freeze({
       latitude,
       longitude,
       journeyId = undefined,
-      checkpointId = undefined
+      checkpointId = undefined,
     ) => {
       ws.send(
         JSON.stringify({
@@ -77,7 +83,7 @@ const API = Object.freeze({
             journeyId,
             checkpointId,
           },
-        })
+        }),
       );
     },
   },

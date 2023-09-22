@@ -10,6 +10,9 @@ import ManWalkingAnimation from "../atoms/ManWalkingAnimation";
 import withLocation from "../../middlewares/location.middleware";
 import { useNavigation } from "@react-navigation/native";
 
+const randomElement = (array) =>
+  array[Math.floor(Math.random() * array.length)];
+
 const AuthPage = ({ user, location }) => {
   const { token, logout } = useUser();
   const navigation = useNavigation();
@@ -17,8 +20,8 @@ const AuthPage = ({ user, location }) => {
   const wss = useRef();
   const [lastLocation, setLastLocation] = useState();
   const [connected, setConnected] = useState(false);
-  const [journeys, setJourneys] = useState([]);
-  const [checkpoints, setCheckpoints] = useState([]);
+  const [journey, setJourney] = useState();
+  const [checkpoint, setCheckpoint] = useState();
 
   useEffect(() => {
     wss.current = API.wss.new();
@@ -54,12 +57,13 @@ const AuthPage = ({ user, location }) => {
     API.journeys
       .all()
       .then((journeys) => {
-        setJourneys(journeys);
+        const journey = randomElement(journeys);
+        setJourney(journey);
 
-        return API.journeys.checkpoints(journeys[0].id);
+        return API.journeys.checkpoints(journey.id);
       })
       .then((checkpoints) => {
-        setCheckpoints(checkpoints);
+        setCheckpoint(randomElement(checkpoints));
       });
   }, []);
 
@@ -84,29 +88,29 @@ const AuthPage = ({ user, location }) => {
           }}
         >
           <ManWalkingAnimation autoPlay={connected} />
-          {journeys.length > 0 && (
+          {journey && (
             <Button
               mode="outlined"
               onPress={() =>
                 navigation.navigate("Reward", {
-                  journey: journeys[0],
+                  journey,
                 })
               }
             >
-              {journeys[0].title}
+              {journey.title}
             </Button>
           )}
 
-          {checkpoints.length > 0 && (
+          {checkpoint && (
             <Button
               mode="outlined"
               onPress={() =>
                 navigation.navigate("Reward", {
-                  checkpoint: checkpoints[0],
+                  checkpoint,
                 })
               }
             >
-              {checkpoints[0].title}
+              {checkpoint.title}
             </Button>
           )}
 

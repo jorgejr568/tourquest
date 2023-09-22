@@ -6,7 +6,7 @@ function MedalAnimation(props, ref) {
     <LottieView
       ref={ref}
       source={require("../../animations/Medal.json")}
-      autoPlay
+      autoPlay={false}
       loop={false}
       style={{ width: 200, height: 200 }}
       {...props}
