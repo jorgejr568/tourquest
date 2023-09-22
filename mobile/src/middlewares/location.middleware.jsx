@@ -48,8 +48,10 @@ function LocationMiddleware({ Component, ...props }) {
           }
         );
 
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation(location.coords);
+        let {
+          coords: { latitude, longitude },
+        } = await Location.getCurrentPositionAsync({});
+        setLocation({ latitude, longitude });
       }
     })();
 

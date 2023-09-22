@@ -5,8 +5,9 @@ import MedalAnimation from "../atoms/MedalAnimation";
 import withAuth from "../../middlewares/auth.middleware";
 import Navbar from "../organisms/Navbar";
 import firstName from "../../utils/firstName";
+import withLocation from "../../middlewares/location.middleware";
 
-function Reward({ route, user, navigation }) {
+function Reward({ route, user, navigation, location }) {
   const medalRef = useRef();
   const theme = useTheme();
   const styles = useMemo(() =>
@@ -73,15 +74,6 @@ function Reward({ route, user, navigation }) {
     navigation.goBack();
   }, []);
 
-  const resetAnimation = useCallback(() => {
-    setTimeout(() => {
-      if (!medalRef.current) return;
-
-      medalRef.current.reset();
-      medalRef.current.play();
-    }, 1500);
-  }, [medalRef.current]);
-
   return (
     <View style={styles.container}>
       <Navbar title={`Parabéns ${firstName(user.name)}`} />
@@ -90,7 +82,7 @@ function Reward({ route, user, navigation }) {
         <View style={styles.contentContainer}>
           <View style={styles.medalContainer}>
             {title}
-            <MedalAnimation ref={medalRef} onAnimationFinish={resetAnimation} />
+            <MedalAnimation ref={medalRef} loop={false} />
           </View>
 
           <Button mode="contained" style={styles.button} onPress={handleBack}>
@@ -102,4 +94,4 @@ function Reward({ route, user, navigation }) {
   );
 }
 
-export default withAuth(Reward);
+export default withAuth(withLocation(Reward));
