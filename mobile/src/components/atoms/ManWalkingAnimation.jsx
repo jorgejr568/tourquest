@@ -8,7 +8,6 @@ function ManWalkingAnimation(props, ref) {
       style={{ width: 250, height: 250 }}
       loop
       autoPlay={true}
-      speed={0.5}
       ref={ref}
       {...props}
     />

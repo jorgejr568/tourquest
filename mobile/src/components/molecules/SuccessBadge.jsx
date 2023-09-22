@@ -31,7 +31,7 @@ export default function SuccessBadge({ title, onFinished }) {
   }, [ref.current]);
   return (
     <View style={styles.container}>
-      <SuccessAnimation />
+      <SuccessAnimation onAnimationFinish={handleAnimationFinish} ref={ref} />
       {title &&
         (typeof title === "string" ? (
           <Text variant="headlineSmall">{title}</Text>

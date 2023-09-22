@@ -1,28 +1,38 @@
 {
   "expo": {
-    "name": "tourquest",
-    "slug": "tourquest",
-    "version": "1.0.0",
+    "name": "TourQuest",
+    "slug": "tour-quest",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#3CA897"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#3CA897"
+      },
+      "package": "com.jorgejr568.tourquest",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3a557cd5-f57e-4c50-a5ec-d609dd055610"
+      }
+    },
+    "owner": "jorgejr568"
   }
 }

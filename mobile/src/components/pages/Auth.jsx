@@ -9,7 +9,7 @@ import firstName from "../../utils/firstName";
 import ManWalkingAnimation from "../atoms/ManWalkingAnimation";
 import withLocation from "../../middlewares/location.middleware";
 
-const AuthPage = ({ user, route, location }) => {
+const AuthPage = ({ user, location }) => {
   const { token, logout } = useUser();
   const theme = useTheme();
   const wss = useRef();
