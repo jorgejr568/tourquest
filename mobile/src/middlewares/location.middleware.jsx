@@ -3,10 +3,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import LoadingPage from "../components/pages/Loading";
 import LocationRequestPage from "../components/pages/LocationRequest";
 import useErrors from "../hooks/useErrors";
+import useLocation from "../hooks/useLocation";
 
 function LocationMiddleware({ Component, ...props }) {
   const watchRef = useRef();
-  const [location, setLocation] = useState();
+  const { location, setLocation } = useLocation();
   const errors = useErrors();
 
   const [locationPermission, setLocationPermission] = useState(false);

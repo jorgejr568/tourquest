@@ -9,6 +9,7 @@ import firstName from "../../utils/firstName";
 import ManWalkingAnimation from "../atoms/ManWalkingAnimation";
 import withLocation from "../../middlewares/location.middleware";
 import { useNavigation } from "@react-navigation/native";
+import useWatchLocation from "../../hooks/useWatchLocation";
 
 const randomElement = (array) =>
   array[Math.floor(Math.random() * array.length)];
@@ -17,41 +18,9 @@ const AuthPage = ({ user, location }) => {
   const { token, logout } = useUser();
   const navigation = useNavigation();
   const theme = useTheme();
-  const wss = useRef();
-  const [lastLocation, setLastLocation] = useState();
-  const [connected, setConnected] = useState(false);
   const [journey, setJourney] = useState();
   const [checkpoint, setCheckpoint] = useState();
-
-  useEffect(() => {
-    wss.current = API.wss.new();
-    wss.current.onopen = () => {
-      setConnected(true);
-    };
-
-    wss.current.onmessage = (e) => {
-      const uuidRegex = /([a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8})/gi;
-      const matches = e.data.match(uuidRegex);
-
-      if (matches && matches.length > 0) {
-        setLastLocation(matches[0]);
-      }
-    };
-
-    wss.current.onclose = () => {
-      setConnected(false);
-    };
-
-    return () => {
-      wss.current.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!wss.current || wss.current.readyState !== WebSocket.OPEN) return;
-
-    API.wss.sendLocation(wss.current, location.latitude, location.longitude);
-  }, [wss.current, location]);
+  const { connected, lastLocation } = useWatchLocation();
 
   useEffect(() => {
     API.journeys
@@ -111,6 +80,19 @@ const AuthPage = ({ user, location }) => {
               }
             >
               {checkpoint.title}
+            </Button>
+          )}
+
+          {checkpoint && (
+            <Button
+              mode="outlined"
+              onPress={() =>
+                navigation.navigate("CheckpointMap", {
+                  checkpoint,
+                })
+              }
+            >
+              map {checkpoint.title}
             </Button>
           )}
 

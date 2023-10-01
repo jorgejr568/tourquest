@@ -43,7 +43,7 @@ function Reward({ route, user, navigation, location }) {
       button: {
         marginBottom: 12,
       },
-    }),
+    })
   );
 
   const title = useMemo(() => {
@@ -103,10 +103,14 @@ function Reward({ route, user, navigation, location }) {
         .catch((error) => {
           console.error(error);
           errors.pushError(
-            "Não foi possível marcar o checkpoint como concluído.",
+            "Não foi possível marcar o checkpoint como concluído."
           );
         });
     }
+  }, [route.params]);
+
+  const animationComponent = useMemo(() => {
+    return <MedalAnimation ref={medalRef} onAnimationFinish={resetAnimation} />;
   }, [route.params]);
 
   return (
@@ -117,7 +121,7 @@ function Reward({ route, user, navigation, location }) {
         <View style={styles.contentContainer}>
           <View style={styles.medalContainer}>
             {title}
-            <MedalAnimation ref={medalRef} onAnimationFinish={resetAnimation} />
+            {animationComponent}
           </View>
 
           <Button mode="contained" style={styles.button} onPress={handleBack}>

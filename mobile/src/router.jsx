@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import Reward from "./components/pages/Reward";
+import CheckpointMap from "./components/pages/CheckpointMap";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function Router() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Reward" component={Reward} />
+        <Stack.Screen name="CheckpointMap" component={CheckpointMap} />
       </Stack.Navigator>
     </NavigationContainer>
   );
