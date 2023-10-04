@@ -37,6 +37,7 @@ export default function useWatchLocation() {
 
     if (wss.current.readyState !== WebSocket.OPEN) {
       wss.current.onopen = () => {
+        setConnected(true);
         API.wss.sendLocation(
           wss.current,
           location.latitude,
