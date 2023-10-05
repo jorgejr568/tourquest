@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, SafeAreaView, StyleSheet, FlatList } from "react-native";
-import { Text } from "react-native-paper";
+import { ActivityIndicator, Text } from "react-native-paper";
 import CheckpointCard from "../molecules/CheckpointCard";
 import API from "../../API";
 import withAuth from "../../middlewares/auth.middleware";
@@ -9,6 +9,7 @@ import Navbar from "../organisms/Navbar";
 function CheckpointList({ route, navigation }) {
   const { journey } = route.params;
   const [checkpoints, setCheckpoints] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     API.journeys
@@ -17,6 +18,9 @@ function CheckpointList({ route, navigation }) {
       .catch((e) => {
         console.error("Error on get checkpoints", e);
         navigation.goBack();
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -24,17 +28,25 @@ function CheckpointList({ route, navigation }) {
     <View style={styles.container}>
       <Navbar title={`${journey.title}`} />
       <SafeAreaView style={styles.safeContainer}>
-        <View style={styles.listContainer}>
-          <FlatList
-            data={checkpoints}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View style={styles.checkpointItem}>
-                <CheckpointCard checkpoint={item} />
-              </View>
-            )}
-          />
-        </View>
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
+
+        {!loading && (
+          <View style={styles.listContainer}>
+            <FlatList
+              data={checkpoints}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <View style={styles.checkpointItem}>
+                  <CheckpointCard checkpoint={item} />
+                </View>
+              )}
+            />
+          </View>
+        )}
       </SafeAreaView>
     </View>
   );
@@ -50,6 +62,11 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkpointItem: {
     marginBottom: 16,
