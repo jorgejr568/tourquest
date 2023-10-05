@@ -61,7 +61,7 @@ const AuthPage = ({ user, location }) => {
             <Button
               mode="outlined"
               onPress={() =>
-                navigation.navigate("Reward", {
+                navigation.navigate("CheckpointList", {
                   journey,
                 })
               }
