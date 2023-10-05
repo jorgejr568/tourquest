@@ -101,7 +101,6 @@ function Reward({ route, user, navigation, location }) {
       API.user
         .markCheckpoint(route.params.checkpoint.id, location)
         .catch((error) => {
-          console.error(error);
           errors.pushError(
             "Não foi possível marcar o checkpoint como concluído."
           );
