@@ -1,5 +1,6 @@
 import { describe, it, expect, mock } from "bun:test";
 import { PrismaCheckpointRepository } from "./checkpoint_repository.prisma";
+import { Checkpoint } from "@/dtos";
 
 describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => {
   describe("create", () => {
@@ -271,14 +272,14 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
       expect(checkpoints[0].latitude).toEqual(22);
       expect(checkpoints[0].longitude).toEqual(23);
       expect(checkpoints[0].completedAt).toEqual(
-        new Date("2023-01-01T00:00:00.000Z")
+        new Date("2023-01-01T00:00:00.000Z"),
       );
 
       expect(
-        mockClient.userCompletedCheckpoints.findMany
+        mockClient.userCompletedCheckpoints.findMany,
       ).toHaveBeenCalledTimes(1);
       expect(
-        mockClient.userCompletedCheckpoints.findMany.mock.calls[0]
+        mockClient.userCompletedCheckpoints.findMany.mock.calls[0],
       ).toEqual([
         {
           where: { userId: "mock-user-id" },
@@ -326,7 +327,7 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
       });
 
       expect(mockClient.userCompletedCheckpoints.upsert).toHaveBeenCalledTimes(
-        1
+        1,
       );
       expect(mockClient.userCompletedCheckpoints.upsert.mock.calls[0]).toEqual([
         {
@@ -365,6 +366,87 @@ describe("repositories.checkpoint_repository.PrismaCheckpointRepository", () => 
           latitude: 22,
           longitude: 23,
         })
+        .then(() => done("should have thrown an error"))
+        .catch((error) => {
+          expect(error.message).toEqual("mock-error");
+          done();
+        });
+    });
+  });
+
+  describe("findById", () => {
+    it("should return a checkpoint", async () => {
+      const mockClient = {
+        checkpoint: {
+          findUnique: mock(
+            async () =>
+              new Checkpoint({
+                id: "mock-id",
+                title: "mock-title",
+                description: "mock-description",
+                image: "mock-image",
+                latitude: 22,
+                longitude: 23,
+                range: 50,
+              }),
+          ),
+        },
+      };
+
+      const repository = new PrismaCheckpointRepository(mockClient as any);
+
+      const checkpoint = await repository.findById("mock-id");
+
+      if (!checkpoint) {
+        expect(checkpoint).toBeTruthy();
+        return;
+      }
+
+      expect(checkpoint.toJSON()).toEqual({
+        id: "mock-id",
+        title: "mock-title",
+        description: "mock-description",
+        image: "mock-image",
+        latitude: 22,
+        longitude: 23,
+        range: 50,
+      });
+
+      expect(mockClient.checkpoint.findUnique).toHaveBeenCalledTimes(1);
+      expect(mockClient.checkpoint.findUnique.mock.calls[0]).toEqual([
+        {
+          where: { id: "mock-id" },
+        },
+      ]);
+    });
+
+    it("should return null if no checkpoint is found", async () => {
+      const mockClient = {
+        checkpoint: {
+          findUnique: mock(async () => null),
+        },
+      };
+
+      const repository = new PrismaCheckpointRepository(mockClient as any);
+
+      const checkpoint = await repository.findById("mock-id");
+
+      expect(checkpoint).toEqual(null);
+    });
+
+    it("should throw an error if the checkpoint could not be found", (done) => {
+      const mockClient = {
+        checkpoint: {
+          findUnique: mock(async () => {
+            throw new Error("mock-error");
+          }),
+        },
+      };
+
+      const repository = new PrismaCheckpointRepository(mockClient as any);
+
+      repository
+        .findById("mock-id")
         .then(() => done("should have thrown an error"))
         .catch((error) => {
           expect(error.message).toEqual("mock-error");
