@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import useLocation from "./useLocation";
 import API from "../API";
 
-export default function useWatchLocation() {
+/**
+ *
+ * @param {checkpointId: string, journeyId: string} props
+ * @returns {lastLocation: string, connected: boolean, wss: WebSocket}
+ */
+
+export default function useWatchLocation(props) {
   const wss = useRef();
   const { location } = useLocation();
   const [lastLocation, setLastLocation] = useState();
@@ -41,13 +47,21 @@ export default function useWatchLocation() {
         API.wss.sendLocation(
           wss.current,
           location.latitude,
-          location.longitude
+          location.longitude,
+          props?.journeyId,
+          props?.checkpointId
         );
       };
       return;
     }
 
-    API.wss.sendLocation(wss.current, location.latitude, location.longitude);
+    API.wss.sendLocation(
+      wss.current,
+      location.latitude,
+      location.longitude,
+      props?.journeyId,
+      props?.checkpointId
+    );
   }, [wss.current, location]);
 
   return {

@@ -2,12 +2,13 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 
-export default function CheckpointCard({ checkpoint }) {
+export default function CheckpointCard({ checkpoint, journeyId }) {
   const navigation = useNavigation();
 
   const handlePress = () => {
     navigation.navigate("CheckpointMap", {
       checkpoint,
+      journeyId,
     });
   };
 

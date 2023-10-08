@@ -12,7 +12,7 @@ import distanceFormatter from "../../utils/distanceFormatter";
 import durationFormatter from "../../utils/durationFormatter";
 
 function CheckpointMapPage({ navigation, location, route, theme }) {
-  const { checkpoint } = route.params;
+  const { checkpoint, journeyId } = route.params;
   const [distance, setDistance] = useState(undefined);
   const [duration, setDuration] = useState(undefined);
   const initialLocation = useRef(location);
@@ -55,7 +55,10 @@ function CheckpointMapPage({ navigation, location, route, theme }) {
     [theme]
   );
 
-  useWatchLocation();
+  useWatchLocation({
+    checkpointId: checkpoint.id,
+    journeyId: journeyId,
+  });
 
   useEffect(() => {
     mapRef.current?.animateCamera({

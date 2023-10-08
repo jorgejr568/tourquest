@@ -41,7 +41,7 @@ function CheckpointList({ route, navigation }) {
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <View style={styles.checkpointItem}>
-                  <CheckpointCard checkpoint={item} />
+                  <CheckpointCard checkpoint={item} journeyId={journey.id} />
                 </View>
               )}
             />

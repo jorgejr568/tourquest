@@ -19,21 +19,13 @@ const AuthPage = ({ user, location }) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const [journey, setJourney] = useState();
-  const [checkpoint, setCheckpoint] = useState();
   const { connected, lastLocation } = useWatchLocation();
 
   useEffect(() => {
-    API.journeys
-      .all()
-      .then((journeys) => {
-        const journey = randomElement(journeys);
-        setJourney(journey);
-
-        return API.journeys.checkpoints(journey.id);
-      })
-      .then((checkpoints) => {
-        setCheckpoint(randomElement(checkpoints));
-      });
+    API.journeys.all().then((journeys) => {
+      const journey = randomElement(journeys);
+      setJourney(journey);
+    });
   }, []);
 
   return (
@@ -67,32 +59,6 @@ const AuthPage = ({ user, location }) => {
               }
             >
               {journey.title}
-            </Button>
-          )}
-
-          {checkpoint && (
-            <Button
-              mode="outlined"
-              onPress={() =>
-                navigation.navigate("Reward", {
-                  checkpoint,
-                })
-              }
-            >
-              {checkpoint.title}
-            </Button>
-          )}
-
-          {checkpoint && (
-            <Button
-              mode="outlined"
-              onPress={() =>
-                navigation.navigate("CheckpointMap", {
-                  checkpoint,
-                })
-              }
-            >
-              map {checkpoint.title}
             </Button>
           )}
 

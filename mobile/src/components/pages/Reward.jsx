@@ -104,6 +104,7 @@ function Reward({ route, user, navigation, location }) {
           errors.pushError(
             "Não foi possível marcar o checkpoint como concluído."
           );
+          navigation.goBack();
         });
     }
   }, [route.params]);
