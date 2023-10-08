@@ -6,217 +6,155 @@ export const USERS_SEED_DATA = [
   },
 ];
 
+const CHECKPOINTS = {
+  AcampamentoPedraDaTartaruga: {
+    title: "Acampamento Pedra da Tartaruga",
+    image:
+      "https://tourquest.storage.googleapis.com/acampamento-pedra-da-tartaruga.jpeg",
+    latitude: -22.368268582259912,
+    longitude: -42.98467120525294,
+    description:
+      "Frequentada por montanhista desde antes da criação do Parque. Com vias de Mozart Catão e Alexandre Oliveira (Ice Wall), renomados alpinistas teresopolitanos, o local sempre foi de treinamento para escalada se tornando um verdadeiro Campo Escola.",
+  },
+  CasaDaMemoria: {
+    title: "Casa da Memória Arthur Dalmasso",
+    image:
+      "https://tourquest.storage.googleapis.com/casa-da-memoria-arthur-dalmasso.jpeg",
+    latitude: -22.412022127328747,
+    longitude: -42.96462367841782,
+    description:
+      "Construída como um presente do prefeito interino de Teresópolis, Sr. José Lino de Oliveira Leite, a sua esposa Cecília da Silva Leite. O local foi batizado de Villa Cecília tendo sua construção concluída em 1924.",
+  },
+  CascataDoImbui: {
+    title: "Cascata do Imbuí",
+    image: "https://tourquest.storage.googleapis.com/cascata-do-imbui.jpg",
+    latitude: -22.383999198203167,
+    longitude: -42.98121354405841,
+    description:
+      "atrativo é caracterizado por um grande platô rochoso, de onde se podem destacar três pequenas piscinas naturais, originadas do Rio Paquequer. A cascata, de grande beleza, apresenta-se com altura aproximada de 20 metros de queda, onde as águas, com forte intensidade, se precipitam em corredeiras.",
+  },
+  ColinaDoMirante: {
+    title: "Colina do Mirante",
+    image: "https://tourquest.storage.googleapis.com/colina-do-mirante.jpeg",
+    latitude: -22.428507135693753,
+    longitude: -42.972512991198215,
+    description:
+      "O mirante panorâmico foi erguido nos anos 1960 pra virar opção de lazer. A área pertencia a Joaquim Rolla e foi doada ao município a pedido do prefeito da época, Waldir Barbosa. Ele mesmo fez o esboço do projeto. Hoje, revitalizado, o mirante é bastante frequentado por moradores.",
+  },
+  CachoeiraDaCampanha: {
+    title: "Cachoeira da Campanha",
+    image:
+      "https://tourquest.storage.googleapis.com/cachoeira-da-campanha.jpeg",
+    latitude: -22.301872721428538,
+    longitude: -42.81921788520808,
+    description:
+      "A Cachoeira da Campanha, localizada no Vale de Bonsucesso, é uma das opções perfeitas para passar o dia em família. Com fácil acesso, é um local seguro e agradável para todas as idades, sobretudo por conta das águas claras, uma das maiores características do local.",
+  },
+  FonteAmelia: {
+    title: "Fonte Amélia",
+    image: "https://tourquest.storage.googleapis.com/fonte-amelia.jpeg",
+    latitude: -22.43856684320064,
+    longitude: -42.983937433083916,
+    description:
+      "Foi inaugurada em 8 de novembro de 1970 pelo então prefeito Waldir Barbosa Moreira para homenagear sua amiga portuguesa Amélia que costumava lavar roupa no local, sendo patrimônio cultural do município, bastante frequentada por moradores do entorno.",
+  },
+  FonteJudith: {
+    title: "Fonte Judith",
+    image: "https://tourquest.storage.googleapis.com/fonte-judith.jpeg",
+    latitude: -22.443467282827974,
+    longitude: -42.98177219260404,
+    description:
+      "A Fonte Judith é uma fonte de água mineral localizada no bairro de São Pedro, na cidade de Teresópolis, no estado do Rio de Janeiro, no Brasil. A fonte foi construída em 1897 e é uma das mais antigas da cidade.",
+  },
+  CampoEscolaDeEscaladaAlexandreOliveira: {
+    title: "Campo Escola de Escalada Alexandre Oliveira – Pedra da Camelo",
+    image:
+      "https://tourquest.storage.googleapis.com/campo-escola-de-escalada-alexandre-oliveira-pedra-da-camelo.jpeg",
+    latitude: -22.364965689197163,
+    longitude: -42.99426269810765,
+    description:
+      "O C.E. tem acesso pela Trilha do Camelo e está na base da montanha. Foi batizado em homenagem ao escalador que perdeu sua vida em 1998 junto de Mozart Catão e Othon Leonardos em uma trágica investida na face sul do Monte Aconcágua sendo atingidos por uma avalanche. Alexandre tem vias na escalada na Pedra da Tartaruga e frequentemente treinava nas montanhas da UC.",
+  },
+  Parnaso: {
+    title: "PARNASO | SEDE TERESÓPOLIS",
+    image: "https://tourquest.storage.googleapis.com/parnaso.jpeg",
+    latitude: -22.448268688492078,
+    longitude: -42.982528621989964,
+    description:
+      "O Parque Nacional da Serra dos Órgãos é uma unidade de conservação brasileira de proteção integral à natureza localizada na Serra dos Órgãos, na região serrana do estado do Rio de Janeiro. Abrange os municípios de Teresópolis, Petrópolis, Magé e Guapimirim.",
+  },
+  ParquinhoInfantilTrilhaDoCamelo: {
+    title: "Parquinho Infantil – Trilha do Camelo",
+    image:
+      "https://tourquest.storage.googleapis.com/parquinho-infantil-trilha-do-camelo.jpeg",
+    latitude: -22.367346901007668,
+    longitude: -42.98666668252409,
+    description:
+      "O parquinho infantil está localizado na entrada da Trilha do Camelo. O acesso é feito pela Trilha da Tartaruga virando à esquerda na bifurcação com a sinalização indicativa totalizando um percurso de 710m.",
+  },
+  PetpNucleoValeDaRevolta: {
+    title: "PETP | Núcleo Vale da Revolta",
+    image:
+      "https://tourquest.storage.googleapis.com/petp-nucleo-vale-da-revolta.jpeg",
+    latitude: -22.447313396479057,
+    longitude: -42.951098346577204,
+    description:
+      "O Núcleo Vale da Revolta está localizado no bairro de São Pedro, a 4 km do centro da cidade de Teresópolis. O acesso é feito pela Estrada Teresópolis-Friburgo (BR-116), no km 55,5, entrando à direita na Estrada do Vale da Revolta, seguindo por 3 km até a portaria do parque.",
+  },
+};
+
 export const JOURNEY_SEED_DATA = [
   {
-    title: "Natureza e Aventura",
+    title: "Atrações Turísticas",
     shortDescription:
-      "Explore a natureza e descubra as belezas naturais de Teresópolis.",
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
-
-    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
+      "Descubra pontos turísticos imperdíveis, receba informações autênticas e viva experiências únicas. Comece sua aventura agora!",
+    description: `Com a jornada Atrações Turísticas, você está prestes a embarcar em uma jornada inesquecível por pontos turísticos incríveis. Desde monumentos históricos até maravilhas naturais, estamos aqui para proporcionar uma experiência enriquecedora.
     
-    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
-    image: "https://placekitten.com/400/400",
+    Nosso compromisso é levar você a uma exploração detalhada de cada atração. Não queremos apenas mostrar o caminho; queremos fornecer informações valiosas que tornam a sua visita mais significativa. Além disso, incentivamos a interação com a comunidade local, onde você pode compartilhar suas experiências e obter dicas valiosas para a sua jornada.
+    `,
+    image: CHECKPOINTS.AcampamentoPedraDaTartaruga.image,
     checkpoints: [
-      {
-        title: "Parque Nacional da Serra dos Órgãos",
-        description:
-          "Além das trilhas e cachoeiras, o parque também oferece uma oportunidade única de observação de aves e vida selvagem.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4216,
-        longitude: -42.9873,
-      },
-      {
-        title: "Pico Dedo de Deus",
-        description:
-          "A vista do topo é recompensadora, com visões panorâmicas do Rio de Janeiro e das montanhas circundantes.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4247,
-        longitude: -42.9799,
-      },
-      {
-        title: "Pedra do Sino",
-        description:
-          "É o ponto mais alto da Serra dos Órgãos e oferece vistas espetaculares. É um destino popular para caminhadas.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4175,
-        longitude: -42.9786,
-      },
-      {
-        title: "Trilha das Agulhas Negras",
-        description:
-          "Uma trilha desafiadora que leva você até o Pico das Agulhas Negras, a quinta montanha mais alta do Brasil.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4772,
-        longitude: -42.9924,
-      },
-      {
-        title: "Cachoeira dos Frades",
-        description:
-          "Uma bela cachoeira cercada por uma vegetação exuberante, perfeita para um mergulho refrescante em dias quentes.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4663,
-        longitude: -42.9889,
-      },
+      CHECKPOINTS.AcampamentoPedraDaTartaruga,
+      CHECKPOINTS.CasaDaMemoria,
+      CHECKPOINTS.CascataDoImbui,
+      CHECKPOINTS.ColinaDoMirante,
+      CHECKPOINTS.FonteAmelia,
     ],
   },
   {
-    title: "Cultura e História",
+    title: "Cachoeiras",
     shortDescription:
-      "Conheça a história de Teresópolis visitando seus museus e monumentos históricos.",
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
+      "Explore paisagens incríveis, sinta a energia da natureza e desfrute de momentos relaxantes. Comece sua jornada agora!",
+    description: `Com a jornada Cachoeiras, você está prestes a se encantar com paisagens naturais deslumbrantes e a energia revigorante das cachoeiras.
 
-    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
-    
-    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
-    image: "https://placekitten.com/400/400",
-    checkpoints: [
-      {
-        title: "Museu de Teresópolis",
-        description:
-          "Além de sua exposição permanente, o museu frequentemente realiza exposições temporárias que exploram diversos aspectos da história da cidade.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4183,
-        longitude: -42.9781,
-      },
-      {
-        title: "Igreja de Santa Teresa",
-        description:
-          "Esta igreja histórica é uma obra-prima da arquitetura colonial e uma parte importante do patrimônio cultural de Teresópolis.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4162,
-        longitude: -42.9758,
-      },
-      {
-        title: "Casa da Memória Arthur Dalmasso",
-        description:
-          "Este museu preserva a memória do fotógrafo Arthur Dalmasso e exibe sua vasta coleção de fotografias históricas de Teresópolis.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4187,
-        longitude: -42.9718,
-      },
-      {
-        title: "Casa de Cultura Adolpho Bloch",
-        description:
-          "Um espaço cultural que promove exposições de arte, apresentações teatrais e eventos culturais diversos.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4168,
-        longitude: -42.9745,
-      },
-      {
-        title: "Antiga Estação Ferroviária de Teresópolis",
-        description:
-          "Uma estação ferroviária histórica que agora abriga um centro cultural e eventos artísticos.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.415,
-        longitude: -42.9689,
-      },
-    ],
+    Nós entendemos o poder terapêutico que a natureza possui, e é por isso que queremos levá-lo a uma experiência única junto a essas maravilhas aquáticas. Não é apenas sobre visitar cachoeiras, é sobre se conectar com a natureza, desfrutar de momentos de tranquilidade e sentir a energia pulsante das quedas d'água.`,
+    image: CHECKPOINTS.CachoeiraDaCampanha.image,
+    checkpoints: [CHECKPOINTS.CachoeiraDaCampanha, CHECKPOINTS.CascataDoImbui],
   },
   {
-    title: "Relaxamento e Compras",
+    title: "Fontes Naturais",
     shortDescription:
-      "Relaxe e desfrute de um dia tranquilo visitando as lojas e atrações locais.",
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
+      "Descubra refúgios de paz, relaxe junto à natureza e renove suas energias. Comece sua jornada agora!",
+    description: `A jornada Fontes Naturais é uma oportunidade para você se conectar com a paz e a tranquilidade que as fontes naturais oferecem.
 
-    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
-    
-    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
-    image: "https://placekitten.com/400/400",
-    checkpoints: [
-      {
-        title: "Cascata dos Amores",
-        description:
-          "Uma cascata pitoresca cercada por vegetação exuberante. Ideal para relaxar e refrescar-se.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4392,
-        longitude: -42.9781,
-      },
-      {
-        title: "Feirarte",
-        description:
-          "Uma feira de artesanato local com uma grande variedade de produtos, desde roupas até artesanato tradicional.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4132,
-        longitude: -42.9723,
-      },
-      {
-        title: "Parque Municipal Montanhas de Teresópolis",
-        description:
-          "Um parque com trilhas, piscinas naturais e áreas para piquenique. Perfeito para um dia relaxante em família.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4287,
-        longitude: -42.9622,
-      },
-      {
-        title: "Espaço Coworking Teresópolis",
-        description:
-          "Um espaço moderno e tranquilo para trabalhar, com café e opções de alimentação saudável.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4165,
-        longitude: -42.9714,
-      },
-      {
-        title: "Loja de Produtos Regionais",
-        description:
-          "Uma loja onde você pode comprar produtos locais, como doces, queijos, cachaça e outros itens típicos da região.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4119,
-        longitude: -42.9683,
-      },
-    ],
+      Sabemos o quão vital é ter momentos de calma e relaxamento, especialmente em meio à agitação da vida cotidiana. É por isso que desejamos proporcionar a você uma jornada onde possa se reconectar com a natureza, relaxar junto a fontes naturais e renovar suas energias.`,
+    image: CHECKPOINTS.FonteAmelia.image,
+    checkpoints: [CHECKPOINTS.FonteAmelia, CHECKPOINTS.FonteJudith],
   },
   {
-    title: "Gastronomia e Entretenimento",
+    title: "Trilhas",
     shortDescription:
-      "Experimente a deliciosa culinária local e divirta-se com as atrações da cidade.",
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
+      "Explore cenários deslumbrantes, mergulhe na vida selvagem e viva experiências ao ar livre. Comece sua jornada agora!",
+    description: `A jornada Trilhas é uma oportunidade emocionante para você explorar cenários naturais deslumbrantes, se conectar com a vida selvagem e mergulhar em experiências ao ar livre.
 
-    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
-    
-    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
-    image: "https://placekitten.com/400/400",
+    Compreendemos a importância de estar em harmonia com a natureza e a adrenalina que as trilhas podem oferecer. É por isso que queremos levar você a uma jornada onde possa caminhar por trilhas incríveis, apreciar a beleza natural ao seu redor e vivenciar a emoção de estar em contato direto com a vida selvagem.
+`,
+    image: CHECKPOINTS.PetpNucleoValeDaRevolta.image,
     checkpoints: [
-      {
-        title: "Vila St. Gallen",
-        description:
-          "Um complexo de entretenimento com cervejaria artesanal, restaurantes, lojas e uma atmosfera encantadora inspirada na Suíça.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4161,
-        longitude: -42.9671,
-      },
-      {
-        title: "Mercado Municipal de Teresópolis",
-        description:
-          "Um mercado tradicional com barracas de comida, onde você pode saborear pratos locais e experimentar a gastronomia da região.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4157,
-        longitude: -42.9679,
-      },
-      {
-        title: "Restaurante Família Manjericão",
-        description:
-          "Um restaurante acolhedor que serve pratos tradicionais da culinária brasileira e internacional, com destaque para opções vegetarianas.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4164,
-        longitude: -42.9706,
-      },
-      {
-        title: "Bar e Restaurante Pedra do Sino",
-        description:
-          "Um restaurante com vista panorâmica para a Serra dos Órgãos, ideal para uma refeição deliciosa com uma paisagem deslumbrante.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.4213,
-        longitude: -42.9767,
-      },
-      {
-        title: "Empório do Bacalhau",
-        description:
-          "Um restaurante que oferece uma experiência gastronômica única, com destaque para pratos à base de bacalhau e frutos do mar.",
-        image: "https://placekitten.com/400/400",
-        latitude: -22.42,
-        longitude: -42.975,
-      },
+      CHECKPOINTS.CampoEscolaDeEscaladaAlexandreOliveira,
+      CHECKPOINTS.Parnaso,
+      CHECKPOINTS.ParquinhoInfantilTrilhaDoCamelo,
+      CHECKPOINTS.PetpNucleoValeDaRevolta,
     ],
   },
 ];

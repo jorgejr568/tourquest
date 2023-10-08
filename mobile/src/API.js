@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "https://tourquest.j-jr.app";
-const BASE_WS = "wss://tourquest.j-jr.app/ws";
+// const BASE_URL = "https://tourquest.j-jr.app";
+// const BASE_WS = "wss://tourquest.j-jr.app/ws";
+const BASE_URL = "http://localhost:8000"
+const BASE_WS = "ws://localhost:8001"
 
 const client = axios.create({
   baseURL: BASE_URL,
