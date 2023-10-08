@@ -30,7 +30,11 @@ describe("controllers.middlewares.authorization_middleware", () => {
     const mockNext = mock(() => {});
 
     expect(() =>
-      authorizationMiddleware(mockRequest as any, mockResponse as any, mockNext)
+      authorizationMiddleware(
+        mockRequest as any,
+        mockResponse as any,
+        mockNext,
+      ),
     ).toThrow(new UnauthorizedException());
 
     expect(mockNext).not.toHaveBeenCalled();

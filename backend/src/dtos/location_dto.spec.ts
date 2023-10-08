@@ -1,8 +1,5 @@
-import { describe, it, expect } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import { Location } from "./location_dto";
-import { User } from "./user_dto";
-import { Checkpoint } from "./checkpoint_dto";
-import { Journey } from ".";
 
 describe("dtos.location_dto", () => {
   describe("Location", () => {

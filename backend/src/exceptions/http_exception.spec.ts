@@ -1,4 +1,4 @@
-import { describe, it, expect, mock, spyOn } from "bun:test";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import {
   ExpressHttpExceptionErrorHandler,
   HttpException,
@@ -45,10 +45,10 @@ describe("exceptions.http_exception.ExpressHttpExceptionErrorHandler", () => {
       json: () => expressResponse,
     };
     const spyStatus = spyOn(expressResponse, "status").mockImplementationOnce(
-      () => expressResponse as any
+      () => expressResponse as any,
     );
     const spyJson = spyOn(expressResponse, "json").mockImplementationOnce(
-      () => expressResponse as any
+      () => expressResponse as any,
     );
 
     const next = mock(() => {});
@@ -57,7 +57,7 @@ describe("exceptions.http_exception.ExpressHttpExceptionErrorHandler", () => {
       err,
       {} as any,
       expressResponse as any,
-      next
+      next,
     );
 
     expect(spyStatus).toHaveBeenCalledTimes(1);
@@ -98,10 +98,10 @@ describe("exceptions.http_exception.ExpressHttpExceptionErrorHandler", () => {
       json: () => expressResponse,
     };
     const spyStatus = spyOn(expressResponse, "status").mockImplementationOnce(
-      () => expressResponse as any
+      () => expressResponse as any,
     );
     const spyJson = spyOn(expressResponse, "json").mockImplementationOnce(
-      () => expressResponse as any
+      () => expressResponse as any,
     );
 
     const next = mock(() => {});
@@ -110,7 +110,7 @@ describe("exceptions.http_exception.ExpressHttpExceptionErrorHandler", () => {
       err as any,
       {} as any,
       expressResponse as any,
-      next
+      next,
     );
 
     expect(spyStatus).toHaveBeenCalledTimes(1);
@@ -140,11 +140,11 @@ describe("exceptions.http_exception.ExpressHttpExceptionErrorHandler", () => {
     };
 
     const spyStatus = spyOn(expressResponse, "status").mockImplementationOnce(
-      () => expressResponse as any
+      () => expressResponse as any,
     );
 
     const spyJson = spyOn(expressResponse, "json").mockImplementationOnce(
-      () => expressResponse as any
+      () => expressResponse as any,
     );
 
     const next = mock(() => {});
@@ -153,7 +153,7 @@ describe("exceptions.http_exception.ExpressHttpExceptionErrorHandler", () => {
       err as any,
       {} as any,
       expressResponse as any,
-      next
+      next,
     );
 
     expect(spyStatus).toHaveBeenCalledTimes(1);

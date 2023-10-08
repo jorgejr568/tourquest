@@ -13,7 +13,7 @@ export class GeolibDistance implements GeoDistance {
       {
         lat: to.latitude,
         lon: to.longitude,
-      }
+      },
     );
   }
 }

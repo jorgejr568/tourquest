@@ -13,7 +13,7 @@ export const withAuthorization = async <T extends WsAuthMessage>(
   next: WithAuthorizationNext<T>,
   { tokenization }: WithAuthorizationContainer = {
     tokenization: infraTokenizationFactory(),
-  }
+  },
 ) => {
   try {
     const user = tokenization.verify(message.authorization);

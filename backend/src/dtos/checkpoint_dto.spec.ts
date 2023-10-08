@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, setSystemTime } from "bun:test";
+import { beforeAll, describe, expect, it, setSystemTime } from "bun:test";
 import { Checkpoint } from "./checkpoint_dto";
 
 describe("dtos.checkpoint_dto.Checkpoint", () => {

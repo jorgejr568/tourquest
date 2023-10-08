@@ -1,7 +1,4 @@
 import { BaseDTO } from "./_base_dto";
-import { Checkpoint } from "./checkpoint_dto";
-import { Journey } from "./journey_dto";
-import { User } from "./user_dto";
 
 type LocationData = {
   id: string;

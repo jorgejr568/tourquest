@@ -16,7 +16,7 @@ export interface JourneyService {
 export class DefaultJourneyService implements JourneyService {
   constructor(
     private readonly journeyRepository: JourneyRepository,
-    private readonly checkpointRepository: CheckpointRepository
+    private readonly checkpointRepository: CheckpointRepository,
   ) {}
 
   listJourneys = async (): Promise<JourneyListResponse> => {
@@ -24,7 +24,7 @@ export class DefaultJourneyService implements JourneyService {
   };
 
   listJourneyCheckpoints = async (
-    journeyId: string
+    journeyId: string,
   ): Promise<CheckpointListResponse> => {
     if (!(await this.journeyRepository.exists(journeyId))) {
       throw new JourneyNotFoundException();

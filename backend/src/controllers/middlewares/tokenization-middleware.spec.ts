@@ -1,4 +1,4 @@
-import { describe, expect, it, mock, spyOn } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 import { tokenizationMiddleware } from ".";
 import { Tokenization } from "@/infra/tokenization";
 import { any } from "zod";
@@ -30,18 +30,19 @@ describe("controllers.middlewares.TokenizationMiddleware", () => {
     const next = mock(() => {});
 
     const request = new (class {
+      headers = {
+        authorization: "Bearer mock_token",
+      };
+
       private _user = any;
-      set user(value: any) {
-        this._user = value;
-      }
 
       get user() {
         return this._user;
       }
 
-      headers = {
-        authorization: "Bearer mock_token",
-      };
+      set user(value: any) {
+        this._user = value;
+      }
     })();
 
     sut(request as any, {} as any, next);
@@ -72,18 +73,19 @@ describe("controllers.middlewares.TokenizationMiddleware", () => {
     const next = mock(() => {});
 
     const request = new (class {
+      headers = {
+        authorization: "Bearer mock_token",
+      };
+
       private _user = any;
-      set user(value: any) {
-        this._user = value;
-      }
 
       get user() {
         return this._user;
       }
 
-      headers = {
-        authorization: "Bearer mock_token",
-      };
+      set user(value: any) {
+        this._user = value;
+      }
     })();
 
     expect(() => sut(request as any, {} as any, next)).not.toThrow();

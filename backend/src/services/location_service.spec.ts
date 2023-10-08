@@ -1,6 +1,5 @@
-import { describe, it, mock, expect } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 import { DefaultLocationService } from "./location_service";
-import { HttpException } from "@/exceptions";
 import { Location } from "@/dtos";
 
 describe("services.Location_service.DefaultLocationService", () => {
@@ -17,7 +16,7 @@ describe("services.Location_service.DefaultLocationService", () => {
               journeyId: "mock-journey-id",
               checkpointId: "mock-checkpoint-id",
               createdAt: new Date(),
-            })
+            }),
         ),
       };
 

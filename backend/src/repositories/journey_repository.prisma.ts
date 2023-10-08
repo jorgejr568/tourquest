@@ -1,9 +1,18 @@
-import { JourneyCreateRequest, Journey } from "@/dtos";
+import { Journey, JourneyCreateRequest } from "@/dtos";
 import { JourneyRepository } from "./journey_repository";
-import { PrismaClient, Journey as JourneyDocument } from "@prisma/client";
+import { Journey as JourneyDocument, PrismaClient } from "@prisma/client";
 
 export class PrismaJourneyRepository implements JourneyRepository {
   constructor(private readonly prisma: PrismaClient) {}
+
+  static toDTO(journey: JourneyDocument): Journey {
+    return new Journey({
+      id: journey.id,
+      title: journey.title,
+      description: journey.description,
+      image: journey.image,
+    });
+  }
 
   create = async (request: JourneyCreateRequest): Promise<Journey> => {
     const journey = await this.prisma.journey.create({
@@ -18,7 +27,9 @@ export class PrismaJourneyRepository implements JourneyRepository {
   };
 
   exists(title: string): Promise<boolean>;
+
   exists(id: string): Promise<boolean>;
+
   exists(id: unknown): Promise<boolean> {
     return this.prisma.journey
       .findFirst({
@@ -40,7 +51,7 @@ export class PrismaJourneyRepository implements JourneyRepository {
 
   private findBy = async (
     key: keyof JourneyDocument,
-    value: unknown
+    value: unknown,
   ): Promise<Journey | null> => {
     const journey = await this.prisma.journey.findFirst({
       where: { [key]: value },
@@ -50,13 +61,4 @@ export class PrismaJourneyRepository implements JourneyRepository {
 
     return PrismaJourneyRepository.toDTO(journey);
   };
-
-  static toDTO(journey: JourneyDocument): Journey {
-    return new Journey({
-      id: journey.id,
-      title: journey.title,
-      description: journey.description,
-      image: journey.image,
-    });
-  }
 }

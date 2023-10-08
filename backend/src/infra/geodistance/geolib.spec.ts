@@ -1,7 +1,7 @@
 import { describe, expect, it, mock } from "bun:test";
 import { GeoLocation } from "./_interface";
 import { GeolibDistance } from "./geolib";
-import geolib from "geolib";
+
 describe("infra.geodistance.geolib", () => {
   describe("calculate", () => {
     it("should calculate the distance between two coordinates", async () => {
@@ -81,8 +81,8 @@ describe("infra.geodistance.geolib", () => {
           {
             latitude: 40.712775,
             longitude: -74.005972,
-          }
-        )
+          },
+        ),
       ).toThrow("mock-error");
     });
   });

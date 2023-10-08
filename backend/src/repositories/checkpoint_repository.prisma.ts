@@ -1,14 +1,30 @@
 import {
-  CheckpointCreateRequest,
   Checkpoint,
+  CheckpointCreateRequest,
   CheckpointMarkAsCompletedRequest,
   CheckpointMarkAsCompletedResponse,
 } from "@/dtos";
 import { CheckpointRepository } from "./checkpoint_repository";
-import { PrismaClient, Checkpoint as CheckpointDocument } from "@prisma/client";
+import { Checkpoint as CheckpointDocument, PrismaClient } from "@prisma/client";
 
 export class PrismaCheckpointRepository implements CheckpointRepository {
   constructor(private readonly prisma: PrismaClient) {}
+
+  static toDTO(
+    checkpoint: CheckpointDocument,
+    aggregate?: Partial<ConstructorParameters<typeof Checkpoint>[0]>,
+  ): Checkpoint {
+    return new Checkpoint({
+      id: checkpoint.id,
+      title: checkpoint.title,
+      description: checkpoint.description,
+      image: checkpoint.image,
+      latitude: checkpoint.latitude,
+      longitude: checkpoint.longitude,
+      range: checkpoint.range,
+      ...aggregate,
+    });
+  }
 
   async create(request: CheckpointCreateRequest): Promise<Checkpoint> {
     const checkpoint = await this.prisma.checkpoint.create({
@@ -26,7 +42,7 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
 
   async assignToJourney(
     checkpointId: string,
-    journeyId: string
+    journeyId: string,
   ): Promise<void> {
     await this.prisma.journeyCheckpoint.upsert({
       where: {
@@ -44,7 +60,9 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
   }
 
   exists(title: string): Promise<string | false>;
+
   exists(id: string): Promise<string | false>;
+
   async exists(id: unknown): Promise<string | false> {
     const checkpoint = await this.prisma.checkpoint.findFirst({
       where: {
@@ -63,7 +81,7 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
     });
 
     return checkpoints.map(({ Checkpoint }) =>
-      PrismaCheckpointRepository.toDTO(Checkpoint)
+      PrismaCheckpointRepository.toDTO(Checkpoint),
     );
   }
 
@@ -77,13 +95,13 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
         { ...Checkpoint },
         {
           completedAt,
-        }
-      )
+        },
+      ),
     );
   }
 
   async markAsDone(
-    request: CheckpointMarkAsCompletedRequest
+    request: CheckpointMarkAsCompletedRequest,
   ): Promise<CheckpointMarkAsCompletedResponse> {
     await this.prisma.userCompletedCheckpoints.upsert({
       where: {
@@ -112,21 +130,5 @@ export class PrismaCheckpointRepository implements CheckpointRepository {
     }
 
     return PrismaCheckpointRepository.toDTO(checkpoint);
-  }
-
-  static toDTO(
-    checkpoint: CheckpointDocument,
-    aggregate?: Partial<ConstructorParameters<typeof Checkpoint>[0]>
-  ): Checkpoint {
-    return new Checkpoint({
-      id: checkpoint.id,
-      title: checkpoint.title,
-      description: checkpoint.description,
-      image: checkpoint.image,
-      latitude: checkpoint.latitude,
-      longitude: checkpoint.longitude,
-      range: checkpoint.range,
-      ...aggregate,
-    });
   }
 }

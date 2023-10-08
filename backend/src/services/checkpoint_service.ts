@@ -18,14 +18,14 @@ export interface CheckpointService {
    * @param request
    */
   userMarkCheckpointAsCompleted(
-    request: CheckpointMarkAsCompletedRequest
+    request: CheckpointMarkAsCompletedRequest,
   ): Promise<CheckpointMarkAsCompletedResponse>;
 }
 
 export class DefaultCheckpointService implements CheckpointService {
   constructor(
     private readonly checkpointRepository: CheckpointRepository,
-    private readonly infraGeoDistance: GeoDistance
+    private readonly infraGeoDistance: GeoDistance,
   ) {}
 
   async userListCheckpoints(userId: string): Promise<CheckpointListResponse> {
@@ -33,10 +33,10 @@ export class DefaultCheckpointService implements CheckpointService {
   }
 
   async userMarkCheckpointAsCompleted(
-    request: CheckpointMarkAsCompletedRequest
+    request: CheckpointMarkAsCompletedRequest,
   ): Promise<CheckpointMarkAsCompletedResponse> {
     const checkpoint = await this.checkpointRepository.findById(
-      request.checkpointId
+      request.checkpointId,
     );
     if (!checkpoint) {
       throw new CheckpointNotFoundException();
@@ -50,7 +50,7 @@ export class DefaultCheckpointService implements CheckpointService {
       {
         latitude: checkpoint.latitude,
         longitude: checkpoint.longitude,
-      }
+      },
     );
 
     if (distance > checkpoint.range) {

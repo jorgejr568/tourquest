@@ -1,4 +1,4 @@
-import { describe, it, mock, expect, spyOn } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 
 import { PrismaUserRepository as SUT } from "./user_repository.prisma";
 import { User } from "@/dtos";

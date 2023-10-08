@@ -1,4 +1,3 @@
-import { InvalidTokenException } from "@/exceptions";
 import { infraTokenizationFactory } from "@/factories/infra";
 import { Tokenization } from "@/infra/tokenization";
 import { NextFunction, Request, Response } from "express";

@@ -1,4 +1,4 @@
-import { describe, it, expect, mock } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 import { DefaultCheckpointService } from "./checkpoint_service";
 import {
   CheckpointNotFoundException,
@@ -79,7 +79,7 @@ describe("services.checkpoint_service.DefaultCheckpointService", () => {
               range: 50,
               rewards: [],
               completedAt: new Date(),
-            })
+            }),
         ),
       } as any;
 
@@ -148,7 +148,7 @@ describe("services.checkpoint_service.DefaultCheckpointService", () => {
               range: 50,
               rewards: [],
               completedAt: new Date(),
-            })
+            }),
         ),
       } as any;
 
@@ -196,7 +196,7 @@ describe("services.checkpoint_service.DefaultCheckpointService", () => {
               range: 50,
               rewards: [],
               completedAt: new Date(),
-            })
+            }),
         ),
         markAsDone: mock(async () => ({})),
       } as any;
@@ -239,7 +239,7 @@ describe("services.checkpoint_service.DefaultCheckpointService", () => {
               range: 50,
               rewards: [],
               completedAt: new Date(),
-            })
+            }),
         ),
         markAsDone: mock(async () => {
           throw new Error("error");

@@ -6,7 +6,7 @@ import { Tokenization, TokenizationUserData } from "./_interface";
 export class JwtTokenization implements Tokenization {
   constructor(
     private readonly secret: string = Environment.JWT_SECRET,
-    private readonly expiresIn: string = Environment.JWT_EXPIRES_IN
+    private readonly expiresIn: string = Environment.JWT_EXPIRES_IN,
   ) {}
 
   sign = (user: TokenizationUserData): string => {

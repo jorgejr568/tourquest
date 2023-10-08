@@ -2,10 +2,10 @@ name: Backend Actions
 on:
   push:
     branches:
-      - '*'
+      - "*"
   pull_request:
     branches:
-      - '*'
+      - "*"
 
 jobs:
   test-coverage:
@@ -31,6 +31,10 @@ jobs:
         working-directory: ./backend
         name: Type Check
         run: bun run typecheck
+      - id: eslint
+        working-directory: ./backend
+        name: ESLint
+        run: bun run lint
       - id: run-tests
         working-directory: ./backend
         name: Run Tests

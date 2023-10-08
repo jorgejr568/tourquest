@@ -5,6 +5,17 @@ import { PrismaClient, User as UserDocument } from "@prisma/client";
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly client: PrismaClient) {}
 
+  static toDTO(user: UserDocument): User {
+    return new User({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const user = await this.client.user.findUnique({
       where: {
@@ -29,16 +40,5 @@ export class PrismaUserRepository implements UserRepository {
     });
 
     return PrismaUserRepository.toDTO(user);
-  }
-
-  static toDTO(user: UserDocument): User {
-    return new User({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    });
   }
 }

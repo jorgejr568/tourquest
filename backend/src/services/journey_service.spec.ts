@@ -1,4 +1,4 @@
-import { describe, it, mock, expect } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 import { DefaultJourneyService } from "./journey_service";
 import { HttpException, JourneyNotFoundException } from "@/exceptions";
 
@@ -11,7 +11,7 @@ describe("services.journery_service.DefaultJourneyService", () => {
 
       const sut = new DefaultJourneyService(
         mockJourneyRepository as any,
-        null as any
+        null as any,
       );
       const journeys = await sut.listJourneys();
 
@@ -27,7 +27,7 @@ describe("services.journery_service.DefaultJourneyService", () => {
 
       const sut = new DefaultJourneyService(
         mockJourneyRepository as any,
-        null as any
+        null as any,
       );
 
       sut
@@ -51,7 +51,7 @@ describe("services.journery_service.DefaultJourneyService", () => {
 
       const sut = new DefaultJourneyService(
         mockJourneyRepository as any,
-        mockCheckpointRepository as any
+        mockCheckpointRepository as any,
       );
 
       const checkpoints = await sut.listJourneyCheckpoints("mock-journey-id");
@@ -74,7 +74,7 @@ describe("services.journery_service.DefaultJourneyService", () => {
 
       const sut = new DefaultJourneyService(
         mockJourneyRepository as any,
-        null as any
+        null as any,
       );
 
       sut
@@ -100,7 +100,7 @@ describe("services.journery_service.DefaultJourneyService", () => {
 
       const sut = new DefaultJourneyService(
         mockJourneyRepository as any,
-        null as any
+        null as any,
       );
 
       sut
@@ -129,7 +129,7 @@ describe("services.journery_service.DefaultJourneyService", () => {
 
       const sut = new DefaultJourneyService(
         mockJourneyRepository as any,
-        mockCheckpointRepository as any
+        mockCheckpointRepository as any,
       );
 
       sut
@@ -142,10 +142,10 @@ describe("services.journery_service.DefaultJourneyService", () => {
             "mock-journey-id",
           ]);
           expect(
-            mockCheckpointRepository.listByJourneyId
+            mockCheckpointRepository.listByJourneyId,
           ).toHaveBeenCalledTimes(1);
           expect(
-            mockCheckpointRepository.listByJourneyId.mock.calls[0]
+            mockCheckpointRepository.listByJourneyId.mock.calls[0],
           ).toEqual(["mock-journey-id"]);
           done();
         });

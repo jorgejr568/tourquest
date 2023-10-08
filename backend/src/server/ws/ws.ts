@@ -1,16 +1,8 @@
-import { Environment } from "../../constants";
-import { TokenizationUserData } from "../../infra/tokenization";
-import { PrismaClient } from "@prisma/client";
-import {
-  UserLocationWsMessage,
-  WsMessage,
-  UserLocationWsSchema,
-} from "./messages";
-import { Ws, WsUpgrade } from "./types";
+import { Environment } from "@/constants";
+import { WsMessage } from "./messages";
+import { WsUpgrade } from "./types";
 import { withAuthorization } from "./middlewares";
 import { handleUserLocationWsMessage } from "./handlers";
-
-const prisma = new PrismaClient();
 
 const server = Bun.serve<WsUpgrade>({
   fetch(req, server) {

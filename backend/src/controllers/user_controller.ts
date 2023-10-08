@@ -23,7 +23,7 @@ userRouter.get(
   authorizationMiddleware,
   async (req: Request, res: Response) => {
     res.json(req.user);
-  }
+  },
 );
 
 userRouter.get(
@@ -31,7 +31,7 @@ userRouter.get(
   authorizationMiddleware,
   async (req: Request, res: Response) => {
     res.json(await checkpointService.userListCheckpoints(req.user!.id));
-  }
+  },
 );
 
 userRouter.patch(
@@ -45,10 +45,10 @@ userRouter.patch(
           checkpointId: req.params.checkpointId,
           latitude: req.body.latitude,
           longitude: req.body.longitude,
-        })
-      )
+        }),
+      ),
     );
-  }
+  },
 );
 
 userRouter.post("/", async (req: Request, res: Response) => {

@@ -1,4 +1,4 @@
-import { describe, it, expect, mock } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 import { PrismaCheckpointRepository } from "./checkpoint_repository.prisma";
 import { Checkpoint } from "@/dtos";
 

@@ -1,5 +1,4 @@
 import {
-  CheckpointListResponse,
   UserCreateRequest,
   UserCreateResponse,
   UserLoginRequest,
@@ -10,7 +9,7 @@ import {
   UserAlreadyExistsException,
 } from "@/exceptions";
 import { Tokenization } from "@/infra/tokenization";
-import { CheckpointRepository, UserRepository } from "@/repositories";
+import { UserRepository } from "@/repositories";
 
 export interface UserService {
   /**
@@ -27,7 +26,7 @@ export interface UserService {
 export class DefaultUserService implements UserService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly tokenization: Tokenization
+    private readonly tokenization: Tokenization,
   ) {}
 
   async signIn(request: UserLoginRequest): Promise<UserLoginResponse> {

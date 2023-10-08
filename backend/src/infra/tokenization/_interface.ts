@@ -6,6 +6,7 @@ export type TokenizationUserData = {
 
 export interface Tokenization {
   sign(user: TokenizationUserData): string;
+
   /**
    *
    * @param token

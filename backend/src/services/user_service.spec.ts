@@ -49,8 +49,8 @@ describe("services.UserService.signIn", () => {
             password: Bun.password.hashSync("wrong_password"),
             createdAt: new Date(),
             updatedAt: new Date(),
-          })
-        )
+          }),
+        ),
       ),
     } as any;
 
@@ -88,7 +88,7 @@ describe("services.UserService.signIn", () => {
             password: Bun.password.hashSync("mock_password"),
             createdAt: new Date(),
             updatedAt: new Date(),
-          })
+          }),
       ),
     } as any;
 
@@ -182,7 +182,7 @@ describe("services.UserService.signIn", () => {
               password: "mock-password",
               createdAt: new Date(),
               updatedAt: new Date(),
-            })
+            }),
         ),
         findByEmail: mock(async () => null),
       };
@@ -193,7 +193,7 @@ describe("services.UserService.signIn", () => {
 
       const sut = new DefaultUserService(
         mockUserRepository as any,
-        mockTokenization as any
+        mockTokenization as any,
       );
 
       const response = await sut.signUp({
@@ -221,7 +221,7 @@ describe("services.UserService.signIn", () => {
       expect(createMockCall[0].name).toEqual("mock-name");
       expect(createMockCall[0].email).toEqual("mock-email");
       expect(
-        Bun.password.verifySync("mock-password", createMockCall[0].password)
+        Bun.password.verifySync("mock-password", createMockCall[0].password),
       ).toEqual(true);
 
       expect(mockTokenization.sign).toHaveBeenCalledTimes(1);
@@ -269,6 +269,7 @@ describe("services.UserService.signIn", () => {
         findByEmail: mock(async () => null),
       };
 
+      // eslint-disable-next-line
       const sut = new DefaultUserService(mockUserRepository as any, {} as any);
 
       sut
@@ -293,7 +294,10 @@ describe("services.UserService.signIn", () => {
           expect(createMockCall[0].name).toEqual("mock-name");
           expect(createMockCall[0].email).toEqual("mock-email");
           expect(
-            Bun.password.verifySync("mock-password", createMockCall[0].password)
+            Bun.password.verifySync(
+              "mock-password",
+              createMockCall[0].password,
+            ),
           ).toEqual(true);
 
           done();
@@ -311,7 +315,7 @@ describe("services.UserService.signIn", () => {
               password: "mock-password",
               createdAt: new Date(),
               updatedAt: new Date(),
-            })
+            }),
         ),
         findByEmail: mock(async () => null),
       };
@@ -324,7 +328,7 @@ describe("services.UserService.signIn", () => {
 
       const sut = new DefaultUserService(
         mockUserRepository as any,
-        mockTokenization as any
+        mockTokenization as any,
       );
 
       sut
@@ -349,7 +353,10 @@ describe("services.UserService.signIn", () => {
           expect(createMockCall[0].name).toEqual("mock-name");
           expect(createMockCall[0].email).toEqual("mock-email");
           expect(
-            Bun.password.verifySync("mock-password", createMockCall[0].password)
+            Bun.password.verifySync(
+              "mock-password",
+              createMockCall[0].password,
+            ),
           ).toEqual(true);
 
           expect(mockTokenization.sign).toHaveBeenCalledTimes(1);

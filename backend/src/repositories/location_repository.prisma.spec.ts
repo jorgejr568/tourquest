@@ -1,5 +1,5 @@
 import { LocationCreateRequest } from "@/dtos";
-import { describe, it, expect, mock } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 import { PrismaLocationRepository } from "./location_repository.prisma";
 
 describe("repositories.location_repository.PrismaLocationRepository", () => {

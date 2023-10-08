@@ -13,7 +13,7 @@ export const handleUserLocationWsMessage = async (
   user: TokenizationUserData,
   { service }: HandleUserLocationWsMessageContainer = {
     service: locationServiceFactory(),
-  }
+  },
 ) => {
   const result = await service.create({
     userId: user.id,

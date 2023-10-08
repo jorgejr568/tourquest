@@ -7,9 +7,11 @@ import {
 
 export interface CheckpointRepository {
   create(request: CheckpointCreateRequest): Promise<Checkpoint>;
+
   assignToJourney(checkpointId: string, journeyId: string): Promise<void>;
 
   exists(title: string): Promise<string | false>;
+
   exists(id: string): Promise<string | false>;
 
   listByJourneyId(journeyId: string): Promise<Checkpoint[]>;
@@ -17,7 +19,7 @@ export interface CheckpointRepository {
   listByUserId(userId: string): Promise<Checkpoint[]>;
 
   markAsDone(
-    request: CheckpointMarkAsCompletedRequest
+    request: CheckpointMarkAsCompletedRequest,
   ): Promise<CheckpointMarkAsCompletedResponse>;
 
   findById(id: string): Promise<Checkpoint | null>;

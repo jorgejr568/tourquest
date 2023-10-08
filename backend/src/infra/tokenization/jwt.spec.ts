@@ -173,7 +173,7 @@ describe("infra.tokenization.jwt", () => {
 
     const oneHourAndOneMinuteInMilliseconds = 1 * 60 * 60 * 1000 + 60 * 1000;
     spyOn(Date, "now").mockImplementationOnce(
-      () => (Date.now() + oneHourAndOneMinuteInMilliseconds) as any
+      () => (Date.now() + oneHourAndOneMinuteInMilliseconds) as any,
     );
 
     verifySpy.mockImplementationOnce(originalVerify as any);

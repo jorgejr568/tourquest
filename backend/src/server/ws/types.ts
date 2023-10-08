@@ -14,5 +14,5 @@ export type Ws = ServerWebSocket<WsUpgrade>;
 export type WithAuthorizationNext<T extends WsAuthMessage> = (
   ws: Ws,
   message: T,
-  user: TokenizationUserData
+  user: TokenizationUserData,
 ) => any;

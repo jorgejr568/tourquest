@@ -1,6 +1,8 @@
-import { unknown } from "zod";
+type T_Extend = {
+  [key: string]: any;
+};
 
-export abstract class BaseDTO<T extends Object, J = T> {
+export abstract class BaseDTO<T extends T_Extend, J = T> {
   constructor(protected readonly data: T) {}
 
   toJSON(): J {
@@ -11,7 +13,7 @@ export abstract class BaseDTO<T extends Object, J = T> {
         }
 
         return [key, value];
-      })
+      }),
     ) as unknown as J;
   }
 }
