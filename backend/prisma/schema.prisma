@@ -41,12 +41,13 @@ model User {
 }
 
 model Journey {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  image       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(uuid())
+  title            String
+  description      String
+  shortDescription String
+  image            String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   // relationships
   Checkpoints JourneyCheckpoint[]

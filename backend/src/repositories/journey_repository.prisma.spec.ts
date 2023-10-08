@@ -15,6 +15,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
       const mockRequest: JourneyCreateRequest = {
         title: "mock_title",
         description: "mock_description",
+        shortDescription: "mock_short_description",
         image: "mock_image",
       };
 
@@ -35,6 +36,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
               data: {
                 title: "mock_title",
                 description: "mock_description",
+                shortDescription: "mock_short_description",
                 image: "mock_image",
               },
             },
@@ -50,6 +52,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
             id: "mock_id",
             title: "mock_title",
             description: "mock_description",
+            shortDescription: "mock_short_description",
             image: "mock_image",
           })),
         },
@@ -57,6 +60,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
       const mockRequest: JourneyCreateRequest = {
         title: "mock_title",
         description: "mock_description",
+        shortDescription: "mock_short_description",
         image: "mock_image",
       };
 
@@ -68,7 +72,8 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
           expect(journey).toBeDefined();
           expect(journey.id).toBe("mock_id");
           expect(journey.title).toBe("mock_title");
-          expect(journey.description).toBe("mock_description");
+          expect(journey.description).toEqual(["mock_description"]);
+          expect(journey.shortDescription).toBe("mock_short_description");
           expect(journey.image).toBe("mock_image");
 
           expect(mockClient.journey.create).toHaveBeenCalledTimes(1);
@@ -77,6 +82,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
               data: {
                 title: "mock_title",
                 description: "mock_description",
+                shortDescription: "mock_short_description",
                 image: "mock_image",
               },
             },
@@ -210,7 +216,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
           if (!journey) return;
           expect(journey.id).toBe("mock_id");
           expect(journey.title).toBe("mock_title");
-          expect(journey.description).toBe("mock_description");
+          expect(journey.description).toEqual(["mock_description"]);
           expect(journey.image).toBe("mock_image");
 
           expect(mockClient.journey.findFirst).toHaveBeenCalledTimes(1);
@@ -320,7 +326,7 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
 
           expect(journey.id).toBe("mock_id");
           expect(journey.title).toBe("mock_title");
-          expect(journey.description).toBe("mock_description");
+          expect(journey.description).toEqual(["mock_description"]);
           expect(journey.image).toBe("mock_image");
 
           expect(mockClient.journey.findMany).toHaveBeenCalledTimes(1);

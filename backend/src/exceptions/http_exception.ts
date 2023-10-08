@@ -1,5 +1,5 @@
 import { Environment } from "@/constants";
-import { ErrorRequestHandler, Request, Response } from "express";
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
 export abstract class HttpException extends Error {
@@ -24,6 +24,7 @@ export const ExpressHttpExceptionErrorHandler: ErrorRequestHandler = (
   err: Error,
   _: Request,
   res: Response,
+  next: NextFunction,
 ) => {
   if (err instanceof HttpException) {
     res.status(err.status).json({
@@ -49,6 +50,8 @@ export const ExpressHttpExceptionErrorHandler: ErrorRequestHandler = (
     status: 500,
     ...prepareStack(err.stack),
   });
+
+  next(err);
 };
 
 const prepareStack = (

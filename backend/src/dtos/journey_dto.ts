@@ -6,13 +6,18 @@ type JourneyData = {
   id: string;
   title: string;
   description: string;
+  shortDescription: string;
   image: string;
 
   checkpoints?: Checkpoint[];
   rewards?: Reward[];
 };
 
-export class Journey extends BaseDTO<JourneyData> {
+type JourneyDataJSON = Omit<JourneyData, "description"> & {
+  description: string[];
+};
+
+export class Journey extends BaseDTO<JourneyData, JourneyDataJSON> {
   get id() {
     return this.data.id;
   }
@@ -21,8 +26,15 @@ export class Journey extends BaseDTO<JourneyData> {
     return this.data.title;
   }
 
-  get description() {
-    return this.data.description;
+  get description(): string[] {
+    return this.data.description
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+  }
+
+  get shortDescription() {
+    return this.data.shortDescription;
   }
 
   get image() {
@@ -36,10 +48,18 @@ export class Journey extends BaseDTO<JourneyData> {
   get rewards() {
     return this.data.rewards;
   }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      description: this.description,
+    };
+  }
 }
 
 export type JourneyCreateRequest = {
   title: string;
+  shortDescription: string;
   description: string;
   image: string;
 };

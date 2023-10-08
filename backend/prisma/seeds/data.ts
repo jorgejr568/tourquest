@@ -9,8 +9,13 @@ export const USERS_SEED_DATA = [
 export const JOURNEY_SEED_DATA = [
   {
     title: "Natureza e Aventura",
-    description:
+    shortDescription:
       "Explore a natureza e descubra as belezas naturais de Teresópolis.",
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
+
+    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
+    
+    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
     image: "https://placekitten.com/400/400",
     checkpoints: [
       {
@@ -57,8 +62,13 @@ export const JOURNEY_SEED_DATA = [
   },
   {
     title: "Cultura e História",
-    description:
+    shortDescription:
       "Conheça a história de Teresópolis visitando seus museus e monumentos históricos.",
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
+
+    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
+    
+    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
     image: "https://placekitten.com/400/400",
     checkpoints: [
       {
@@ -105,8 +115,13 @@ export const JOURNEY_SEED_DATA = [
   },
   {
     title: "Relaxamento e Compras",
-    description:
+    shortDescription:
       "Relaxe e desfrute de um dia tranquilo visitando as lojas e atrações locais.",
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
+
+    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
+    
+    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
     image: "https://placekitten.com/400/400",
     checkpoints: [
       {
@@ -153,8 +168,13 @@ export const JOURNEY_SEED_DATA = [
   },
   {
     title: "Gastronomia e Entretenimento",
-    description:
+    shortDescription:
       "Experimente a deliciosa culinária local e divirta-se com as atrações da cidade.",
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus. Id aliquet risus feugiat in ante metus dictum at tempor. Amet porttitor eget dolor morbi non arcu risus quis. Amet porttitor eget dolor morbi non arcu. Pellentesque adipiscing commodo elit at imperdiet dui accumsan sit amet. Eget felis eget nunc lobortis mattis aliquam. Aliquam sem fringilla ut morbi. Eget velit aliquet sagittis id consectetur purus ut faucibus. Purus in mollis nunc sed id. Amet volutpat consequat mauris nunc. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Hendrerit dolor magna eget est lorem ipsum dolor.
+
+    Tellus molestie nunc non blandit. Lectus nulla at volutpat diam ut. Vulputate eu scelerisque felis imperdiet. Tempus quam pellentesque nec nam aliquam. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Ut tellus elementum sagittis vitae et leo. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Nullam vehicula ipsum a arcu. Quis auctor elit sed vulputate mi. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.
+    
+    Ut diam quam nulla porttitor. Vitae turpis massa sed elementum tempus egestas sed sed. Semper viverra nam libero justo. Egestas pretium aenean pharetra magna. Erat pellentesque adipiscing commodo elit. Interdum posuere lorem ipsum dolor sit amet. Neque sodales ut etiam sit amet nisl. Ultrices sagittis orci a scelerisque purus semper eget duis at. Sapien eget mi proin sed libero enim sed faucibus. Sit amet massa vitae tortor condimentum lacinia quis vel eros. Aliquet bibendum enim facilisis gravida neque convallis a cras semper.`,
     image: "https://placekitten.com/400/400",
     checkpoints: [
       {

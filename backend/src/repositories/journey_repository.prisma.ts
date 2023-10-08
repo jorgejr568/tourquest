@@ -10,6 +10,7 @@ export class PrismaJourneyRepository implements JourneyRepository {
       id: journey.id,
       title: journey.title,
       description: journey.description,
+      shortDescription: journey.shortDescription,
       image: journey.image,
     });
   }
@@ -18,6 +19,7 @@ export class PrismaJourneyRepository implements JourneyRepository {
     const journey = await this.prisma.journey.create({
       data: {
         title: request.title,
+        shortDescription: request.shortDescription,
         description: request.description,
         image: request.image,
       },
