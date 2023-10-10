@@ -8,6 +8,9 @@ export const UserContext = createContext({
   loading: true,
 
   user: null,
+  userCompletedCheckpoints: [],
+  pushUserCompletedCheckpoint: (checkpointId) => {},
+  userCompletedCheckpoint: (checkpointId) => false,
   logout: () => {},
 });
 
@@ -15,6 +18,21 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [userCompletedCheckpoints, setUserCompletedCheckpoints] = useState([]);
+
+  const pushUserCompletedCheckpoint = useCallback(
+    (checkpointId) => {
+      setUserCompletedCheckpoints((prev) => [...prev, checkpointId]);
+    },
+    [setUserCompletedCheckpoints]
+  );
+
+  const userCompletedCheckpoint = useCallback(
+    (checkpointId) => {
+      return userCompletedCheckpoints.includes(checkpointId);
+    },
+    [userCompletedCheckpoints]
+  );
 
   const loadTokenFromStorage = async () => {
     try {
@@ -61,6 +79,14 @@ export const UserProvider = ({ children }) => {
     })();
   }, [token]);
 
+  useEffect(() => {
+    if (user) {
+      API.user.completedCheckpoints().then((checkpoints) => {
+        setUserCompletedCheckpoints(checkpoints.map(({ id }) => id));
+      });
+    }
+  }, [user]);
+
   return (
     <UserContext.Provider
       value={{
@@ -70,6 +96,9 @@ export const UserProvider = ({ children }) => {
         setUser,
         loading,
         logout: handleLogout,
+        userCompletedCheckpoints,
+        userCompletedCheckpoint,
+        pushUserCompletedCheckpoint,
       }}
     >
       {children}

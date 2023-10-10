@@ -46,6 +46,10 @@ const API = Object.freeze({
         longitude,
       });
     },
+    completedCheckpoints: async () => {
+      const { data } = await client.get("/api/v1/users/checkpoints");
+      return data;
+    },
   },
   journeys: {
     all: async () => {

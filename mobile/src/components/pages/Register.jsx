@@ -10,6 +10,7 @@ import useUser from "../../hooks/useUser";
 import useErrors from "../../hooks/useErrors";
 import { z } from "zod";
 import SuccessBadge from "../molecules/SuccessBadge";
+import { BaseLayout } from "../_layout/base";
 
 const schema = z.object({
   name: z.string().min(3),
@@ -17,7 +18,7 @@ const schema = z.object({
   password: z.string().min(8),
 });
 
-function RegisterPage({ route }) {
+function RegisterPage({ navigation }) {
   const errorsContext = useErrors();
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,39 +34,6 @@ function RegisterPage({ route }) {
 
   const { setToken } = useUser();
   const [waitToken, setWaitToken] = useState();
-  const navigation = useNavigation();
-  const theme = useTheme();
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        container: {
-          flex: 1,
-        },
-        safeContainer: {
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: theme.colors.elevation.level1,
-        },
-        heading: {},
-        form: {
-          paddingHorizontal: 24,
-          paddingBottom: 92,
-          width: "100%",
-          maxWidth: 380,
-
-          flexDirection: "column",
-          gap: 16,
-          marginTop: 42,
-        },
-
-        alreadyHaveAccountContainer: {
-          flexDirection: "row",
-          justifyContent: "center",
-        },
-      }),
-    [theme],
-  );
 
   const handleAlreadyHaveAccount = useCallback(() => {
     navigation.navigate("Login");
@@ -89,7 +57,7 @@ function RegisterPage({ route }) {
 
           if (errors?.password) {
             errorsContext.pushError(
-              "A senha deve conter no mínimo 8 caracteres",
+              "A senha deve conter no mínimo 8 caracteres"
             );
           }
 
@@ -112,15 +80,15 @@ function RegisterPage({ route }) {
 
   const handleAnimationFinished = useCallback(() => {
     setToken(waitToken);
-    navigation.navigate("Auth");
+    navigation.navigate("Home");
   }, [waitToken]);
 
   return (
-    <View style={styles.container}>
-      <Navbar title="Crie sua conta" />
+    <BaseLayout>
+      <BaseLayout.Navbar title="Crie sua conta" />
 
       <DismissKeyboardView>
-        <SafeAreaView style={styles.safeContainer}>
+        <BaseLayout.Content centered>
           {success ? (
             <SuccessBadge
               title="Que bom que você está aqui!"
@@ -184,10 +152,29 @@ function RegisterPage({ route }) {
               </View>
             </>
           )}
-        </SafeAreaView>
+        </BaseLayout.Content>
       </DismissKeyboardView>
-    </View>
+    </BaseLayout>
   );
 }
+
+const styles = StyleSheet.create({
+  heading: {},
+  form: {
+    paddingHorizontal: 24,
+    paddingBottom: 92,
+    width: "100%",
+    maxWidth: 380,
+
+    flexDirection: "column",
+    gap: 16,
+    marginTop: 42,
+  },
+
+  alreadyHaveAccountContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+});
 
 export default withGuest(RegisterPage);

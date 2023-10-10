@@ -11,7 +11,7 @@ const GuestMiddlewareComponent = forwardRef(({ Component, props }, ref) => {
     if (user) {
       navigation.reset({
         index: 0,
-        routes: [{ name: "Auth" }],
+        routes: [{ name: "Home" }],
       });
     }
 

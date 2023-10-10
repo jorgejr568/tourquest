@@ -8,8 +8,10 @@ import firstName from "../../utils/firstName";
 import withLocation from "../../middlewares/location.middleware";
 import useErrors from "../../hooks/useErrors";
 import API from "../../API";
+import useUser from "../../hooks/useUser";
 
 function Reward({ route, user, navigation, location }) {
+  const { pushUserCompletedCheckpoint } = useUser();
   const medalRef = useRef();
   const errors = useErrors();
   const theme = useTheme();
@@ -74,7 +76,7 @@ function Reward({ route, user, navigation, location }) {
   }, [route.params, theme]);
 
   const handleBack = useCallback(() => {
-    navigation.goBack();
+    navigation.pop(2);
   }, []);
 
   const resetAnimation = useCallback((isCancelled) => {
@@ -100,6 +102,9 @@ function Reward({ route, user, navigation, location }) {
     if (route.params?.checkpoint) {
       API.user
         .markCheckpoint(route.params.checkpoint.id, location)
+        .then(() => {
+          pushUserCompletedCheckpoint(route.params.checkpoint.id);
+        })
         .catch((error) => {
           errors.pushError(
             "Não foi possível marcar o checkpoint como concluído."

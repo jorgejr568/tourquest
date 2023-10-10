@@ -2,18 +2,12 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
 import { Text } from "react-native-paper";
 
-export default function CheckpointCard({ checkpoint, journeyId, completed }) {
+export default function JourneyCard({ journey, completed }) {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    if (completed) {
-      Alert.alert("Objetivo concluído", "Você já concluiu esse objetivo");
-      return;
-    }
-
-    navigation.navigate("CheckpointMap", {
-      checkpoint,
-      journeyId,
+    navigation.navigate("CheckpointList", {
+      journey,
     });
   };
 
@@ -23,10 +17,10 @@ export default function CheckpointCard({ checkpoint, journeyId, completed }) {
       activeOpacity={0.8}
       onPress={handlePress}
     >
-      <Image style={styles.img} source={{ uri: checkpoint.image }} />
+      <Image style={styles.img} source={{ uri: journey.image }} />
       <View style={styles.containerText}>
-        <Text style={styles.title}>{checkpoint.title}</Text>
-        <Text style={styles.description}>{checkpoint.description}</Text>
+        <Text style={styles.title}>{journey.title}</Text>
+        <Text style={styles.description}>{journey.shortDescription}</Text>
       </View>
 
       {completed && (
@@ -50,7 +44,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     position: "relative",
   },
-
   containerText: {
     display: "flex",
     flexDirection: "column",

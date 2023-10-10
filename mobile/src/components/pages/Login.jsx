@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import withGuest from "../../middlewares/guest.middleware";
 import useErrors from "../../hooks/useErrors";
 import { z } from "zod";
+import { BaseLayout } from "../_layout/base";
 
 const schema = z.object({
   email: z.string().email(),
@@ -29,40 +30,6 @@ function Login() {
     return schema.safeParse(form).success;
   }, [form]);
 
-  const theme = useTheme();
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        container: {
-          flex: 1,
-        },
-        safeContainer: {
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: theme.colors.elevation.level1,
-        },
-        heading: {},
-
-        form: {
-          paddingHorizontal: 24,
-          paddingBottom: 92,
-          width: "100%",
-          maxWidth: 380,
-
-          flexDirection: "column",
-          gap: 24,
-          marginTop: 42,
-        },
-
-        createAccountHelperContainer: {
-          flexDirection: "row",
-          justifyContent: "center",
-        },
-      }),
-    [],
-  );
-
   const handleSubmit = useCallback(() => {
     setLoading(true);
     Keyboard.dismiss();
@@ -72,7 +39,7 @@ function Login() {
         setToken(token);
         navigation.reset({
           index: 0,
-          routes: [{ name: "Auth" }],
+          routes: [{ name: "Home" }],
         });
       })
       .catch(() => {
@@ -89,9 +56,9 @@ function Login() {
 
   return (
     <DismissKeyboardView>
-      <View style={styles.container}>
-        <Navbar />
-        <SafeAreaView style={styles.safeContainer}>
+      <BaseLayout>
+        <BaseLayout.Navbar />
+        <BaseLayout.Content centered>
           <Text variant="headlineSmall">Entrar na TourQuest</Text>
 
           <View style={styles.form}>
@@ -137,10 +104,30 @@ function Login() {
               Entrar
             </Button>
           </View>
-        </SafeAreaView>
-      </View>
+        </BaseLayout.Content>
+      </BaseLayout>
     </DismissKeyboardView>
   );
 }
+
+const styles = StyleSheet.create({
+  heading: {},
+
+  form: {
+    paddingHorizontal: 24,
+    paddingBottom: 92,
+    width: "100%",
+    maxWidth: 380,
+
+    flexDirection: "column",
+    gap: 24,
+    marginTop: 42,
+  },
+
+  createAccountHelperContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+});
 
 export default withGuest(Login);

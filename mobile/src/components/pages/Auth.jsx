@@ -10,6 +10,7 @@ import ManWalkingAnimation from "../atoms/ManWalkingAnimation";
 import withLocation from "../../middlewares/location.middleware";
 import { useNavigation } from "@react-navigation/native";
 import useWatchLocation from "../../hooks/useWatchLocation";
+import { BaseLayout } from "../_layout/base";
 
 const randomElement = (array) =>
   array[Math.floor(Math.random() * array.length)];
@@ -29,15 +30,9 @@ const AuthPage = ({ user, location }) => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Navbar title={`Perfil de ${firstName(user.name)}`} />
-
-      <SafeAreaView
-        style={{
-          backgroundColor: theme.colors.elevation.level1,
-          flex: 1,
-        }}
-      >
+    <BaseLayout>
+      <BaseLayout.Navbar title={`Perfil de ${firstName(user.name)}`} />
+      <BaseLayout.Content>
         <View
           style={{
             flex: 1,
@@ -86,8 +81,8 @@ const AuthPage = ({ user, location }) => {
 
           <Button onPress={logout}>Logout</Button>
         </View>
-      </SafeAreaView>
-    </View>
+      </BaseLayout.Content>
+    </BaseLayout>
   );
 };
 
