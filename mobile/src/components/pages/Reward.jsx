@@ -45,7 +45,7 @@ function Reward({ route, user, navigation, location }) {
       button: {
         marginBottom: 12,
       },
-    })
+    }),
   );
 
   const title = useMemo(() => {
@@ -107,7 +107,7 @@ function Reward({ route, user, navigation, location }) {
         })
         .catch((error) => {
           errors.pushError(
-            "Não foi possível marcar o checkpoint como concluído."
+            "Não foi possível marcar o checkpoint como concluído.",
           );
           navigation.goBack();
         });

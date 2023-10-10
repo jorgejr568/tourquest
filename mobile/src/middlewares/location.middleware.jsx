@@ -46,7 +46,7 @@ function LocationMiddleware({ Component, ...props }) {
           },
           ({ coords: { latitude, longitude } }) => {
             setLocation({ latitude, longitude });
-          }
+          },
         );
 
         let {

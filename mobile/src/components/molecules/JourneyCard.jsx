@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 
 export default function JourneyCard({ journey, completed }) {

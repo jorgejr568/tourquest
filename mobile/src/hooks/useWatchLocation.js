@@ -49,7 +49,7 @@ export default function useWatchLocation(props) {
           location.latitude,
           location.longitude,
           props?.journeyId,
-          props?.checkpointId
+          props?.checkpointId,
         );
       };
       return;
@@ -60,7 +60,7 @@ export default function useWatchLocation(props) {
       location.latitude,
       location.longitude,
       props?.journeyId,
-      props?.checkpointId
+      props?.checkpointId,
     );
   }, [wss.current, location]);
 

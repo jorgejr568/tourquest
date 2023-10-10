@@ -1,6 +1,5 @@
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import Navbar from "../organisms/Navbar";
-import { useMemo } from "react";
 import { useTheme } from "react-native-paper";
 
 export const BaseLayout = ({ children }) => {

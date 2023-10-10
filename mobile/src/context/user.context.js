@@ -24,14 +24,14 @@ export const UserProvider = ({ children }) => {
     (checkpointId) => {
       setUserCompletedCheckpoints((prev) => [...prev, checkpointId]);
     },
-    [setUserCompletedCheckpoints]
+    [setUserCompletedCheckpoints],
   );
 
   const userCompletedCheckpoint = useCallback(
     (checkpointId) => {
       return userCompletedCheckpoints.includes(checkpointId);
     },
-    [userCompletedCheckpoints]
+    [userCompletedCheckpoints],
   );
 
   const loadTokenFromStorage = async () => {

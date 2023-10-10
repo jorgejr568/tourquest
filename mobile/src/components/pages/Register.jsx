@@ -1,10 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import Navbar from "../organisms/Navbar";
-import { Button, Text, TextInput, useTheme } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Button, Text, TextInput } from "react-native-paper";
 import withGuest from "../../middlewares/guest.middleware";
 import DismissKeyboardView from "../organisms/DismissKeyboardView";
-import { useNavigation } from "@react-navigation/native";
 import API from "../../API";
 import useUser from "../../hooks/useUser";
 import useErrors from "../../hooks/useErrors";
@@ -57,7 +55,7 @@ function RegisterPage({ navigation }) {
 
           if (errors?.password) {
             errorsContext.pushError(
-              "A senha deve conter no mínimo 8 caracteres"
+              "A senha deve conter no mínimo 8 caracteres",
             );
           }
 

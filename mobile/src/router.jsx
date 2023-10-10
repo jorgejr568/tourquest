@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Home from "./components/pages/Home";
-import Auth from "./components/pages/Auth";
 import { StatusBar } from "expo-status-bar";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";

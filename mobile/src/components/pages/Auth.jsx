@@ -1,9 +1,8 @@
-import { FlatList, SafeAreaView, View } from "react-native";
+import { FlatList, View } from "react-native";
 import withAuth from "../../middlewares/auth.middleware";
-import Navbar from "../organisms/Navbar";
 import { Button, List, useTheme } from "react-native-paper";
 import useUser from "../../hooks/useUser";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../../API";
 import firstName from "../../utils/firstName";
 import ManWalkingAnimation from "../atoms/ManWalkingAnimation";

@@ -1,11 +1,12 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import API from "../../API";
 import useErrors from "../../hooks/useErrors";
 import { BaseLayout } from "../_layout/base";
 import JourneyCard from "../molecules/JourneyCard";
 import useUser from "../../hooks/useUser";
 import RegisterOrSignIn from "../molecules/RegisterOrSignIn";
+import { ActivityIndicator } from "react-native-paper";
 
 function Home() {
   const { userCompletedCheckpoints } = useUser();
@@ -54,9 +55,14 @@ function Home() {
             />
           </View>
         )}
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
       </BaseLayout.Content>
 
-      <RegisterOrSignIn />
+      <RegisterOrSignIn hide={loading} />
     </BaseLayout>
   );
 }

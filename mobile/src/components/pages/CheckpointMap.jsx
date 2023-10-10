@@ -52,7 +52,7 @@ function CheckpointMapPage({ navigation, location, route, theme }) {
           paddingVertical: 24,
         },
       }),
-    [theme]
+    [theme],
   );
 
   useWatchLocation({
@@ -71,7 +71,7 @@ function CheckpointMapPage({ navigation, location, route, theme }) {
       latitude: checkpoint.latitude,
       longitude: checkpoint.longitude,
     }),
-    [checkpoint]
+    [checkpoint],
   );
 
   const canComplete = useMemo(() => {

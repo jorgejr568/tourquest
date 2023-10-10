@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import CheckpointCard from "../molecules/CheckpointCard";
 import { BaseLayout } from "../_layout/base";
 import useUser from "../../hooks/useUser";
