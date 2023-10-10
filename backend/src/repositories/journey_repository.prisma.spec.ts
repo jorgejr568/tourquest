@@ -306,6 +306,21 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
               title: "mock_title",
               description: "mock_description",
               image: "mock_image",
+              Checkpoints: [
+                {
+                  checkpointId: "mock_checkpoint_id",
+                  journeyId: "mock_journey_id",
+                  Checkpoint: {
+                    id: "mock_checkpoint_id",
+                    title: "mock_checkpoint_title",
+                    description: "mock_checkpoint_description",
+                    image: "mock_checkpoint_image",
+                    range: 100,
+                    latitude: 0,
+                    longitude: 0,
+                  },
+                },
+              ],
             },
           ]),
         },
@@ -328,6 +343,17 @@ describe("repositories.journey_repository.PrismJourneyRepository", () => {
           expect(journey.title).toBe("mock_title");
           expect(journey.description).toEqual(["mock_description"]);
           expect(journey.image).toBe("mock_image");
+          expect(journey.checkpoints).toBeInstanceOf(Array);
+          expect(journey.checkpoints.length).toBe(1);
+          expect(journey.checkpoints[0].toJSON()).toEqual({
+            id: "mock_checkpoint_id",
+            title: "mock_checkpoint_title",
+            description: "mock_checkpoint_description",
+            image: "mock_checkpoint_image",
+            range: 100,
+            latitude: 0,
+            longitude: 0,
+          });
 
           expect(mockClient.journey.findMany).toHaveBeenCalledTimes(1);
         })

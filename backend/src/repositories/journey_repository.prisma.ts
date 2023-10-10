@@ -1,17 +1,28 @@
 import { Journey, JourneyCreateRequest } from "@/dtos";
 import { JourneyRepository } from "./journey_repository";
-import { Journey as JourneyDocument, PrismaClient } from "@prisma/client";
+import {
+  Journey as JourneyDocument,
+  Checkpoint as CheckpointDocument,
+  PrismaClient,
+} from "@prisma/client";
+import { PrismaCheckpointRepository } from ".";
 
 export class PrismaJourneyRepository implements JourneyRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  static toDTO(journey: JourneyDocument): Journey {
+  static toDTO(
+    journey: JourneyDocument,
+    checkpoints?: CheckpointDocument[]
+  ): Journey {
     return new Journey({
       id: journey.id,
       title: journey.title,
       description: journey.description,
       shortDescription: journey.shortDescription,
       image: journey.image,
+      checkpoints: checkpoints?.map((checkpoint) => {
+        return PrismaCheckpointRepository.toDTO(checkpoint);
+      }),
     });
   }
 
@@ -47,13 +58,27 @@ export class PrismaJourneyRepository implements JourneyRepository {
   };
 
   list = async (): Promise<Journey[]> => {
-    const journeys = await this.prisma.journey.findMany();
-    return journeys.map((journey) => PrismaJourneyRepository.toDTO(journey));
+    const journeys = await this.prisma.journey.findMany({
+      include: {
+        Checkpoints: {
+          include: {
+            Checkpoint: true,
+          },
+        },
+      },
+    });
+
+    return journeys.map((journey) =>
+      PrismaJourneyRepository.toDTO(
+        journey,
+        journey.Checkpoints.map((checkpoint) => checkpoint.Checkpoint)
+      )
+    );
   };
 
   private findBy = async (
     key: keyof JourneyDocument,
-    value: unknown,
+    value: unknown
   ): Promise<Journey | null> => {
     const journey = await this.prisma.journey.findFirst({
       where: { [key]: value },
