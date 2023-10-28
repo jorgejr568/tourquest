@@ -7,6 +7,7 @@ import Register from "./components/pages/Register";
 import Reward from "./components/pages/Reward";
 import CheckpointMap from "./components/pages/CheckpointMap";
 import CheckpointList from "./components/pages/CheckpointList";
+import Journey from "./components/pages/Journey";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function Router() {
         <Stack.Screen name="Reward" component={Reward} />
         <Stack.Screen name="CheckpointMap" component={CheckpointMap} />
         <Stack.Screen name="CheckpointList" component={CheckpointList} />
+        <Stack.Screen name="Journey" component={Journey} />
       </Stack.Navigator>
     </NavigationContainer>
   );

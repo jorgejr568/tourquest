@@ -12,6 +12,7 @@ export const UserContext = createContext({
   pushUserCompletedCheckpoint: (checkpointId) => {},
   userCompletedCheckpoint: (checkpointId) => false,
   logout: () => {},
+  isJourneyCompleted: (journey) => false,
 });
 
 export const UserProvider = ({ children }) => {
@@ -24,14 +25,23 @@ export const UserProvider = ({ children }) => {
     (checkpointId) => {
       setUserCompletedCheckpoints((prev) => [...prev, checkpointId]);
     },
-    [setUserCompletedCheckpoints],
+    [setUserCompletedCheckpoints]
   );
 
   const userCompletedCheckpoint = useCallback(
     (checkpointId) => {
       return userCompletedCheckpoints.includes(checkpointId);
     },
-    [userCompletedCheckpoints],
+    [userCompletedCheckpoints]
+  );
+
+  const isJourneyCompleted = useCallback(
+    (journey) => {
+      return journey.checkpoints.every((checkpoint) =>
+        userCompletedCheckpoints.includes(checkpoint.id)
+      );
+    },
+    [userCompletedCheckpoints]
   );
 
   const loadTokenFromStorage = async () => {
@@ -99,6 +109,7 @@ export const UserProvider = ({ children }) => {
         userCompletedCheckpoints,
         userCompletedCheckpoint,
         pushUserCompletedCheckpoint,
+        isJourneyCompleted,
       }}
     >
       {children}

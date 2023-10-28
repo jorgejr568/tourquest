@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../../API";
 import useErrors from "../../hooks/useErrors";
 import { BaseLayout } from "../_layout/base";
@@ -9,7 +9,7 @@ import RegisterOrSignIn from "../molecules/RegisterOrSignIn";
 import { ActivityIndicator } from "react-native-paper";
 
 function Home() {
-  const { userCompletedCheckpoints } = useUser();
+  const { isJourneyCompleted } = useUser();
   const [journeys, setJourneys] = useState([]);
   const [loading, setLoading] = useState(true);
   const errors = useErrors();
@@ -25,15 +25,6 @@ function Home() {
         setLoading(false);
       });
   }, []);
-
-  const isJourneyCompleted = useCallback(
-    (journey) => {
-      return journey.checkpoints.every((checkpoint) =>
-        userCompletedCheckpoints.includes(checkpoint.id)
-      );
-    },
-    [userCompletedCheckpoints]
-  );
 
   return (
     <BaseLayout>

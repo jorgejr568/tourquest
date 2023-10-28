@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
+import CompletedBadge from "../atoms/CompletedBadge";
 
 export default function CheckpointCard({ checkpoint, journeyId, completed }) {
   const navigation = useNavigation();
@@ -29,11 +30,7 @@ export default function CheckpointCard({ checkpoint, journeyId, completed }) {
         <Text style={styles.description}>{checkpoint.description}</Text>
       </View>
 
-      {completed && (
-        <View style={styles.completedContainer}>
-          <Text style={styles.completedText}>Objetivo concluído</Text>
-        </View>
-      )}
+      {completed && <CompletedBadge />}
     </TouchableOpacity>
   );
 }
