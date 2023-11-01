@@ -52,7 +52,7 @@ function CheckpointMapPage({ navigation, location, route, theme }) {
           paddingVertical: 24,
         },
       }),
-    [theme],
+    [theme]
   );
 
   useWatchLocation({
@@ -71,7 +71,7 @@ function CheckpointMapPage({ navigation, location, route, theme }) {
       latitude: checkpoint.latitude,
       longitude: checkpoint.longitude,
     }),
-    [checkpoint],
+    [checkpoint]
   );
 
   const canComplete = useMemo(() => {
@@ -101,7 +101,7 @@ function CheckpointMapPage({ navigation, location, route, theme }) {
             <MapViewDirections
               origin={initialLocation.current}
               destination={destinationCoords}
-              apikey={"AIzaSyA3ewAlIlB8ybaKUHiwFpAWZqGDCNbEkY8"}
+              apikey={"AIzaSyAaEeH1ASZp7NevXjgBc-k7nl2jmFv9Ggw"}
               strokeWidth={5}
               strokeColor={theme.colors.primary}
               onReady={(result) => {
