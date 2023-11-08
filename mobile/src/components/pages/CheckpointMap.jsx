@@ -101,7 +101,7 @@ function CheckpointMapPage({ navigation, location, route, theme }) {
             <MapViewDirections
               origin={initialLocation.current}
               destination={destinationCoords}
-              apikey={"AIzaSyAaEeH1ASZp7NevXjgBc-k7nl2jmFv9Ggw"}
+              apikey={"AIzaSyA3ewAlIlB8ybaKUHiwFpAWZqGDCNbEkY8"}
               strokeWidth={5}
               strokeColor={theme.colors.primary}
               onReady={(result) => {

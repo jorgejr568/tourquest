@@ -65,6 +65,7 @@ export const UserProvider = ({ children }) => {
   const handleLogout = useCallback(() => {
     setToken(null);
     setUser(null);
+    setUserCompletedCheckpoints([]);
     SecureStore.deleteItemAsync("token");
   }, []);
 
